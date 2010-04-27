@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module codename="pl.project13.tsalgorithms">
+    <module_version install_time="1272411005093" last="true" origin="installer" specification_version="1.0">
+        <file crc="4201435366" name="config/Modules/pl-project13-tsalgorithms.xml"/>
+        <file crc="3115229424" name="modules/pl-project13-tsalgorithms.jar"/>
+    </module_version>
+</module>

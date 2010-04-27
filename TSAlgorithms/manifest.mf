@@ -1,0 +1,5 @@
+Manifest-Version: 1.0
+OpenIDE-Module: pl.project13.tsalgorithms
+OpenIDE-Module-Localizing-Bundle: pl/project13/tsalgorithms/Bundle.properties
+OpenIDE-Module-Specification-Version: 1.0
+

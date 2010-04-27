@@ -1,0 +1,5 @@
+Manifest-Version: 1.0
+OpenIDE-Module: lucene
+OpenIDE-Module-Localizing-Bundle: lucene/Bundle.properties
+OpenIDE-Module-Specification-Version: 1.0
+

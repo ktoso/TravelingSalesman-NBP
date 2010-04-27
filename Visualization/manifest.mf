@@ -1,0 +1,6 @@
+Manifest-Version: 1.0
+OpenIDE-Module: pl.project13.visualization
+OpenIDE-Module-Layer: pl/project13/visualization/layer.xml
+OpenIDE-Module-Localizing-Bundle: pl/project13/visualization/Bundle.properties
+OpenIDE-Module-Specification-Version: 1.0
+

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module codename="lucene">
+    <module_version install_time="1272411004624" last="true" origin="installer" specification_version="1.0">
+        <file crc="3778946719" name="config/Modules/lucene.xml"/>
+        <file crc="997030388" name="modules/ext/lucene-1.4.3.jar"/>
+        <file crc="1206534449" name="modules/lucene.jar"/>
+    </module_version>
+</module>
