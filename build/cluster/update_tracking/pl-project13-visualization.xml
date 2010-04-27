@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<module codename="pl.project13.visualization">
-    <module_version install_time="1272412270325" last="true" origin="installer" specification_version="1.0">
-        <file crc="3162200012" name="config/Modules/pl-project13-visualization.xml"/>
-        <file crc="1587216612" name="modules/pl-project13-visualization.jar"/>
-    </module_version>
-</module>

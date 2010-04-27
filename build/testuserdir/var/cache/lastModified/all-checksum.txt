@@ -1,4 +1,0 @@
-/home/ktoso/netbeans-6.8/platform11=1270804148000
-/home/ktoso/coding/TravelingSalesman-on-NetBeansPlatform/build/cluster=1272412271000
-/home/ktoso/netbeans-6.8/platform11=1270804148000
-build/testuserdir=1272412271000
