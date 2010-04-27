@@ -65,10 +65,8 @@ pl.project13.visualization.GraphView$OpenGraphAction
 ||:pl.project13.visualization.VisualizerTopComponent
 prefuse.data.io.GraphMLReader
 java.lang.Class
-java.util.LinkedList
 prefuse.controls.WheelZoomControl
 javax.swing.GroupLayout$Group
-org.openide.util.Lookup
 prefuse.controls.PanControl
 java.util.logging.Logger
 prefuse.action.assignment.ColorAction
@@ -81,9 +79,6 @@ pl.project13.tsalgorithms.api.MockTSSolverAction
 prefuse.action.RepaintAction
 prefuse.Display
 javax.swing.JPanel
-java.util.List
-prefuse.data.Graph
-java.util.Iterator
 pl.project13.visualization.VisualizerTopComponent
 prefuse.controls.NeighborHighlightControl
 javax.swing.GroupLayout
@@ -97,13 +92,12 @@ org.openide.windows.WindowManager
 java.awt.Color
 prefuse.controls.FocusControl
 java.io.PrintStream
-org.openide.windows.TopComponent
 prefuse.data.io.DataIOException
+org.openide.windows.TopComponent
 java.awt.BorderLayout
 prefuse.controls.ZoomToFitControl
 prefuse.action.ActionList
 prefuse.Visualization
-javax.swing.JList
 prefuse.util.ColorLib
 java.util.Properties
 ||:pl.project13.visualization.GraphView$GraphMenuAction

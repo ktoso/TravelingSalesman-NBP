@@ -7,7 +7,8 @@ import org.openide.windows.InputOutput;
 import prefuse.action.Action;
 
 /**
- *
+ * Use this only to create your own solver classes
+ * It has some minor NetBeans Platform related helpers - allowing you to log into the output window etc
  * @author ktoso
  */
 abstract public class SolverAction extends Action {

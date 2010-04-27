@@ -1,2 +1,3 @@
 *.jnlp
-LibsAndStuff
+build/
+LibsAndStuff/
