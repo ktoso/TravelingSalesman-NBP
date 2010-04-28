@@ -24,7 +24,7 @@
                 </dependency>
             </module-dependencies>
             <public-packages>
-                <package>pl.project13.tsalgorithms.api</package>
+                <package>pl.project13.tsalgorithms</package>
             </public-packages>
         </data>
     </configuration>
