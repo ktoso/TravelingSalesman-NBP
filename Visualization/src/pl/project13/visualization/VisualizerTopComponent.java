@@ -169,7 +169,8 @@ public final class VisualizerTopComponent extends TopComponent {
     private void initGraph() {
         Graph graph = null;
         try {
-            String filename = "data/sampleCityGraph.xml";
+//            String filename = "data/sampleCityGraph.xml";
+            String filename = "data/socialnet.xml";
             graph = new GraphMLReader().readGraph(filename);
         } catch (DataIOException e) {
             e.printStackTrace();
@@ -198,7 +199,7 @@ public final class VisualizerTopComponent extends TopComponent {
         //TODO: zdobywać to przez opcje oraz lookup najlepiej
         //layout.add(new TSSolverAction("graph", ???Activity.INFINITY???))//wykonaj kolejny krok alg. genetycznego
         //TODO: usunąć tą akcję testową
-        layout.add(new MockTSSolverAction());
+        layout.add(new MockTSSolverAction(graph));
         layout.add(new RepaintAction());
 
 
