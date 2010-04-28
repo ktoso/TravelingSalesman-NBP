@@ -1,3 +1,20 @@
 http://www.k0pper.republika.pl/geny.htm
 
 Do roboty!
+
+---------------------------------
+Pomysł na podział ról:
+* Bartek - głównie algorytmy, alg->gui, + na co będziesz miał ochotę/czas/pomysł
+* Ktoso - głównie "integracja", poprawki w prefuse (nie mamy wag krawędzi itp), stuff z platformą, loose coupling tego wszystkiego(?)
+* Michał - wszelkie edytory, kreatory(?), gdyby okazała się konieczna - dokumentacja dla prof.
+---------------------------------
+Super szybki opis struktury plików:
+* Całe to repo, jest projektem netbeans, tym "głównym" Platform Application
+* Visualization, to okienko wizualizacji w edytorze, listy node'ów, muszę dopisać do biblioteczki żeby jakoś ładnie rysowały się wagi ścieżek no i sama integracja algorytmu (kolorowanie ścieżki obecnej itp). Jest trochę pracy ale da radę...
+* TSAlgorithms, wszystkie algorytmy rozwiązujące ten problem. O ile faktycznie ten "model" rozwiązywania tego grafu podejmiemy - Algorytmy rozwiązujące być w ".api" oraz dziedziczyć tak jak to robi MockTSSolverAction, i modyfikować po znalezieniu kolejnego pokolenia najlepszego odpowiednio graf... To pierwsze rozwiązanie na jakie wpadłem - pozwala nam na dodawanie algorytmów przez po prostu napisanie ich - a VIsualizer sam je "zobaczy" (zabawy z Lookup)... Jakby się okazało nie fajne - przejdziemy na coś innego...
+* Prefuse, korzystamy z tego do wizualizacji, oraz wczytywania GraphML - gdzie możemy sobie deklarować XMLowato grafy jakie chcemy wprowadzać, to fajna opcja dość... Jest zależnością Visualizera.
+* Lucene, wykorzystywany jest przez Prefuse przy przeszukiwaniu grafów...
+
+To dopiero pierwszy szkic jakby to miało wyglądać ogólnie, obawiam się troszkę sposobu wołania algorytmu na chwilę obecną... Fajnie "silne", bo taki "step-over" też damy radę dzięki temu napisać, ale trochę dziwne podejście. Będziemy myśleć co z tym...
+
+Jest to wszystko w trakcie szukania sensownych rozwiązań i integraowania algorytmów Bartka, jakoś damy radę!
