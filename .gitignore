@@ -1,3 +1,6 @@
 *.jnlp
+*.zip
+*.class
+dist/
 build/
 LibsAndStuff/
