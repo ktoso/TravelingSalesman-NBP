@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
-OpenIDE-Module: pl.project13.visualization
-OpenIDE-Module-Layer: pl/project13/visualization/layer.xml
-OpenIDE-Module-Localizing-Bundle: pl/project13/visualization/Bundle.properties
+OpenIDE-Module: pl.edu.netbeans.visualization
+OpenIDE-Module-Layer: pl/edu/netbeans/visualization/layer.xml
+OpenIDE-Module-Localizing-Bundle: pl/edu/netbeans/visualization/Bundle.properties
 OpenIDE-Module-Specification-Version: 1.0
 

@@ -1,0 +1,5 @@
+Manifest-Version: 1.0
+OpenIDE-Module: pl.edu.netbeans.algorithms
+OpenIDE-Module-Localizing-Bundle: pl/edu/netbeans/algorithms/Bundle.properties
+OpenIDE-Module-Specification-Version: 1.0
+

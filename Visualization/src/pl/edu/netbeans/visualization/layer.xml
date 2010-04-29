@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE filesystem PUBLIC "-//NetBeans//DTD Filesystem 1.2//EN" "http://www.netbeans.org/dtds/filesystem-1_2.dtd">
+<filesystem>
+    <folder name="Actions">
+        <folder name="Window">
+            <file name="pl-edu-netbeans-visualization-NodeListAction.instance">
+                <attr name="component" methodvalue="pl.edu.netbeans.visualization.NodeListTopComponent.findInstance"/>
+                <attr name="displayName" bundlevalue="pl.edu.netbeans.visualization.Bundle#CTL_NodeListAction"/>
+                <attr name="instanceCreate" methodvalue="org.openide.windows.TopComponent.openAction"/>
+            </file>
+            <file name="pl-edu-netbeans-visualization-VisualizerAction.instance">
+                <attr name="component" methodvalue="pl.edu.netbeans.visualization.VisualizerTopComponent.findInstance"/>
+                <attr name="displayName" bundlevalue="pl.edu.netbeans.visualization.Bundle#CTL_VisualizerAction"/>
+                <attr name="instanceCreate" methodvalue="org.openide.windows.TopComponent.openAction"/>
+            </file>
+        </folder>
+    </folder>
+    <folder name="Menu">
+        <folder name="Window">
+            <file name="NodeListAction.shadow">
+                <attr name="originalFile" stringvalue="Actions/Window/pl-edu-netbeans-visualization-NodeListAction.instance"/>
+            </file>
+            <file name="VisualizerAction.shadow">
+                <attr name="originalFile" stringvalue="Actions/Window/pl-edu-netbeans-visualization-VisualizerAction.instance"/>
+            </file>
+        </folder>
+    </folder>
+    <folder name="Windows2">
+        <folder name="Components">
+            <file name="NodeListTopComponent.settings" url="NodeListTopComponentSettings.xml"/>
+            <file name="VisualizerTopComponent.settings" url="VisualizerTopComponentSettings.xml"/>
+        </folder>
+        <folder name="Modes">
+            <folder name="editor">
+                <file name="VisualizerTopComponent.wstcref" url="VisualizerTopComponentWstcref.xml"/>
+            </folder>
+            <folder name="leftSlidingSide">
+                <file name="NodeListTopComponent.wstcref" url="NodeListTopComponentWstcref.xml"/>
+            </folder>
+        </folder>
+    </folder>
+</filesystem>
