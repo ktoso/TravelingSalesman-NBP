@@ -3,26 +3,18 @@
 package pl.project13.visualization;
 
 import java.awt.BorderLayout;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.logging.Logger;
-import javax.swing.JList;
 import org.openide.util.NbBundle;
 import org.openide.windows.TopComponent;
 import org.openide.windows.WindowManager;
 //import org.openide.util.ImageUtilities;
 import org.netbeans.api.settings.ConvertAsProperties;
-import org.openide.util.Lookup;
-import pl.project13.tsalgorithms.MockTSSolverAction;
-import pl.project13.tsalgorithms.TSSolverAction;
-import prefuse.Constants;
+import pl.edu.netbeans.algorithms.MockTSSolverAction;
 import prefuse.Display;
 import prefuse.Visualization;
 import prefuse.action.ActionList;
 import prefuse.action.RepaintAction;
 import prefuse.action.assignment.ColorAction;
-import prefuse.action.assignment.DataColorAction;
 import prefuse.action.layout.graph.ForceDirectedLayout;
 import prefuse.activity.Activity;
 import prefuse.controls.DragControl;
@@ -39,7 +31,6 @@ import prefuse.render.DefaultRendererFactory;
 import prefuse.render.LabelRenderer;
 import prefuse.util.ColorLib;
 import prefuse.visual.VisualItem;
-import prefuse.visual.tuple.TableNodeItem;
 
 /**
  * Top component which displays something.

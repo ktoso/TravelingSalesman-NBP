@@ -75,7 +75,6 @@ org.openide.util.NbBundle
 prefuse.render.DefaultRendererFactory
 prefuse.controls.DragControl
 prefuse.render.LabelRenderer
-pl.project13.tsalgorithms.api.MockTSSolverAction
 prefuse.action.RepaintAction
 prefuse.Display
 javax.swing.JPanel
@@ -91,6 +90,7 @@ java.lang.System
 org.openide.windows.WindowManager
 java.awt.Color
 prefuse.controls.FocusControl
+pl.project13.tsalgorithms.MockTSSolverAction
 java.io.PrintStream
 prefuse.data.io.DataIOException
 org.openide.windows.TopComponent
