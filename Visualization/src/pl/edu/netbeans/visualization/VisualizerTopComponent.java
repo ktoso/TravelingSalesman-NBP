@@ -169,8 +169,8 @@ public final class VisualizerTopComponent extends TopComponent {
     private void initGraph() {
         Graph graph = null;
         try {
-//            String filename = "data/sampleCityGraph.xml";
-            String filename = "data/socialnet.xml";
+            String filename = "data/sampleCityGraph.xml";
+//            String filename = "data/socialnet.xml";
             graph = new GraphMLReader().readGraph(filename);
         } catch (DataIOException e) {
             e.printStackTrace();
