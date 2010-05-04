@@ -114,17 +114,15 @@ public class Chromosom extends LinkedList<Integer> implements Comparable<Chromos
 
     @Override
     public String toString() {
-        String tmp = new String();
+        StringBuilder b = new StringBuilder();
         for (Integer i : this) {
             try {
-                tmp += this.graph.getNode(i).get("name") + " ";
-            }catch (ArrayIndexOutOfBoundsException ex) {
-                tmp += "null ";
+                b.append(this.graph.getNode(i).get("name")).append(" ");
+            } catch (ArrayIndexOutOfBoundsException ex) {
+                b.append(" null ");
             }
-
-            
         }
-        return tmp;
+        return b.toString();
     }
 
 //    public double fitness(Graph g) {  dopasowanie ze względu na graf
@@ -134,19 +132,19 @@ public class Chromosom extends LinkedList<Integer> implements Comparable<Chromos
         double f = 0;
         System.out.println("Chromosom fitness:");
         for (int i = 0; i < size(); ++i) {
-            Edge e = this.graph.getEdge(this.graph.getEdge(i, (int) ( (i + 1) % size() ) ));
-            
-            if ( e == null ) {
-                e = this.graph.getEdge(this.graph.getEdge( (int) ( (i + 1) % size() ) , i) );
+            Edge e = this.graph.getEdge(this.graph.getEdge(i, (int) ((i + 1) % size())));
+
+            if (e == null) {
+                e = this.graph.getEdge(this.graph.getEdge((int) ((i + 1) % size()), i));
             }
 
-            if ( e != null ) {
+            if (e != null) {
 
-                System.out.println("\t" + e.getSourceNode().getString("name") + " " + e.getTargetNode().getString("name") + " " + e.getDouble("weight") );
+                System.out.println("\t" + e.getSourceNode().getString("name") + " " + e.getTargetNode().getString("name") + " " + e.getDouble("weight"));
                 f += e.getDouble("weight");
 
             }
-            
+
         }
         return f;
     }
