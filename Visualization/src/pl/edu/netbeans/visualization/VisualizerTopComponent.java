@@ -3,26 +3,19 @@
 package pl.edu.netbeans.visualization;
 
 import java.awt.BorderLayout;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.logging.Logger;
-import javax.swing.JList;
 import org.openide.util.NbBundle;
 import org.openide.windows.TopComponent;
 import org.openide.windows.WindowManager;
 //import org.openide.util.ImageUtilities;
 import org.netbeans.api.settings.ConvertAsProperties;
-import org.openide.util.Lookup;
+import pl.edu.netbeans.algorithms.FirstTSSolverAction;
 import pl.edu.netbeans.algorithms.MockTSSolverAction;
-import pl.edu.netbeans.algorithms.TSSolverAction;
-import prefuse.Constants;
 import prefuse.Display;
 import prefuse.Visualization;
 import prefuse.action.ActionList;
 import prefuse.action.RepaintAction;
 import prefuse.action.assignment.ColorAction;
-import prefuse.action.assignment.DataColorAction;
 import prefuse.action.layout.graph.ForceDirectedLayout;
 import prefuse.activity.Activity;
 import prefuse.controls.DragControl;
@@ -39,7 +32,6 @@ import prefuse.render.DefaultRendererFactory;
 import prefuse.render.LabelRenderer;
 import prefuse.util.ColorLib;
 import prefuse.visual.VisualItem;
-import prefuse.visual.tuple.TableNodeItem;
 
 /**
  * Top component which displays something.
@@ -167,11 +159,9 @@ public final class VisualizerTopComponent extends TopComponent {
     }
 
     private void initGraph() {
-        System.out.println("    !!!!!!!!!!! ECHO !!!!!!!!!!!!!!!!");
         Graph graph = null;
         try {
             String filename = "data/sampleCityGraph.xml";
-//            String filename = "data/socialnet.xml";
             graph = new GraphMLReader().readGraph(filename);
         } catch (DataIOException e) {
             e.printStackTrace();
@@ -198,8 +188,9 @@ public final class VisualizerTopComponent extends TopComponent {
         ActionList layout = new ActionList(Activity.INFINITY);
         layout.add(new ForceDirectedLayout("graph", true, false));
         //TODO: zdobywać to przez opcje oraz lookup najlepiej
-        //layout.add(new TSSolverAction("graph", ???Activity.INFINITY???))//wykonaj kolejny krok alg. genetycznego
         //TODO: usunąć tą akcję testową
+        //fixme: bez jakiś magicznych 20 znikąd! Przez to są out of bounds! Nie Visualizer jest kaputt a solver się wywala...
+        //layout.add(new FirstTSSolverAction(graph));
         layout.add(new MockTSSolverAction(graph));
         layout.add(new RepaintAction());
 

@@ -2,7 +2,6 @@
 
  * Klasa reprezentująca chromosom w algorytmie ewolucyjnym
  */
-
 package pl.edu.netbeans.algorithms.genetic;
 
 import java.util.LinkedList;
@@ -24,7 +23,7 @@ public class Chromosom extends LinkedList<Integer> implements Comparable<Chromos
      *
      * @param length Ilość wezłów w grafie - długośc najdłużeszego cyklu hamiltona
      */
-    public Chromosom( int length , Graph g) {
+    public Chromosom(int length, Graph g) {
         this.graph = g;
         for (int i = 0; i < length; ++i) {
 
@@ -36,7 +35,7 @@ public class Chromosom extends LinkedList<Integer> implements Comparable<Chromos
         int length = size();
         for (int i = 0; i < length; ++i) {
             int num = generator.nextInt(length);
-            while ( indexOf(num) != -1 ) {
+            while (indexOf(num) != -1) {
                 num = generator.nextInt(length);
             }
             set(i, num);
@@ -45,33 +44,34 @@ public class Chromosom extends LinkedList<Integer> implements Comparable<Chromos
 
     public ChromosomPair crossover(Chromosom ch) throws Exception {
 
-        if ( size() != ch.size() )
+        if (size() != ch.size()) {
             throw new Exception("Niezgodnośc rozmiarów chromosomów");
+        }
 
         int length = size();
-        
+
         Chromosom child1 = new Chromosom(length, this.graph);
         Chromosom child2 = new Chromosom(length, this.graph);
 
         /*
          * TODO: jakieś randomy
          */
-        int from = (int) length/4;
-        int to = (int) 3*length/4;
+        int from = (int) length / 4;
+        int to = (int) 3 * length / 4;
 
-        for ( int i = from; i < to; ++i) {
+        for (int i = from; i < to; ++i) {
             child1.set(i, get(i));
             child2.set(i, ch.get(i));
         }
 
         int ch1pos = to;
         int ch2pos = to;
-        for ( int i = 0; i < length ; ++i) {
-            if ( child1.indexOf( ch.get(to + i) ) == -1 ) {
+        for (int i = 0; i < length; ++i) {
+            if (child1.indexOf(ch.get(to + i)) == -1) {
                 child1.set(ch1pos, ch.get(to + i));
                 ++ch1pos;
             }
-            if ( child2.indexOf( get(to + i) ) == -1 ) {
+            if (child2.indexOf(get(to + i)) == -1) {
                 child2.set(ch2pos, get(to + i));
                 ++ch2pos;
             }
@@ -85,17 +85,17 @@ public class Chromosom extends LinkedList<Integer> implements Comparable<Chromos
 
         Chromosom child = new Chromosom(length, this.graph);
 
-        for( int i = 0; i< length; ++i) {
+        for (int i = 0; i < length; ++i) {
             child.set(i, get(i));
         }
 
         //ilość zamian genów w mutacji
-        for( int i= 0; i < ( (int) length / 2 + 1 ); ++i ) {
+        for (int i = 0; i < ((int) length / 2 + 1); ++i) {
             int from = generator.nextInt(length);
             int with = from + generator.nextInt(length - 1);
 
             int tmp = child.get(from);
-            child.set( from, child.get(with));
+            child.set(from, child.get(with));
             child.set(with, tmp);
         }
 
@@ -104,18 +104,18 @@ public class Chromosom extends LinkedList<Integer> implements Comparable<Chromos
 
     @Override
     public Integer get(int i) {
-        return super.get( i % size() );
+        return super.get(i % size());
     }
 
     @Override
     public Integer set(int index, Integer element) {
-        return super.set(index % size() , element);
+        return super.set(index % size(), element);
     }
 
     @Override
     public String toString() {
-        String tmp = new String();
-        for( Integer i : this) {
+        String tmp = new String();//fixme
+        for (Integer i : this) {
             tmp += this.graph.getNode(i).get("name") + " ";
         }
         return tmp;
@@ -126,8 +126,8 @@ public class Chromosom extends LinkedList<Integer> implements Comparable<Chromos
 //    teraz funkcja uważa odległość miedzy grafami za bezwzględną róznice miedzy ich numerami, czyli najlepszy graf to 1 2 3 4 5 6 7 8 9 itd.
     public double fitness() {
         int f = 0;
-        for (int i = 0; i< size(); ++i) {
-            Edge e = this.graph.getEdge( this.graph.getEdge(i, i+1) );
+        for (int i = 0; i < size(); ++i) {
+            Edge e = this.graph.getEdge(this.graph.getEdge(i, i + 1));
             f += (Integer) e.get("weigth");
         }
         return f;
@@ -138,17 +138,11 @@ public class Chromosom extends LinkedList<Integer> implements Comparable<Chromos
     }
 
     public boolean equals(Chromosom ch) {
-        for( int i=0; i < size(); ++i) {
-            if ( get(i) != ch.get(i) ) return false;
+        for (int i = 0; i < size(); ++i) {
+            if (get(i) != ch.get(i)) {
+                return false;
+            }
         }
         return true;
     }
-
-
-
-
-
-
-    
-
 }

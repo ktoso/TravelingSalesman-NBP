@@ -25,6 +25,7 @@
             </module-dependencies>
             <public-packages>
                 <package>pl.edu.netbeans.algorithms</package>
+                <package>pl.edu.netbeans.algorithms.genetic</package>
             </public-packages>
         </data>
     </configuration>

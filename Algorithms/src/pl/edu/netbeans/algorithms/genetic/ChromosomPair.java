@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package pl.edu.netbeans.algorithms.genetic;
 
 /**
@@ -14,7 +13,7 @@ public class ChromosomPair {
     private Chromosom first;
     private Chromosom second;
 
-    public ChromosomPair( Chromosom f, Chromosom s ) {
+    public ChromosomPair(Chromosom f, Chromosom s) {
         first = f;
         second = s;
     }
@@ -26,5 +25,4 @@ public class ChromosomPair {
     public Chromosom second() {
         return second;
     }
-
 }

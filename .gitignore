@@ -1,6 +1,8 @@
-*.jnlp
-*.zip
+*~
+*.bak
+*.tmp
 *.class
-dist/
-build/
-LibsAndStuff/
+dist/*
+build/*
+*/build/*
+
