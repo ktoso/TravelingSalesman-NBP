@@ -158,25 +158,9 @@ public final class VisualizerTopComponent extends TopComponent {
     }
 
     private void initGraph() {
-        Graph graph = null;
-        try {
-            String filename = "data/sampleCityGraph.xml";
-            graph = new GraphMLReader().readGraph(filename);
-        } catch (DataIOException e) {
-            e.printStackTrace();
-            System.err.println("Error loading graph. Exiting...");
-            System.exit(1);
-        }
-
-        if (graph == null) {
-            System.err.println("NULL graph! Exiting...");
-            System.exit(1);
-        }
-
-        ////////////////////////////////////////////////////////////////////////
-        //////////////aktualizowanie listy itemów
-        ////////////////////////////////////////////////////////////////////////
-
+        //todo: usunąć na rzecz wstrzykiwanej ścieżki!!!
+        String path = "data/sampleCityGraph.xml";
+        Graph graph = loadGraph(path);
 
         // add the graph to the visualization as the data group "graph"
         // nodes and edges are accessible as "graph.nodes" and "graph.edges"
@@ -187,39 +171,29 @@ public final class VisualizerTopComponent extends TopComponent {
         ActionList layout = new ActionList(Activity.INFINITY);
         layout.add(new ForceDirectedLayout("graph", true, false));
         //TODO: zdobywać to przez opcje oraz lookup najlepiej
-        //TODO: usunąć tą akcję testową
-        //fixme: bez jakiś magicznych 20 znikąd! Przez to są out of bounds! Nie Visualizer jest kaputt a solver się wywala...
         layout.add(new FirstTSSolverAction(graph));
         //layout.add(new MockTSSolverAction(graph));
         layout.add(new RepaintAction());
 
 
-        // draw the "name" label for NodeItems
         LabelRenderer r = new LabelRenderer("name");
-        r.setRoundedCorner(8, 8); // round the corners
 
         // create a new default renderer factory
         // return our name label renderer as the default for all non-EdgeItems
         // includes straight line edges for EdgeItems by default
         vis.setRendererFactory(new DefaultRendererFactory(r));
 
-
         // create our nominal color palette
         // pink for females, baby blue for males
         int[] palette = new int[]{
-            ColorLib.rgb(255, 180, 180), ColorLib.rgb(190, 190, 255)
+            ColorLib.rgb(255, 180, 180),
+            ColorLib.rgb(190, 190, 255)
         };
-        // map nominal data values to colors using our provided palette
-//        DataColorAction fill = new DataColorAction("graph.nodes", "gender",
-//                Constants.NOMINAL, VisualItem.FILLCOLOR, palette);
-        // use black for node text
-        ColorAction text = new ColorAction("graph.nodes",
-                VisualItem.TEXTCOLOR, ColorLib.gray(0));
-        // use light grey for edges
-        ColorAction edges = new ColorAction("graph.edges",
-                VisualItem.STROKECOLOR, ColorLib.gray(200));
 
-        // create an action list containing all color assignments
+//        DataColorAction fill = new DataColorAction("graph.nodes", "gender", Constants.NOMINAL, VisualItem.FILLCOLOR, palette);
+        ColorAction text = new ColorAction("graph.nodes", VisualItem.TEXTCOLOR, ColorLib.gray(0));
+        ColorAction edges = new ColorAction("graph.edges", VisualItem.STROKECOLOR, ColorLib.gray(200));
+
         ActionList color = new ActionList();
         //color.add(fill);//////////////////////////
         color.add(text);
@@ -251,5 +225,23 @@ public final class VisualizerTopComponent extends TopComponent {
 
         revalidate();
         repaint();
+    }
+
+    private Graph loadGraph(String path) {
+        Graph graph = null;
+        try {
+            String filename = path;
+            graph = new GraphMLReader().readGraph(filename);
+        } catch (DataIOException e) {
+            e.printStackTrace();
+            System.err.println("Error loading graph. Exiting...");
+            System.exit(1);
+        }
+
+        if (graph == null) {
+            System.err.println("NULL graph! Exiting...");
+            System.exit(1);
+        }
+        return graph;
     }
 }

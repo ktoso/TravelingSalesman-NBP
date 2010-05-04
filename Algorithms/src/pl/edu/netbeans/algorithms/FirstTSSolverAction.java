@@ -18,7 +18,8 @@ public class FirstTSSolverAction extends SolverAction implements TSSolverAction 
 
     public FirstTSSolverAction(Graph graph) {
         super(graph);
-        this.population = new Population(20, graph);
+        //fixme: usunąć korzystanie z "20"!
+        this.population = new Population(graph.getNodeCount(), graph);
     }
 
     @Override
@@ -34,11 +35,11 @@ public class FirstTSSolverAction extends SolverAction implements TSSolverAction 
     }
 
     public String getHumanReadibleName() {
-        return "Mock algorytm";
+        return "Pierwszy algorytm";
     }
 
     public String getDescription() {
-        return "Tylko udaje że działa, na cele testów";
+        return "Pierwsza wersja algorytmu genetycznego";
     }
 }
 //        Może sie kiedyś przyda!

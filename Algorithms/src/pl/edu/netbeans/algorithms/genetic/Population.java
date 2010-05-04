@@ -26,14 +26,22 @@ public class Population {
      * @param g
      */
     public Population(int osobnikowPopulacji, Graph g) {
+        //FIXME: usunąć korzystanie z "20" (osobnikowPopulacji)!
         this.graph = g;
-        int dlugoscChromosomu = g.getNodeCount(); //Powinnno sie to wyliczyć z grafu
+        int dlugoscChromosomu = g.getNodeCount();
         this.osobnikowPopulacji = osobnikowPopulacji;
         for (int i = 0; i < osobnikowPopulacji; ++i) {
             pop.add(new Chromosom(dlugoscChromosomu, this.graph));
             pop.get(i).create();
         }
-        Collections.sort(this.pop);
+
+        //fixme: nie powinno nigdy do tego dochodzić, usunąć to try/catch!!
+        try{
+            Collections.sort(this.pop);
+        }catch(ArrayIndexOutOfBoundsException ex){
+            ex.printStackTrace();
+        }
+        
     }
 
     public void nextGeneration() throws Exception {

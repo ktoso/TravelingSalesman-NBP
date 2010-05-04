@@ -105,7 +105,7 @@ public final class GenerateGraphWizardAction extends CallableSystemAction {
 
         if (!cancelled) {
             String nodeCount = (String) wizardDescriptor.getProperty("nodeCount");
-            DialogDisplayer.getDefault().notify(new NotifyDescriptor.Message(nodeCount));
+            DialogDisplayer.getDefault().notify(new NotifyDescriptor.Message("Rozpoczynam generowanie " + nodeCount + " węzłów..."));
 
             doGenerateGraph(Integer.parseInt(nodeCount));//pewne iż jest integerem, przeszło walidację
         }
@@ -116,15 +116,20 @@ public final class GenerateGraphWizardAction extends CallableSystemAction {
      * Nazwy miast może pobrać z data/cities.txt
      */
     private void doGenerateGraph(int nodeCount) {
-        //write me, write me, write me, write me, write me,
-        //TODO: potencjalnie michał?
-        //write me, write me, write me, write me, write me,
-        //write me, write me, write me, write me, write me,
         Graph graph = new Graph(false);
+
+        //dodaję obsługę potrzebnych nam dodatkowych informacji
+        graph.addColumn("name", String.class);
+        graph.addColumn("weight", int.class, 1);
+
+        CityNameProvider cities = new CityNameProvider();
+
+        //TODO: progress bar?
         for (int i = 0; i < nodeCount; i++) {
-            graph.addNode();
+            graph.addNode().setString("name", cities.getRandomName());
             for (int j = 0; j < i; j++) {
                 graph.addEdge(i, j);
+                graph.getEdge(graph.getNode(i), graph.getNode(j)).setInt("weight", cities.getRandomDistance());
             }
         }
 
@@ -143,6 +148,8 @@ public final class GenerateGraphWizardAction extends CallableSystemAction {
         }
 
 
-        throw new UnsupportedOperationException("Not yet implemented");
+        DialogDisplayer.getDefault().notify(new NotifyDescriptor.Message("Zakończono generowanie węzłów..."));
+
+        //TODO: napisać otwieranie edytowa z nową symulacją
     }
 }
