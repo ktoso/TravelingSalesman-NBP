@@ -114,9 +114,15 @@ public class Chromosom extends LinkedList<Integer> implements Comparable<Chromos
 
     @Override
     public String toString() {
-        String tmp = new String();//fixme
+        String tmp = new String();
         for (Integer i : this) {
-            tmp += this.graph.getNode(i).get("name") + " ";
+            try {
+                tmp += this.graph.getNode(i).get("name") + " ";
+            }catch (ArrayIndexOutOfBoundsException ex) {
+                tmp += "null ";
+            }
+
+            
         }
         return tmp;
     }
@@ -125,10 +131,22 @@ public class Chromosom extends LinkedList<Integer> implements Comparable<Chromos
 //    powinno liczyć długość ścieżki
 //    teraz funkcja uważa odległość miedzy grafami za bezwzględną róznice miedzy ich numerami, czyli najlepszy graf to 1 2 3 4 5 6 7 8 9 itd.
     public double fitness() {
-        int f = 0;
+        double f = 0;
+        System.out.println("Chromosom fitness:");
         for (int i = 0; i < size(); ++i) {
-            Edge e = this.graph.getEdge(this.graph.getEdge(i, i + 1));
-            f += (Integer) e.get("weigth");
+            Edge e = this.graph.getEdge(this.graph.getEdge(i, (int) ( (i + 1) % size() ) ));
+            
+            if ( e == null ) {
+                e = this.graph.getEdge(this.graph.getEdge( (int) ( (i + 1) % size() ) , i) );
+            }
+
+            if ( e != null ) {
+
+                System.out.println("\t" + e.getSourceNode().getString("name") + " " + e.getTargetNode().getString("name") + " " + e.getDouble("weight") );
+                f += e.getDouble("weight");
+
+            }
+            
         }
         return f;
     }

@@ -10,7 +10,6 @@ import org.openide.windows.WindowManager;
 //import org.openide.util.ImageUtilities;
 import org.netbeans.api.settings.ConvertAsProperties;
 import pl.edu.netbeans.algorithms.FirstTSSolverAction;
-import pl.edu.netbeans.algorithms.MockTSSolverAction;
 import prefuse.Display;
 import prefuse.Visualization;
 import prefuse.action.ActionList;
@@ -190,8 +189,8 @@ public final class VisualizerTopComponent extends TopComponent {
         //TODO: zdobywać to przez opcje oraz lookup najlepiej
         //TODO: usunąć tą akcję testową
         //fixme: bez jakiś magicznych 20 znikąd! Przez to są out of bounds! Nie Visualizer jest kaputt a solver się wywala...
-        //layout.add(new FirstTSSolverAction(graph));
-        layout.add(new MockTSSolverAction(graph));
+        layout.add(new FirstTSSolverAction(graph));
+        //layout.add(new MockTSSolverAction(graph));
         layout.add(new RepaintAction());
 
 

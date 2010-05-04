@@ -27,7 +27,7 @@ public class FirstTSSolverAction extends SolverAction implements TSSolverAction 
             this.population.nextGeneration();
             Chromosom ch = this.population.getBestChromosom();
             log("Generation " + lol + ": best chromosom: " + ch + " (" + ch.fitness() + ")");
-
+            lol++;
         } catch (Exception ex) {
             log("ERROR: " + ex.getMessage());
         }
