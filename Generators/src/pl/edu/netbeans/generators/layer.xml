@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE filesystem PUBLIC "-//NetBeans//DTD Filesystem 1.2//EN" "http://www.netbeans.org/dtds/filesystem-1_2.dtd">
+<filesystem>
+    <folder name="Templates">
+        <folder name="asmFiles">
+            <file name="grafGenerator">
+                <attr name="displayName" bundlevalue="pl.edu.netbeans.generators.Bundle#Templates/asmFiles/grafGenerator"/>
+                <attr name="instantiatingIterator" newvalue="pl.edu.netbeans.generators.GrafGeneratorWizardIterator"/>
+                <attr name="template" boolvalue="true"/>
+                <attr name="templateWizardURL" urlvalue="nbresloc:/pl/edu/netbeans/generators/grafGenerator.html"/>
+            </file>
+        </folder>
+    </folder>
+</filesystem>
