@@ -1,14 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE filesystem PUBLIC "-//NetBeans//DTD Filesystem 1.2//EN" "http://www.netbeans.org/dtds/filesystem-1_2.dtd">
+<!DOCTYPE filesystem PUBLIC "-//NetBeans//DTD Filesystem 1.1//EN" "http://www.netbeans.org/dtds/filesystem-1_1.dtd">
 <filesystem>
-    <folder name="Templates">
-        <folder name="asmFiles">
-            <file name="grafGenerator">
-                <attr name="displayName" bundlevalue="pl.edu.netbeans.generators.Bundle#Templates/asmFiles/grafGenerator"/>
-                <attr name="instantiatingIterator" newvalue="pl.edu.netbeans.generators.GrafGeneratorWizardIterator"/>
-                <attr name="template" boolvalue="true"/>
-                <attr name="templateWizardURL" urlvalue="nbresloc:/pl/edu/netbeans/generators/grafGenerator.html"/>
+    <folder name="Actions">
+        <folder name="File">
+            <file name="pl-edu-netbeans-generators-GenerateGraphWizardAction.instance">
+                <attr name="delegate" newvalue="pl.edu.netbeans.generators.GenerateGraphWizardAction"/>
+                <!--<attr name="iconBase" stringvalue="org/demo/wizard/icon.png"/>-->
+                <attr name="instanceCreate" methodvalue="org.openide.awt.Actions.alwaysEnabled"/>
+                <attr name="noIconInMenu" stringvalue="false"/>
             </file>
         </folder>
     </folder>
+    <folder name="Toolbars">
+        <folder name="File">
+            <file name="pl-edu-netbeans-generators-GenerateGraphAction.shadow">
+                <attr name="originalFile" stringvalue="Actions/File/pl-edu-netbeans-generators-GenerateGraphWizardAction.instance"/>
+                <attr name="position" intvalue="0"/>
+            </file>
+        </folder>
+    </folder>
+    
 </filesystem>

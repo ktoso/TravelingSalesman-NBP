@@ -7,7 +7,7 @@ import javax.swing.event.ChangeListener;
 import org.openide.WizardDescriptor;
 import org.openide.util.HelpCtx;
 
-public class GrafGeneratorWizardPanel1 implements WizardDescriptor.Panel {
+public class GenerateGraphWizardPanel1 implements WizardDescriptor.Panel {
 
     /**
      * The visual component that displays this panel. If you need to access the
@@ -21,7 +21,7 @@ public class GrafGeneratorWizardPanel1 implements WizardDescriptor.Panel {
     // create only those which really need to be visible.
     public Component getComponent() {
         if (component == null) {
-            component = new GrafGeneratorVisualPanel1();
+            component = new GenerateGraphVisualPanel1();
         }
         return component;
     }
