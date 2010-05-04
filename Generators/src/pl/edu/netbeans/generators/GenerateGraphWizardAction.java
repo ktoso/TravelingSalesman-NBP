@@ -5,13 +5,19 @@ package pl.edu.netbeans.generators;
 import java.awt.Component;
 import java.awt.Dialog;
 import java.awt.event.ActionEvent;
+import java.io.File;
+import java.io.IOException;
 import java.text.MessageFormat;
 import javax.swing.JComponent;
 import org.openide.DialogDisplayer;
 import org.openide.NotifyDescriptor;
 import org.openide.WizardDescriptor;
+import org.openide.util.Exceptions;
 import org.openide.util.HelpCtx;
 import org.openide.util.actions.CallableSystemAction;
+import prefuse.data.Graph;
+import prefuse.data.io.DataIOException;
+import prefuse.data.io.GraphMLWriter;
 
 // An example action demonstrating how the wizard could be called from within
 // your code. You can copy-paste the code below wherever you need.
@@ -98,7 +104,7 @@ public final class GenerateGraphWizardAction extends CallableSystemAction {
         boolean cancelled = wizardDescriptor.getValue() != WizardDescriptor.FINISH_OPTION;
 
         if (!cancelled) {
-            String nodeCount  = (String) wizardDescriptor.getProperty("nodeCount");
+            String nodeCount = (String) wizardDescriptor.getProperty("nodeCount");
             DialogDisplayer.getDefault().notify(new NotifyDescriptor.Message(nodeCount));
 
             doGenerateGraph(Integer.parseInt(nodeCount));//pewne iż jest integerem, przeszło walidację
@@ -114,6 +120,29 @@ public final class GenerateGraphWizardAction extends CallableSystemAction {
         //TODO: potencjalnie michał?
         //write me, write me, write me, write me, write me,
         //write me, write me, write me, write me, write me,
+        Graph graph = new Graph(false);
+        for (int i = 0; i < nodeCount; i++) {
+            graph.addNode();
+            for (int j = 0; j < i; j++) {
+                graph.addEdge(i, j);
+            }
+        }
+
+        GraphMLWriter writer = new GraphMLWriter();
+        try {
+            File file = new File("data/" + nodeCount + "nodes.xml");
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+
+            writer.writeGraph(graph, file);
+        } catch (DataIOException ex) {
+            Exceptions.printStackTrace(ex);
+        } catch (IOException ex) {
+            Exceptions.printStackTrace(ex);
+        }
+
+
         throw new UnsupportedOperationException("Not yet implemented");
     }
 }
