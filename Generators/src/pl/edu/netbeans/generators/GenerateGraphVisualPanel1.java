@@ -3,6 +3,7 @@
 package pl.edu.netbeans.generators;
 
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 public final class GenerateGraphVisualPanel1 extends JPanel {
 
@@ -13,7 +14,11 @@ public final class GenerateGraphVisualPanel1 extends JPanel {
 
     @Override
     public String getName() {
-        return "Step #1";
+        return "Wybierz ilość wierzchołków";
+    }
+
+    public String getNodeCount() {
+        return nodeCount.getText();
     }
 
     /** This method is called from within the constructor to
@@ -24,18 +29,37 @@ public final class GenerateGraphVisualPanel1 extends JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel1 = new javax.swing.JLabel();
+        nodeCount = new javax.swing.JTextField();
+
+        org.openide.awt.Mnemonics.setLocalizedText(jLabel1, org.openide.util.NbBundle.getMessage(GenerateGraphVisualPanel1.class, "GenerateGraphVisualPanel1.jLabel1.text")); // NOI18N
+
+        nodeCount.setText(org.openide.util.NbBundle.getMessage(GenerateGraphVisualPanel1.class, "GenerateGraphVisualPanel1.nodeCount.text")); // NOI18N
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(nodeCount, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(165, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(nodeCount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(269, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JTextField nodeCount;
     // End of variables declaration//GEN-END:variables
 }
 

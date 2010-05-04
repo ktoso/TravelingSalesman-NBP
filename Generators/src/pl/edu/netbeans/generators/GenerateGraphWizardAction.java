@@ -4,9 +4,11 @@ package pl.edu.netbeans.generators;
 
 import java.awt.Component;
 import java.awt.Dialog;
+import java.awt.event.ActionEvent;
 import java.text.MessageFormat;
 import javax.swing.JComponent;
 import org.openide.DialogDisplayer;
+import org.openide.NotifyDescriptor;
 import org.openide.WizardDescriptor;
 import org.openide.util.HelpCtx;
 import org.openide.util.actions.CallableSystemAction;
@@ -82,5 +84,36 @@ public final class GenerateGraphWizardAction extends CallableSystemAction {
     @Override
     protected boolean asynchronous() {
         return false;
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        WizardDescriptor wizardDescriptor = new WizardDescriptor(getPanels());
+        // {0} will be replaced by WizardDesriptor.Panel.getComponent().getName()
+        wizardDescriptor.setTitleFormat(new MessageFormat("{0}"));
+        wizardDescriptor.setTitle("Generator Grafów");
+        Dialog dialog = DialogDisplayer.getDefault().createDialog(wizardDescriptor);
+        dialog.setVisible(true);
+        dialog.toFront();
+        boolean cancelled = wizardDescriptor.getValue() != WizardDescriptor.FINISH_OPTION;
+
+        if (!cancelled) {
+            String nodeCount  = (String) wizardDescriptor.getProperty("nodeCount");
+            DialogDisplayer.getDefault().notify(new NotifyDescriptor.Message(nodeCount));
+
+            doGenerateGraph(Integer.parseInt(nodeCount));//pewne iż jest integerem, przeszło walidację
+        }
+    }
+
+    /**
+     * Generuje oraz otwiera nowy graf o podanej licznie wierzchołków.
+     * Nazwy miast może pobrać z data/cities.txt
+     */
+    private void doGenerateGraph(int nodeCount) {
+        //write me, write me, write me, write me, write me,
+        //TODO: potencjalnie michał?
+        //write me, write me, write me, write me, write me,
+        //write me, write me, write me, write me, write me,
+        throw new UnsupportedOperationException("Not yet implemented");
     }
 }

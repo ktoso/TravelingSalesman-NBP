@@ -3,23 +3,26 @@
 package pl.edu.netbeans.generators;
 
 import java.awt.Component;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.event.ChangeListener;
 import org.openide.WizardDescriptor;
+import org.openide.WizardValidationException;
 import org.openide.util.HelpCtx;
 
-public class GenerateGraphWizardPanel1 implements WizardDescriptor.Panel {
+public class GenerateGraphWizardPanel1 implements WizardDescriptor.ValidatingPanel {
 
     /**
      * The visual component that displays this panel. If you need to access the
      * component from this class, just use getComponent().
      */
-    private Component component;
+    private GenerateGraphVisualPanel1 component;
 
     // Get the visual component for the panel. In this template, the component
     // is kept separate. This can be more efficient: if the wizard is created
     // but never displayed, or not all panels are displayed, it is better to
     // create only those which really need to be visible.
-    public Component getComponent() {
+    public GenerateGraphVisualPanel1 getComponent() {
         if (component == null) {
             component = new GenerateGraphVisualPanel1();
         }
@@ -34,7 +37,6 @@ public class GenerateGraphWizardPanel1 implements WizardDescriptor.Panel {
     }
 
     public boolean isValid() {
-        // If it is always OK to press Next or Finish, then:
         return true;
         // If it depends on some condition (form filled out...), then:
         // return someCondition();
@@ -76,10 +78,24 @@ public class GenerateGraphWizardPanel1 implements WizardDescriptor.Panel {
     // settings object will be the WizardDescriptor, so you can use
     // WizardDescriptor.getProperty & putProperty to store information entered
     // by the user.
-    public void readSettings(Object settings) {
+    public void storeSettings(Object settings) {
+        ((WizardDescriptor) settings).putProperty("nodeCount", ((GenerateGraphVisualPanel1) getComponent()).getNodeCount());
     }
 
-    public void storeSettings(Object settings) {
+    public void readSettings(Object settings) {
+//        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void validate() throws WizardValidationException {
+
+        String nodeCount = component.getNodeCount();
+        if (nodeCount.isEmpty()) {
+            throw new WizardValidationException(null, "Proszę podać liczbę wierzchołków", null);
+        }
+        if (!nodeCount.matches("\\d+")) {
+            throw new WizardValidationException(null, "Proszę podać poprawną liczbę całkowitą", null);
+        }
     }
 }
 
