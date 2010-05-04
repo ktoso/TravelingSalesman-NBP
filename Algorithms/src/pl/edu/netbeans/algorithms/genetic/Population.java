@@ -27,7 +27,7 @@ public class Population {
      */
     public Population(int osobnikowPopulacji, Graph g) {
         this.graph = g;
-        int dlugoscChromosomu = 20; //Powinnno sie to wyliczyć z grafu
+        int dlugoscChromosomu = g.getNodeCount(); //Powinnno sie to wyliczyć z grafu
         this.osobnikowPopulacji = osobnikowPopulacji;
         for (int i = 0; i < osobnikowPopulacji; ++i) {
             pop.add(new Chromosom(dlugoscChromosomu, this.graph));
