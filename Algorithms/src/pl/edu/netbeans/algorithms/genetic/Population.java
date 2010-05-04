@@ -31,11 +31,12 @@ public class Population {
             pop.add( new Chromosom(nodesnumber, this.graph));
             pop.get(i).create();
         }
+        Collections.sort(this.pop);
     }
 
     public void nextGeneration() throws Exception {
         LinkedList<Chromosom> newPop = new LinkedList<Chromosom>();
-        Collections.sort(this.pop);
+        
         
         for( int i=0; i < this.pop.size() / 2 ; ++i ) {
             ChromosomPair childern = pop.get(i).crossover( pop.get(generator.nextInt(this.pop.size())) );
@@ -52,10 +53,15 @@ public class Population {
         }
 
         this.pop = newPop;
+        Collections.sort(this.pop);
         
-        System.out.println("Best: " + pop.getFirst() );
-        System.out.println(" Fitness: " + pop.getFirst().fitness() );
+//        System.out.println("Best: " + pop.getFirst() );
+//        System.out.println(" Fitness: " + pop.getFirst().fitness() );
 
+    }
+
+    public Chromosom getBestChromosom() {
+        return pop.getFirst();
     }
 
     private boolean getBoolean(int percent) {

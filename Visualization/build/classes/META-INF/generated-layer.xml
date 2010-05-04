@@ -4,16 +4,11 @@
     <folder name="xml">
         <folder name="entities">
             <folder name="pl_edu_netbeans_visualization">
-                <file name="NodeList" url="nbres:/org/netbeans/modules/settings/resources/properties-1_0.dtd">
-                    <attr name="hint.originalPublicID" stringvalue="-//pl.edu.netbeans.visualization//NodeList//EN"/>
-                </file>
                 <file name="Visualizer" url="nbres:/org/netbeans/modules/settings/resources/properties-1_0.dtd">
                     <attr name="hint.originalPublicID" stringvalue="-//pl.edu.netbeans.visualization//Visualizer//EN"/>
                 </file>
-            </folder>
-            <folder name="pl_project13_visualization">
-                <file name="Visualizer" url="nbres:/org/netbeans/modules/settings/resources/properties-1_0.dtd">
-                    <attr name="hint.originalPublicID" stringvalue="-//pl.project13.visualization//Visualizer//EN"/>
+                <file name="NodeList" url="nbres:/org/netbeans/modules/settings/resources/properties-1_0.dtd">
+                    <attr name="hint.originalPublicID" stringvalue="-//pl.edu.netbeans.visualization//NodeList//EN"/>
                 </file>
             </folder>
         </folder>
@@ -22,33 +17,19 @@
                 <folder name="edu">
                     <folder name="netbeans">
                         <folder name="visualization">
-                            <file name="NodeListTopComponent">
-                                <attr name="settings.providerPath" stringvalue="xml/lookups//pl_edu_netbeans_visualization/NodeList.instance"/>
-                            </file>
                             <file name="VisualizerTopComponent">
                                 <attr name="settings.providerPath" stringvalue="xml/lookups//pl_edu_netbeans_visualization/Visualizer.instance"/>
                             </file>
+                            <file name="NodeListTopComponent">
+                                <attr name="settings.providerPath" stringvalue="xml/lookups//pl_edu_netbeans_visualization/NodeList.instance"/>
+                            </file>
                         </folder>
-                    </folder>
-                </folder>
-                <folder name="project13">
-                    <folder name="visualization">
-                        <file name="VisualizerTopComponent">
-                            <attr name="settings.providerPath" stringvalue="xml/lookups//pl_project13_visualization/Visualizer.instance"/>
-                        </file>
                     </folder>
                 </folder>
             </folder>
         </folder>
         <folder name="lookups">
             <folder name="pl_edu_netbeans_visualization">
-                <file name="NodeList.instance">
-                    <attr methodvalue="org.netbeans.api.settings.Factory.create" name="instanceCreate"/>
-                    <attr methodvalue="org.netbeans.api.settings.Factory.properties" name="settings.convertor"/>
-                    <attr name="settings.instanceClass" stringvalue="pl.edu.netbeans.visualization.NodeListTopComponent"/>
-                    <attr name="settings.instanceOf" stringvalue="pl.edu.netbeans.visualization.NodeListTopComponent"/>
-                    <attr boolvalue="true" name="xmlproperties.preventStoring"/>
-                </file>
                 <file name="Visualizer.instance">
                     <attr methodvalue="org.netbeans.api.settings.Factory.create" name="instanceCreate"/>
                     <attr methodvalue="org.netbeans.api.settings.Factory.properties" name="settings.convertor"/>
@@ -56,13 +37,11 @@
                     <attr name="settings.instanceOf" stringvalue="pl.edu.netbeans.visualization.VisualizerTopComponent"/>
                     <attr boolvalue="true" name="xmlproperties.preventStoring"/>
                 </file>
-            </folder>
-            <folder name="pl_project13_visualization">
-                <file name="Visualizer.instance">
+                <file name="NodeList.instance">
                     <attr methodvalue="org.netbeans.api.settings.Factory.create" name="instanceCreate"/>
                     <attr methodvalue="org.netbeans.api.settings.Factory.properties" name="settings.convertor"/>
-                    <attr name="settings.instanceClass" stringvalue="pl.project13.visualization.VisualizerTopComponent"/>
-                    <attr name="settings.instanceOf" stringvalue="pl.project13.visualization.VisualizerTopComponent"/>
+                    <attr name="settings.instanceClass" stringvalue="pl.edu.netbeans.visualization.NodeListTopComponent"/>
+                    <attr name="settings.instanceOf" stringvalue="pl.edu.netbeans.visualization.NodeListTopComponent"/>
                     <attr boolvalue="true" name="xmlproperties.preventStoring"/>
                 </file>
             </folder>

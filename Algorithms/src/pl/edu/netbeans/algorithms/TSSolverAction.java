@@ -4,7 +4,7 @@
 package pl.edu.netbeans.algorithms;
 
 /**
- * <strong>An TSSolverAction implementation MUST also extend prefuse.action.Action</stron>
+ * <strong>An TSSolverAction implementation MUST also extend prefuse.action.Action</strong>
  * A common interface to mars classes that are able to SOLVE the Traveling Salesman Problem<br/>
  * @author ktoso
  */

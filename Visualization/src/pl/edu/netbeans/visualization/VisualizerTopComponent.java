@@ -167,6 +167,7 @@ public final class VisualizerTopComponent extends TopComponent {
     }
 
     private void initGraph() {
+        System.out.println("    !!!!!!!!!!! ECHO !!!!!!!!!!!!!!!!");
         Graph graph = null;
         try {
             String filename = "data/sampleCityGraph.xml";

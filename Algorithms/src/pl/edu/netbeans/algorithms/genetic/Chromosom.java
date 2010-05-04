@@ -116,7 +116,7 @@ public class Chromosom extends LinkedList<Integer> implements Comparable<Chromos
     public String toString() {
         String tmp = new String();
         for( Integer i : this) {
-            tmp += i.toString() + " ";
+            tmp += this.graph.getNode(i).get("name") + " ";
         }
         return tmp;
     }
