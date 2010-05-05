@@ -15,11 +15,12 @@ public class FirstTSSolverAction extends SolverAction implements TSSolverAction 
 
     private final Population population;
     private int lol = 0;
+    private int iloscOsobnikow = 50;
 
     public FirstTSSolverAction(Graph graph) {
         super(graph);
         //fixme: usunąć korzystanie z "20"!
-        this.population = new Population(graph.getNodeCount(), graph);
+        this.population = new Population(iloscOsobnikow, graph);
     }
 
     @Override

@@ -26,7 +26,6 @@ public class Population {
      * @param g
      */
     public Population(int osobnikowPopulacji, Graph g) {
-        //FIXME: usunąć korzystanie z "20" (osobnikowPopulacji)!
         this.graph = g;
         int dlugoscChromosomu = g.getNodeCount();
         this.osobnikowPopulacji = osobnikowPopulacji;
@@ -46,10 +45,11 @@ public class Population {
 
     public void nextGeneration() throws Exception {
         LinkedList<Chromosom> newPop = new LinkedList<Chromosom>();
+        int halfsize = (int) (this.pop.size() / 2);
 
-
-        for (int i = 0; i < this.pop.size() / 2; ++i) {
-            ChromosomPair childern = pop.get(i).crossover(pop.get(generator.nextInt(this.pop.size())));
+        for (int i = 0; i < halfsize; ++i) {
+            //krzyżuj pierwszą połowę osobników z losowym osobnikiem z grupiej połowy
+            ChromosomPair childern = pop.get(i).crossover(pop.get(halfsize + generator.nextInt(this.pop.size() - halfsize)));
             Chromosom ch1 = childern.first();
             Chromosom ch2 = childern.second();
             if (getBoolean(70)) {
@@ -62,8 +62,39 @@ public class Population {
 
         }
 
-        this.pop = newPop;
         Collections.sort(this.pop);
+        Collections.sort(newPop);
+
+//        double oldAvgFitness = 0;
+//        double newAvgFitness = 0;
+//
+//        for( Chromosom ch : this.pop ) {
+//            oldAvgFitness += 1/ch.fitness();
+//        }
+//        oldAvgFitness = this.pop.size()/oldAvgFitness;
+//
+//        for( Chromosom ch : newPop ) {
+//            newAvgFitness += 1/ch.fitness();
+//        }
+//        newAvgFitness = newPop.size()/newAvgFitness;
+//
+//        if (newAvgFitness < oldAvgFitness) {
+//            this.pop = newPop;
+//        }
+
+
+//        this.pop = newPop;
+
+        if ( this.pop.getFirst().fitness() > newPop.getFirst().fitness() ) {
+            this.pop = newPop;
+        }
+
+        
+        
+        System.out.println("Populacja: ");
+        for( Chromosom ch : this.pop ) {
+            System.out.println("\t" + ch.fitness() + ": " + ch);
+        }
 
 //        System.out.println("Best: " + pop.getFirst() );
 //        System.out.println(" Fitness: " + pop.getFirst().fitness() );

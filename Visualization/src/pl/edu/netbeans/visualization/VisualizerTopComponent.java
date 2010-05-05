@@ -159,7 +159,7 @@ public final class VisualizerTopComponent extends TopComponent {
 
     private void initGraph() {
         //todo: usunąć na rzecz wstrzykiwanej ścieżki!!!
-        String path = "data/sampleCityGraph.xml";
+        String path = "data/12nodes.xml";
         Graph graph = loadGraph(path);
 
         // add the graph to the visualization as the data group "graph"

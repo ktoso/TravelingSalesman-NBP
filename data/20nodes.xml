@@ -1,0 +1,862 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns
+  http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd">
+
+  <!-- prefuse GraphML Writer | Wed May 05 02:56:26 CEST 2010 -->
+  <key id="name" for="node" attr.name="name" attr.type="string"/>
+  <key id="weight" for="node" attr.name="weight" attr.type="int">
+    <default>1</default>
+  </key>
+  <key id="name" for="edge" attr.name="name" attr.type="string"/>
+  <key id="weight" for="edge" attr.name="weight" attr.type="int">
+    <default>1</default>
+  </key>
+
+  <graph edgedefault="undirected">
+    <!-- nodes -->
+    <node id="0">
+      <data key="name">P&#322;o&#324;sk</data>
+      <data key="weight">1</data>
+    </node>
+    <node id="1">
+      <data key="name">&#321;och&#243;w</data>
+      <data key="weight">1</data>
+    </node>
+    <node id="2">
+      <data key="name">Tychy</data>
+      <data key="weight">1</data>
+    </node>
+    <node id="3">
+      <data key="name">Jasie&#324;</data>
+      <data key="weight">1</data>
+    </node>
+    <node id="4">
+      <data key="name">Stoczek &#321;ukowski</data>
+      <data key="weight">1</data>
+    </node>
+    <node id="5">
+      <data key="name">Strzelce Opolskie</data>
+      <data key="weight">1</data>
+    </node>
+    <node id="6">
+      <data key="name">Kolonowskie</data>
+      <data key="weight">1</data>
+    </node>
+    <node id="7">
+      <data key="name">Radzy&#324; Podlaski</data>
+      <data key="weight">1</data>
+    </node>
+    <node id="8">
+      <data key="name">Radzy&#324; Podlaski</data>
+      <data key="weight">1</data>
+    </node>
+    <node id="9">
+      <data key="name">Gorz&#243;w Wielkopolski</data>
+      <data key="weight">1</data>
+    </node>
+    <node id="10">
+      <data key="name">&#346;cinawa</data>
+      <data key="weight">1</data>
+    </node>
+    <node id="11">
+      <data key="name">Barcin</data>
+      <data key="weight">1</data>
+    </node>
+    <node id="12">
+      <data key="name">Wilamowice</data>
+      <data key="weight">1</data>
+    </node>
+    <node id="13">
+      <data key="name">Rumia</data>
+      <data key="weight">1</data>
+    </node>
+    <node id="14">
+      <data key="name">Mi&#281;dzyzdroje</data>
+      <data key="weight">1</data>
+    </node>
+    <node id="15">
+      <data key="name">&#321;aziska G&#243;rne</data>
+      <data key="weight">1</data>
+    </node>
+    <node id="16">
+      <data key="name">Zawid&#243;w</data>
+      <data key="weight">1</data>
+    </node>
+    <node id="17">
+      <data key="name">Czarna Woda</data>
+      <data key="weight">1</data>
+    </node>
+    <node id="18">
+      <data key="name">Zambr&#243;w</data>
+      <data key="weight">1</data>
+    </node>
+    <node id="19">
+      <data key="name">Frampol</data>
+      <data key="weight">1</data>
+    </node>
+
+    <!-- edges -->
+    <edge id="0" source="1" target="0">
+      <data key="name">null</data>
+      <data key="weight">5</data>
+    </edge>
+    <edge id="1" source="2" target="0">
+      <data key="name">null</data>
+      <data key="weight">6</data>
+    </edge>
+    <edge id="2" source="2" target="1">
+      <data key="name">null</data>
+      <data key="weight">3</data>
+    </edge>
+    <edge id="3" source="3" target="0">
+      <data key="name">null</data>
+      <data key="weight">5</data>
+    </edge>
+    <edge id="4" source="3" target="1">
+      <data key="name">null</data>
+      <data key="weight">1</data>
+    </edge>
+    <edge id="5" source="3" target="2">
+      <data key="name">null</data>
+      <data key="weight">8</data>
+    </edge>
+    <edge id="6" source="4" target="0">
+      <data key="name">null</data>
+      <data key="weight">1</data>
+    </edge>
+    <edge id="7" source="4" target="1">
+      <data key="name">null</data>
+      <data key="weight">9</data>
+    </edge>
+    <edge id="8" source="4" target="2">
+      <data key="name">null</data>
+      <data key="weight">7</data>
+    </edge>
+    <edge id="9" source="4" target="3">
+      <data key="name">null</data>
+      <data key="weight">9</data>
+    </edge>
+    <edge id="10" source="5" target="0">
+      <data key="name">null</data>
+      <data key="weight">9</data>
+    </edge>
+    <edge id="11" source="5" target="1">
+      <data key="name">null</data>
+      <data key="weight">6</data>
+    </edge>
+    <edge id="12" source="5" target="2">
+      <data key="name">null</data>
+      <data key="weight">5</data>
+    </edge>
+    <edge id="13" source="5" target="3">
+      <data key="name">null</data>
+      <data key="weight">8</data>
+    </edge>
+    <edge id="14" source="5" target="4">
+      <data key="name">null</data>
+      <data key="weight">10</data>
+    </edge>
+    <edge id="15" source="6" target="0">
+      <data key="name">null</data>
+      <data key="weight">10</data>
+    </edge>
+    <edge id="16" source="6" target="1">
+      <data key="name">null</data>
+      <data key="weight">8</data>
+    </edge>
+    <edge id="17" source="6" target="2">
+      <data key="name">null</data>
+      <data key="weight">3</data>
+    </edge>
+    <edge id="18" source="6" target="3">
+      <data key="name">null</data>
+      <data key="weight">4</data>
+    </edge>
+    <edge id="19" source="6" target="4">
+      <data key="name">null</data>
+      <data key="weight">8</data>
+    </edge>
+    <edge id="20" source="6" target="5">
+      <data key="name">null</data>
+      <data key="weight">6</data>
+    </edge>
+    <edge id="21" source="7" target="0">
+      <data key="name">null</data>
+      <data key="weight">3</data>
+    </edge>
+    <edge id="22" source="7" target="1">
+      <data key="name">null</data>
+      <data key="weight">1</data>
+    </edge>
+    <edge id="23" source="7" target="2">
+      <data key="name">null</data>
+      <data key="weight">4</data>
+    </edge>
+    <edge id="24" source="7" target="3">
+      <data key="name">null</data>
+      <data key="weight">5</data>
+    </edge>
+    <edge id="25" source="7" target="4">
+      <data key="name">null</data>
+      <data key="weight">2</data>
+    </edge>
+    <edge id="26" source="7" target="5">
+      <data key="name">null</data>
+      <data key="weight">7</data>
+    </edge>
+    <edge id="27" source="7" target="6">
+      <data key="name">null</data>
+      <data key="weight">6</data>
+    </edge>
+    <edge id="28" source="8" target="0">
+      <data key="name">null</data>
+      <data key="weight">1</data>
+    </edge>
+    <edge id="29" source="8" target="1">
+      <data key="name">null</data>
+      <data key="weight">10</data>
+    </edge>
+    <edge id="30" source="8" target="2">
+      <data key="name">null</data>
+      <data key="weight">1</data>
+    </edge>
+    <edge id="31" source="8" target="3">
+      <data key="name">null</data>
+      <data key="weight">5</data>
+    </edge>
+    <edge id="32" source="8" target="4">
+      <data key="name">null</data>
+      <data key="weight">5</data>
+    </edge>
+    <edge id="33" source="8" target="5">
+      <data key="name">null</data>
+      <data key="weight">1</data>
+    </edge>
+    <edge id="34" source="8" target="6">
+      <data key="name">null</data>
+      <data key="weight">10</data>
+    </edge>
+    <edge id="35" source="8" target="7">
+      <data key="name">null</data>
+      <data key="weight">10</data>
+    </edge>
+    <edge id="36" source="9" target="0">
+      <data key="name">null</data>
+      <data key="weight">2</data>
+    </edge>
+    <edge id="37" source="9" target="1">
+      <data key="name">null</data>
+      <data key="weight">10</data>
+    </edge>
+    <edge id="38" source="9" target="2">
+      <data key="name">null</data>
+      <data key="weight">3</data>
+    </edge>
+    <edge id="39" source="9" target="3">
+      <data key="name">null</data>
+      <data key="weight">7</data>
+    </edge>
+    <edge id="40" source="9" target="4">
+      <data key="name">null</data>
+      <data key="weight">3</data>
+    </edge>
+    <edge id="41" source="9" target="5">
+      <data key="name">null</data>
+      <data key="weight">8</data>
+    </edge>
+    <edge id="42" source="9" target="6">
+      <data key="name">null</data>
+      <data key="weight">9</data>
+    </edge>
+    <edge id="43" source="9" target="7">
+      <data key="name">null</data>
+      <data key="weight">5</data>
+    </edge>
+    <edge id="44" source="9" target="8">
+      <data key="name">null</data>
+      <data key="weight">6</data>
+    </edge>
+    <edge id="45" source="10" target="0">
+      <data key="name">null</data>
+      <data key="weight">9</data>
+    </edge>
+    <edge id="46" source="10" target="1">
+      <data key="name">null</data>
+      <data key="weight">10</data>
+    </edge>
+    <edge id="47" source="10" target="2">
+      <data key="name">null</data>
+      <data key="weight">7</data>
+    </edge>
+    <edge id="48" source="10" target="3">
+      <data key="name">null</data>
+      <data key="weight">3</data>
+    </edge>
+    <edge id="49" source="10" target="4">
+      <data key="name">null</data>
+      <data key="weight">7</data>
+    </edge>
+    <edge id="50" source="10" target="5">
+      <data key="name">null</data>
+      <data key="weight">10</data>
+    </edge>
+    <edge id="51" source="10" target="6">
+      <data key="name">null</data>
+      <data key="weight">8</data>
+    </edge>
+    <edge id="52" source="10" target="7">
+      <data key="name">null</data>
+      <data key="weight">6</data>
+    </edge>
+    <edge id="53" source="10" target="8">
+      <data key="name">null</data>
+      <data key="weight">10</data>
+    </edge>
+    <edge id="54" source="10" target="9">
+      <data key="name">null</data>
+      <data key="weight">1</data>
+    </edge>
+    <edge id="55" source="11" target="0">
+      <data key="name">null</data>
+      <data key="weight">10</data>
+    </edge>
+    <edge id="56" source="11" target="1">
+      <data key="name">null</data>
+      <data key="weight">5</data>
+    </edge>
+    <edge id="57" source="11" target="2">
+      <data key="name">null</data>
+      <data key="weight">4</data>
+    </edge>
+    <edge id="58" source="11" target="3">
+      <data key="name">null</data>
+      <data key="weight">7</data>
+    </edge>
+    <edge id="59" source="11" target="4">
+      <data key="name">null</data>
+      <data key="weight">3</data>
+    </edge>
+    <edge id="60" source="11" target="5">
+      <data key="name">null</data>
+      <data key="weight">3</data>
+    </edge>
+    <edge id="61" source="11" target="6">
+      <data key="name">null</data>
+      <data key="weight">8</data>
+    </edge>
+    <edge id="62" source="11" target="7">
+      <data key="name">null</data>
+      <data key="weight">8</data>
+    </edge>
+    <edge id="63" source="11" target="8">
+      <data key="name">null</data>
+      <data key="weight">5</data>
+    </edge>
+    <edge id="64" source="11" target="9">
+      <data key="name">null</data>
+      <data key="weight">8</data>
+    </edge>
+    <edge id="65" source="11" target="10">
+      <data key="name">null</data>
+      <data key="weight">5</data>
+    </edge>
+    <edge id="66" source="12" target="0">
+      <data key="name">null</data>
+      <data key="weight">7</data>
+    </edge>
+    <edge id="67" source="12" target="1">
+      <data key="name">null</data>
+      <data key="weight">8</data>
+    </edge>
+    <edge id="68" source="12" target="2">
+      <data key="name">null</data>
+      <data key="weight">1</data>
+    </edge>
+    <edge id="69" source="12" target="3">
+      <data key="name">null</data>
+      <data key="weight">1</data>
+    </edge>
+    <edge id="70" source="12" target="4">
+      <data key="name">null</data>
+      <data key="weight">8</data>
+    </edge>
+    <edge id="71" source="12" target="5">
+      <data key="name">null</data>
+      <data key="weight">8</data>
+    </edge>
+    <edge id="72" source="12" target="6">
+      <data key="name">null</data>
+      <data key="weight">8</data>
+    </edge>
+    <edge id="73" source="12" target="7">
+      <data key="name">null</data>
+      <data key="weight">1</data>
+    </edge>
+    <edge id="74" source="12" target="8">
+      <data key="name">null</data>
+      <data key="weight">3</data>
+    </edge>
+    <edge id="75" source="12" target="9">
+      <data key="name">null</data>
+      <data key="weight">2</data>
+    </edge>
+    <edge id="76" source="12" target="10">
+      <data key="name">null</data>
+      <data key="weight">6</data>
+    </edge>
+    <edge id="77" source="12" target="11">
+      <data key="name">null</data>
+      <data key="weight">6</data>
+    </edge>
+    <edge id="78" source="13" target="0">
+      <data key="name">null</data>
+      <data key="weight">2</data>
+    </edge>
+    <edge id="79" source="13" target="1">
+      <data key="name">null</data>
+      <data key="weight">2</data>
+    </edge>
+    <edge id="80" source="13" target="2">
+      <data key="name">null</data>
+      <data key="weight">4</data>
+    </edge>
+    <edge id="81" source="13" target="3">
+      <data key="name">null</data>
+      <data key="weight">4</data>
+    </edge>
+    <edge id="82" source="13" target="4">
+      <data key="name">null</data>
+      <data key="weight">4</data>
+    </edge>
+    <edge id="83" source="13" target="5">
+      <data key="name">null</data>
+      <data key="weight">1</data>
+    </edge>
+    <edge id="84" source="13" target="6">
+      <data key="name">null</data>
+      <data key="weight">8</data>
+    </edge>
+    <edge id="85" source="13" target="7">
+      <data key="name">null</data>
+      <data key="weight">8</data>
+    </edge>
+    <edge id="86" source="13" target="8">
+      <data key="name">null</data>
+      <data key="weight">2</data>
+    </edge>
+    <edge id="87" source="13" target="9">
+      <data key="name">null</data>
+      <data key="weight">9</data>
+    </edge>
+    <edge id="88" source="13" target="10">
+      <data key="name">null</data>
+      <data key="weight">5</data>
+    </edge>
+    <edge id="89" source="13" target="11">
+      <data key="name">null</data>
+      <data key="weight">1</data>
+    </edge>
+    <edge id="90" source="13" target="12">
+      <data key="name">null</data>
+      <data key="weight">1</data>
+    </edge>
+    <edge id="91" source="14" target="0">
+      <data key="name">null</data>
+      <data key="weight">8</data>
+    </edge>
+    <edge id="92" source="14" target="1">
+      <data key="name">null</data>
+      <data key="weight">9</data>
+    </edge>
+    <edge id="93" source="14" target="2">
+      <data key="name">null</data>
+      <data key="weight">8</data>
+    </edge>
+    <edge id="94" source="14" target="3">
+      <data key="name">null</data>
+      <data key="weight">5</data>
+    </edge>
+    <edge id="95" source="14" target="4">
+      <data key="name">null</data>
+      <data key="weight">7</data>
+    </edge>
+    <edge id="96" source="14" target="5">
+      <data key="name">null</data>
+      <data key="weight">7</data>
+    </edge>
+    <edge id="97" source="14" target="6">
+      <data key="name">null</data>
+      <data key="weight">4</data>
+    </edge>
+    <edge id="98" source="14" target="7">
+      <data key="name">null</data>
+      <data key="weight">9</data>
+    </edge>
+    <edge id="99" source="14" target="8">
+      <data key="name">null</data>
+      <data key="weight">9</data>
+    </edge>
+    <edge id="100" source="14" target="9">
+      <data key="name">null</data>
+      <data key="weight">4</data>
+    </edge>
+    <edge id="101" source="14" target="10">
+      <data key="name">null</data>
+      <data key="weight">4</data>
+    </edge>
+    <edge id="102" source="14" target="11">
+      <data key="name">null</data>
+      <data key="weight">10</data>
+    </edge>
+    <edge id="103" source="14" target="12">
+      <data key="name">null</data>
+      <data key="weight">2</data>
+    </edge>
+    <edge id="104" source="14" target="13">
+      <data key="name">null</data>
+      <data key="weight">2</data>
+    </edge>
+    <edge id="105" source="15" target="0">
+      <data key="name">null</data>
+      <data key="weight">1</data>
+    </edge>
+    <edge id="106" source="15" target="1">
+      <data key="name">null</data>
+      <data key="weight">7</data>
+    </edge>
+    <edge id="107" source="15" target="2">
+      <data key="name">null</data>
+      <data key="weight">4</data>
+    </edge>
+    <edge id="108" source="15" target="3">
+      <data key="name">null</data>
+      <data key="weight">8</data>
+    </edge>
+    <edge id="109" source="15" target="4">
+      <data key="name">null</data>
+      <data key="weight">3</data>
+    </edge>
+    <edge id="110" source="15" target="5">
+      <data key="name">null</data>
+      <data key="weight">5</data>
+    </edge>
+    <edge id="111" source="15" target="6">
+      <data key="name">null</data>
+      <data key="weight">9</data>
+    </edge>
+    <edge id="112" source="15" target="7">
+      <data key="name">null</data>
+      <data key="weight">7</data>
+    </edge>
+    <edge id="113" source="15" target="8">
+      <data key="name">null</data>
+      <data key="weight">4</data>
+    </edge>
+    <edge id="114" source="15" target="9">
+      <data key="name">null</data>
+      <data key="weight">9</data>
+    </edge>
+    <edge id="115" source="15" target="10">
+      <data key="name">null</data>
+      <data key="weight">2</data>
+    </edge>
+    <edge id="116" source="15" target="11">
+      <data key="name">null</data>
+      <data key="weight">5</data>
+    </edge>
+    <edge id="117" source="15" target="12">
+      <data key="name">null</data>
+      <data key="weight">6</data>
+    </edge>
+    <edge id="118" source="15" target="13">
+      <data key="name">null</data>
+      <data key="weight">5</data>
+    </edge>
+    <edge id="119" source="15" target="14">
+      <data key="name">null</data>
+      <data key="weight">7</data>
+    </edge>
+    <edge id="120" source="16" target="0">
+      <data key="name">null</data>
+      <data key="weight">2</data>
+    </edge>
+    <edge id="121" source="16" target="1">
+      <data key="name">null</data>
+      <data key="weight">5</data>
+    </edge>
+    <edge id="122" source="16" target="2">
+      <data key="name">null</data>
+      <data key="weight">10</data>
+    </edge>
+    <edge id="123" source="16" target="3">
+      <data key="name">null</data>
+      <data key="weight">9</data>
+    </edge>
+    <edge id="124" source="16" target="4">
+      <data key="name">null</data>
+      <data key="weight">3</data>
+    </edge>
+    <edge id="125" source="16" target="5">
+      <data key="name">null</data>
+      <data key="weight">6</data>
+    </edge>
+    <edge id="126" source="16" target="6">
+      <data key="name">null</data>
+      <data key="weight">10</data>
+    </edge>
+    <edge id="127" source="16" target="7">
+      <data key="name">null</data>
+      <data key="weight">1</data>
+    </edge>
+    <edge id="128" source="16" target="8">
+      <data key="name">null</data>
+      <data key="weight">8</data>
+    </edge>
+    <edge id="129" source="16" target="9">
+      <data key="name">null</data>
+      <data key="weight">1</data>
+    </edge>
+    <edge id="130" source="16" target="10">
+      <data key="name">null</data>
+      <data key="weight">10</data>
+    </edge>
+    <edge id="131" source="16" target="11">
+      <data key="name">null</data>
+      <data key="weight">2</data>
+    </edge>
+    <edge id="132" source="16" target="12">
+      <data key="name">null</data>
+      <data key="weight">8</data>
+    </edge>
+    <edge id="133" source="16" target="13">
+      <data key="name">null</data>
+      <data key="weight">1</data>
+    </edge>
+    <edge id="134" source="16" target="14">
+      <data key="name">null</data>
+      <data key="weight">4</data>
+    </edge>
+    <edge id="135" source="16" target="15">
+      <data key="name">null</data>
+      <data key="weight">8</data>
+    </edge>
+    <edge id="136" source="17" target="0">
+      <data key="name">null</data>
+      <data key="weight">9</data>
+    </edge>
+    <edge id="137" source="17" target="1">
+      <data key="name">null</data>
+      <data key="weight">4</data>
+    </edge>
+    <edge id="138" source="17" target="2">
+      <data key="name">null</data>
+      <data key="weight">7</data>
+    </edge>
+    <edge id="139" source="17" target="3">
+      <data key="name">null</data>
+      <data key="weight">10</data>
+    </edge>
+    <edge id="140" source="17" target="4">
+      <data key="name">null</data>
+      <data key="weight">9</data>
+    </edge>
+    <edge id="141" source="17" target="5">
+      <data key="name">null</data>
+      <data key="weight">5</data>
+    </edge>
+    <edge id="142" source="17" target="6">
+      <data key="name">null</data>
+      <data key="weight">7</data>
+    </edge>
+    <edge id="143" source="17" target="7">
+      <data key="name">null</data>
+      <data key="weight">1</data>
+    </edge>
+    <edge id="144" source="17" target="8">
+      <data key="name">null</data>
+      <data key="weight">9</data>
+    </edge>
+    <edge id="145" source="17" target="9">
+      <data key="name">null</data>
+      <data key="weight">9</data>
+    </edge>
+    <edge id="146" source="17" target="10">
+      <data key="name">null</data>
+      <data key="weight">1</data>
+    </edge>
+    <edge id="147" source="17" target="11">
+      <data key="name">null</data>
+      <data key="weight">6</data>
+    </edge>
+    <edge id="148" source="17" target="12">
+      <data key="name">null</data>
+      <data key="weight">2</data>
+    </edge>
+    <edge id="149" source="17" target="13">
+      <data key="name">null</data>
+      <data key="weight">9</data>
+    </edge>
+    <edge id="150" source="17" target="14">
+      <data key="name">null</data>
+      <data key="weight">10</data>
+    </edge>
+    <edge id="151" source="17" target="15">
+      <data key="name">null</data>
+      <data key="weight">2</data>
+    </edge>
+    <edge id="152" source="17" target="16">
+      <data key="name">null</data>
+      <data key="weight">9</data>
+    </edge>
+    <edge id="153" source="18" target="0">
+      <data key="name">null</data>
+      <data key="weight">4</data>
+    </edge>
+    <edge id="154" source="18" target="1">
+      <data key="name">null</data>
+      <data key="weight">6</data>
+    </edge>
+    <edge id="155" source="18" target="2">
+      <data key="name">null</data>
+      <data key="weight">9</data>
+    </edge>
+    <edge id="156" source="18" target="3">
+      <data key="name">null</data>
+      <data key="weight">10</data>
+    </edge>
+    <edge id="157" source="18" target="4">
+      <data key="name">null</data>
+      <data key="weight">3</data>
+    </edge>
+    <edge id="158" source="18" target="5">
+      <data key="name">null</data>
+      <data key="weight">6</data>
+    </edge>
+    <edge id="159" source="18" target="6">
+      <data key="name">null</data>
+      <data key="weight">6</data>
+    </edge>
+    <edge id="160" source="18" target="7">
+      <data key="name">null</data>
+      <data key="weight">2</data>
+    </edge>
+    <edge id="161" source="18" target="8">
+      <data key="name">null</data>
+      <data key="weight">2</data>
+    </edge>
+    <edge id="162" source="18" target="9">
+      <data key="name">null</data>
+      <data key="weight">9</data>
+    </edge>
+    <edge id="163" source="18" target="10">
+      <data key="name">null</data>
+      <data key="weight">4</data>
+    </edge>
+    <edge id="164" source="18" target="11">
+      <data key="name">null</data>
+      <data key="weight">8</data>
+    </edge>
+    <edge id="165" source="18" target="12">
+      <data key="name">null</data>
+      <data key="weight">7</data>
+    </edge>
+    <edge id="166" source="18" target="13">
+      <data key="name">null</data>
+      <data key="weight">3</data>
+    </edge>
+    <edge id="167" source="18" target="14">
+      <data key="name">null</data>
+      <data key="weight">1</data>
+    </edge>
+    <edge id="168" source="18" target="15">
+      <data key="name">null</data>
+      <data key="weight">9</data>
+    </edge>
+    <edge id="169" source="18" target="16">
+      <data key="name">null</data>
+      <data key="weight">6</data>
+    </edge>
+    <edge id="170" source="18" target="17">
+      <data key="name">null</data>
+      <data key="weight">1</data>
+    </edge>
+    <edge id="171" source="19" target="0">
+      <data key="name">null</data>
+      <data key="weight">9</data>
+    </edge>
+    <edge id="172" source="19" target="1">
+      <data key="name">null</data>
+      <data key="weight">8</data>
+    </edge>
+    <edge id="173" source="19" target="2">
+      <data key="name">null</data>
+      <data key="weight">6</data>
+    </edge>
+    <edge id="174" source="19" target="3">
+      <data key="name">null</data>
+      <data key="weight">6</data>
+    </edge>
+    <edge id="175" source="19" target="4">
+      <data key="name">null</data>
+      <data key="weight">6</data>
+    </edge>
+    <edge id="176" source="19" target="5">
+      <data key="name">null</data>
+      <data key="weight">5</data>
+    </edge>
+    <edge id="177" source="19" target="6">
+      <data key="name">null</data>
+      <data key="weight">5</data>
+    </edge>
+    <edge id="178" source="19" target="7">
+      <data key="name">null</data>
+      <data key="weight">4</data>
+    </edge>
+    <edge id="179" source="19" target="8">
+      <data key="name">null</data>
+      <data key="weight">4</data>
+    </edge>
+    <edge id="180" source="19" target="9">
+      <data key="name">null</data>
+      <data key="weight">5</data>
+    </edge>
+    <edge id="181" source="19" target="10">
+      <data key="name">null</data>
+      <data key="weight">2</data>
+    </edge>
+    <edge id="182" source="19" target="11">
+      <data key="name">null</data>
+      <data key="weight">3</data>
+    </edge>
+    <edge id="183" source="19" target="12">
+      <data key="name">null</data>
+      <data key="weight">5</data>
+    </edge>
+    <edge id="184" source="19" target="13">
+      <data key="name">null</data>
+      <data key="weight">8</data>
+    </edge>
+    <edge id="185" source="19" target="14">
+      <data key="name">null</data>
+      <data key="weight">7</data>
+    </edge>
+    <edge id="186" source="19" target="15">
+      <data key="name">null</data>
+      <data key="weight">1</data>
+    </edge>
+    <edge id="187" source="19" target="16">
+      <data key="name">null</data>
+      <data key="weight">6</data>
+    </edge>
+    <edge id="188" source="19" target="17">
+      <data key="name">null</data>
+      <data key="weight">8</data>
+    </edge>
+    <edge id="189" source="19" target="18">
+      <data key="name">null</data>
+      <data key="weight">8</data>
+    </edge>
+  </graph>
+</graphml>
