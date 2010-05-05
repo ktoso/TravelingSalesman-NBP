@@ -80,7 +80,7 @@ public class Chromosom extends LinkedList<Integer> implements Comparable<Chromos
         return new ChromosomPair(child1, child2);
     }
 
-    public Chromosom mutation() {
+    public Chromosom mutation(int mutationSize) {
         int length = size();
 
         Chromosom child = new Chromosom(length, this.graph);
@@ -89,8 +89,9 @@ public class Chromosom extends LinkedList<Integer> implements Comparable<Chromos
             child.set(i, get(i));
         }
 
+        mutationSize = (mutationSize>length) ? length : mutationSize;
         //ilość zamian genów w mutacji
-        for (int i = 0; i < ((int) length / 2 + 1); ++i) {
+        for (int i = 0; i < mutationSize; ++i) {
             int from = generator.nextInt(length);
             int with = from + generator.nextInt(length - 1);
 

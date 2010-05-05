@@ -20,6 +20,10 @@ public class Population {
     Random generator = new Random();
     private final Graph graph;
 
+    private int iloscPokolenBezZmiany = 0;
+    private int maxPokolenBezZmiany = 200;
+
+
     /**
      * populacja powinna mieć też graf na podstawie którego bedzie oceniać chromosomy
      * @param osobnikowPopulacji
@@ -52,9 +56,9 @@ public class Population {
             ChromosomPair childern = pop.get(i).crossover(pop.get(halfsize + generator.nextInt(this.pop.size() - halfsize)));
             Chromosom ch1 = childern.first();
             Chromosom ch2 = childern.second();
-            if (getBoolean(70)) {
-                ch1 = ch1.mutation();
-                ch2 = ch2.mutation();
+            if (getBoolean(iloscPokolenBezZmiany/maxPokolenBezZmiany*100)) {
+                ch1 = ch1.mutation(iloscPokolenBezZmiany);
+                ch2 = ch2.mutation(iloscPokolenBezZmiany);
             }
 
             newPop.add(ch1);
@@ -87,6 +91,9 @@ public class Population {
 
         if ( this.pop.getFirst().fitness() > newPop.getFirst().fitness() ) {
             this.pop = newPop;
+            iloscPokolenBezZmiany = 0;
+        } else {
+            iloscPokolenBezZmiany++;
         }
 
         
