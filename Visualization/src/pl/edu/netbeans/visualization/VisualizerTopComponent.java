@@ -221,6 +221,7 @@ public final class VisualizerTopComponent extends TopComponent {
         vis.run("color");  // assign the colors
         vis.run("layout"); // start up the animated layout
 
+        
         revalidate();
         repaint();
     }

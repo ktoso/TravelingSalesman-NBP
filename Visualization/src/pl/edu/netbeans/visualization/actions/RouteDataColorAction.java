@@ -20,13 +20,13 @@ import prefuse.visual.VisualItem;
  */
 public class RouteDataColorAction extends DataColorAction {
 
-    //TODO: ustalić kolory na kolejne pokolenia!
-    //oznaczanie działa na styl "kolejnych pokoleń"
+//    W algorytmie używam tego tak: 0 - nie używane scieżki, 1 - najlepszy
+//    z poprzedniego pokolenia, 2 najlepszy z aktualnego pokolenia
     static private int[] palette = new int[]{
-        ColorLib.alpha(0),           //marked==0
+        ColorLib.rgb(240, 240, 240), //marked==0
         ColorLib.rgb(255, 180, 180), //marked==1
         ColorLib.rgb(150, 200, 150), //marked==2
-        ColorLib.rgb(50, 255, 50),   //marked==3
+        ColorLib.rgb(50, 255, 50)   //marked==3
     };
 
     public RouteDataColorAction(){

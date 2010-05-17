@@ -2,6 +2,7 @@
  */
 package pl.edu.netbeans.algorithms;
 
+import java.util.Random;
 import pl.edu.netbeans.algorithms.genetic.Chromosom;
 import pl.edu.netbeans.algorithms.genetic.Population;
 import prefuse.data.Graph;
@@ -14,12 +15,10 @@ import prefuse.data.Graph;
 public class FirstTSSolverAction extends SolverAction implements TSSolverAction {//bo zdaje się tak sensownie jest do tego się dobrać przez lookup następnie
 
     private final Population population;
-    private int numerGeneracji = 0;
-    private int iloscOsobnikow = 50;
+    private int iloscOsobnikow = 50; // Pwoinno być ustawiane w programie
 
     public FirstTSSolverAction(Graph graph) {
         super(graph);
-        //fixme: usunąć korzystanie z "20"!
         this.population = new Population(iloscOsobnikow, graph);
     }
 
@@ -28,16 +27,24 @@ public class FirstTSSolverAction extends SolverAction implements TSSolverAction 
         try {
             this.population.nextGeneration();
             Chromosom ch = this.population.getBestChromosom();
-            log("Generation " + numerGeneracji + ": best chromosom: " + ch + " (" + ch.fitness() + ")");
+            log("Generation " + this.population.getNumerGeneracji() + ": best chromosom: " + ch + " (" + ch.fitness() + ")");
 
+//            Czy w ten sposób możemy konczyć symulację (warunek stopu może być inny)?
+//            if ( this.population.getNumerGeneracji() > 100 ) {
+//                getVisualization().removeAction("layout");
+//            }
+            
             //testing testing testing testing testing testing testing
-            graph.getEdge(1).setInt(2, 2);
+            graph.getEdge(1).setInt("marked", ( this.population.getNumerGeneracji() / 100) % 4 );
+            //System.out.println(this.population.getNumerGeneracji() + " : " + graph.getEdge(1).getInt("marked") );
             //testing testing testing testing testing testing testing
 
-            numerGeneracji++;
+            
         } catch (Exception ex) {
-            log("ERROR: " + ex);
+            log("ERROR: " + ex.getMessage() );
         }
+
+        
     }
 
     public String getHumanReadibleName() {
