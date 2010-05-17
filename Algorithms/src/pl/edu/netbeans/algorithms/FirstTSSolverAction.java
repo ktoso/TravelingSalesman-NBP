@@ -14,7 +14,7 @@ import prefuse.data.Graph;
 public class FirstTSSolverAction extends SolverAction implements TSSolverAction {//bo zdaje się tak sensownie jest do tego się dobrać przez lookup następnie
 
     private final Population population;
-    private int lol = 0;
+    private int numerGeneracji = 0;
     private int iloscOsobnikow = 50;
 
     public FirstTSSolverAction(Graph graph) {
@@ -28,10 +28,15 @@ public class FirstTSSolverAction extends SolverAction implements TSSolverAction 
         try {
             this.population.nextGeneration();
             Chromosom ch = this.population.getBestChromosom();
-            log("Generation " + lol + ": best chromosom: " + ch + " (" + ch.fitness() + ")");
-            lol++;
+            log("Generation " + numerGeneracji + ": best chromosom: " + ch + " (" + ch.fitness() + ")");
+
+            //testing testing testing testing testing testing testing
+            graph.getEdge(1).setInt(2, 2);
+            //testing testing testing testing testing testing testing
+
+            numerGeneracji++;
         } catch (Exception ex) {
-            log("ERROR: " + ex.getMessage());
+            log("ERROR: " + ex);
         }
     }
 

@@ -10,11 +10,14 @@ import org.openide.windows.WindowManager;
 //import org.openide.util.ImageUtilities;
 import org.netbeans.api.settings.ConvertAsProperties;
 import pl.edu.netbeans.algorithms.FirstTSSolverAction;
+import pl.edu.netbeans.visualization.actions.RouteDataColorAction;
+import prefuse.Constants;
 import prefuse.Display;
 import prefuse.Visualization;
 import prefuse.action.ActionList;
 import prefuse.action.RepaintAction;
 import prefuse.action.assignment.ColorAction;
+import prefuse.action.assignment.DataColorAction;
 import prefuse.action.layout.graph.ForceDirectedLayout;
 import prefuse.activity.Activity;
 import prefuse.controls.DragControl;
@@ -24,6 +27,7 @@ import prefuse.controls.PanControl;
 import prefuse.controls.WheelZoomControl;
 import prefuse.controls.ZoomControl;
 import prefuse.controls.ZoomToFitControl;
+import prefuse.data.Edge;
 import prefuse.data.Graph;
 import prefuse.data.io.DataIOException;
 import prefuse.data.io.GraphMLReader;
@@ -183,21 +187,15 @@ public final class VisualizerTopComponent extends TopComponent {
         // includes straight line edges for EdgeItems by default
         vis.setRendererFactory(new DefaultRendererFactory(r));
 
-        // create our nominal color palette
-        // pink for females, baby blue for males
-        int[] palette = new int[]{
-            ColorLib.rgb(255, 180, 180),
-            ColorLib.rgb(190, 190, 255)
-        };
-
 //        DataColorAction fill = new DataColorAction("graph.nodes", "gender", Constants.NOMINAL, VisualItem.FILLCOLOR, palette);
         ColorAction text = new ColorAction("graph.nodes", VisualItem.TEXTCOLOR, ColorLib.gray(0));
-        ColorAction edges = new ColorAction("graph.edges", VisualItem.STROKECOLOR, ColorLib.gray(200));
+//        ColorAction edges = new ColorAction("graph.edges", VisualItem.STROKECOLOR, ColorLib.gray(200));
+        ColorAction dataMarked = new RouteDataColorAction();
 
         ActionList color = new ActionList();
-        //color.add(fill);//////////////////////////
         color.add(text);
-        color.add(edges);
+//        color.add(edges);
+        color.add(dataMarked);
 
         // add the actions to the visualization
         vis.putAction("color", color);
