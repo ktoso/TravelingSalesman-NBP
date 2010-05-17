@@ -127,12 +127,9 @@ public class Chromosom extends LinkedList<Integer> implements Comparable<Chromos
         return b.toString();
     }
 
-//    public double fitness(Graph g) {  dopasowanie ze względu na graf
-//    powinno liczyć długość ścieżki
-//    teraz funkcja uważa odległość miedzy grafami za bezwzględną róznice miedzy ich numerami, czyli najlepszy graf to 1 2 3 4 5 6 7 8 9 itd.
+
     public double fitness() {
         double f = 0;
-//        System.out.println("Chromosom fitness:");
         for (int i = 0; i < size(); ++i) {
             int source = get(i);
             int target = get(i + 1);
@@ -144,14 +141,34 @@ public class Chromosom extends LinkedList<Integer> implements Comparable<Chromos
             }
 
             if (e != null) {
-
-//                System.out.println("\t" + e.getSourceNode().getString("name") + " " + e.getTargetNode().getString("name") + " " + e.getDouble("weight"));
                 f += e.getDouble("weight");
-
             }
 
         }
         return f;
+    }
+
+    /**
+     * Ustawia scieżce reprezentowanej przez siebie parametr marked=mark
+     * @param mark wartosc parametru marked dla reprezentowanej scieżki
+     */
+    public void mark(int mark) {
+        for (int i = 0; i < size(); ++i) {
+            int source = get(i);
+            int target = get(i + 1);
+
+            Edge e = this.graph.getEdge(this.graph.getEdge(source, target));
+
+            if (e == null) {
+                e = this.graph.getEdge(this.graph.getEdge(target, source));
+            }
+
+            if (e != null) {
+                e.setInt("marked", mark);
+            }
+
+
+        }
     }
 
     public int compareTo(Chromosom ch) {

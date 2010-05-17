@@ -5,9 +5,11 @@
 package pl.edu.netbeans.algorithms.genetic;
 
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Random;
 import prefuse.data.Graph;
+import prefuse.data.Tuple;
 
 /**
  *
@@ -16,6 +18,9 @@ import prefuse.data.Graph;
 public class Population {
 
     LinkedList<Chromosom> pop = new LinkedList<Chromosom>();
+    int numerGeneracji = 0;
+
+
     int osobnikowPopulacji = 0;
     Random generator = new Random();
     private final Graph graph;
@@ -37,6 +42,9 @@ public class Population {
             pop.add(new Chromosom(dlugoscChromosomu, this.graph));
             pop.get(i).create();
         }
+
+        // na samym początku ustaw każdej krawedzi parametr marked=0
+        clearGraph();
 
         //fixme: nie powinno nigdy do tego dochodzić, usunąć to try/catch!!
         try{
@@ -90,18 +98,26 @@ public class Population {
 //        this.pop = newPop;
 
         if ( this.pop.getFirst().fitness() > newPop.getFirst().fitness() ) {
+            // Jeśli się coś zmieniło to ustawiamy wszystkim krawedziom
+            // marked=0, najlepszej sciezce ze starego pokolenia marked=1,
+            // a najlepszej sciezce z aktualnego pokolenia marked=2
+            clearGraph();
+            this.pop.getFirst().mark(1);
+            newPop.getFirst().mark(2);
             this.pop = newPop;
             iloscPokolenBezZmiany = 0;
         } else {
             iloscPokolenBezZmiany++;
         }
 
+        numerGeneracji++;
+
         
         
-        System.out.println("Populacja: ");
-        for( Chromosom ch : this.pop ) {
-            System.out.println("\t" + ch.fitness() + ": " + ch);
-        }
+//        System.out.println("Populacja: ");
+//        for( Chromosom ch : this.pop ) {
+//            System.out.println("\t" + ch.fitness() + ": " + ch);
+//        }
 
 //        System.out.println("Best: " + pop.getFirst() );
 //        System.out.println(" Fitness: " + pop.getFirst().fitness() );
@@ -111,7 +127,21 @@ public class Population {
         return pop.getFirst();
     }
 
+    public int getNumerGeneracji() {
+        return numerGeneracji;
+    }
+
     private boolean getBoolean(int percent) {
         return (generator.nextInt(100) < percent);
     }
+
+    private void clearGraph() {
+        //nadanie parametrom marked wszystkich krawędzi wartości 0
+        Iterator<Tuple> it = this.graph.getEdges().tuples();
+        while ( it.hasNext() ) {
+            it.next().setInt("marked", 0);
+        }
+    }
+
+
 }
