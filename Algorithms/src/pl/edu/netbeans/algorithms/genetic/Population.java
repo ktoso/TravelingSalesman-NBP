@@ -19,15 +19,11 @@ public class Population {
 
     LinkedList<Chromosom> pop = new LinkedList<Chromosom>();
     int numerGeneracji = 0;
-
-
     int osobnikowPopulacji = 0;
     Random generator = new Random();
     private final Graph graph;
-
     private int iloscPokolenBezZmiany = 0;
     private int maxPokolenBezZmiany = 200;
-
 
     /**
      * populacja powinna mieć też graf na podstawie którego bedzie oceniać chromosomy
@@ -47,24 +43,24 @@ public class Population {
         clearGraph();
 
         //fixme: nie powinno nigdy do tego dochodzić, usunąć to try/catch!!
-        try{
+        try {
             Collections.sort(this.pop);
-        }catch(ArrayIndexOutOfBoundsException ex){
+        } catch (ArrayIndexOutOfBoundsException ex) {
             ex.printStackTrace();
         }
-        
+
     }
 
     public void nextGeneration() throws Exception {
         LinkedList<Chromosom> newPop = new LinkedList<Chromosom>();
-        int halfsize = (int) (this.pop.size() / 2);
+        int halfsize = this.pop.size() / 2;
 
         for (int i = 0; i < halfsize; ++i) {
             //krzyżuj pierwszą połowę osobników z losowym osobnikiem z grupiej połowy
             ChromosomPair childern = pop.get(i).crossover(pop.get(halfsize + generator.nextInt(this.pop.size() - halfsize)));
             Chromosom ch1 = childern.first();
             Chromosom ch2 = childern.second();
-            if (getBoolean(iloscPokolenBezZmiany/maxPokolenBezZmiany*100)) {
+            if (getBoolean(iloscPokolenBezZmiany / maxPokolenBezZmiany * 100)) {
                 ch1 = ch1.mutation(iloscPokolenBezZmiany);
                 ch2 = ch2.mutation(iloscPokolenBezZmiany);
             }
@@ -97,13 +93,13 @@ public class Population {
 
 //        this.pop = newPop;
 
-        if ( this.pop.getFirst().fitness() > newPop.getFirst().fitness() ) {
+        if (this.pop.getFirst().fitness() > newPop.getFirst().fitness()) {
             // Jeśli się coś zmieniło to ustawiamy wszystkim krawedziom
             // marked=0, najlepszej sciezce ze starego pokolenia marked=1,
             // a najlepszej sciezce z aktualnego pokolenia marked=2
             clearGraph();
-            this.pop.getFirst().mark(1);
-            newPop.getFirst().mark(2);
+//            this.pop.getFirst().mark(1);
+//            newPop.getFirst().mark(2);
             this.pop = newPop;
             iloscPokolenBezZmiany = 0;
         } else {
@@ -112,8 +108,8 @@ public class Population {
 
         numerGeneracji++;
 
-        
-        
+
+
 //        System.out.println("Populacja: ");
 //        for( Chromosom ch : this.pop ) {
 //            System.out.println("\t" + ch.fitness() + ": " + ch);
@@ -135,13 +131,13 @@ public class Population {
         return (generator.nextInt(100) < percent);
     }
 
+    @SuppressWarnings("unchecked")
     private void clearGraph() {
+        //FIXME: problemy z ustawianiem wartości
         //nadanie parametrom marked wszystkich krawędzi wartości 0
         Iterator<Tuple> it = this.graph.getEdges().tuples();
-        while ( it.hasNext() ) {
+        while (it.hasNext()) {
             it.next().setInt("marked", 0);
         }
     }
-
-
 }

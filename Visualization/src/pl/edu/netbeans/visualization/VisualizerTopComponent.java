@@ -192,7 +192,7 @@ public final class VisualizerTopComponent extends TopComponent {
 //        ColorAction edges = new ColorAction("graph.edges", VisualItem.STROKECOLOR, ColorLib.gray(200));
         ColorAction dataMarked = new RouteDataColorAction();
 
-        ActionList color = new ActionList();
+        ActionList color = new ActionList(Activity.INFINITY);
         color.add(text);
 //        color.add(edges);
         color.add(dataMarked);
