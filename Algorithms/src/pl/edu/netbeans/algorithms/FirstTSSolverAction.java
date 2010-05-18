@@ -35,7 +35,7 @@ public class FirstTSSolverAction extends SolverAction implements TSSolverAction 
 //            }
             
             //testing testing testing testing testing testing testing
-            graph.getEdge(1).setInt("marked", ( this.population.getNumerGeneracji() / 100) % 4 );
+//            graph.getEdge(1).setInt("marked", ( this.population.getNumerGeneracji() / 100) % 4 );
             //System.out.println(this.population.getNumerGeneracji() + " : " + graph.getEdge(1).getInt("marked") );
             //testing testing testing testing testing testing testing
 

@@ -98,8 +98,8 @@ public class Population {
             // marked=0, najlepszej sciezce ze starego pokolenia marked=1,
             // a najlepszej sciezce z aktualnego pokolenia marked=2
             clearGraph();
-//            this.pop.getFirst().mark(1);
-//            newPop.getFirst().mark(2);
+            this.pop.getFirst().mark(1);
+            newPop.getFirst().mark(2);
             this.pop = newPop;
             iloscPokolenBezZmiany = 0;
         } else {
