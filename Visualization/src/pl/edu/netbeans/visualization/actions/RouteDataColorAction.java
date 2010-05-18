@@ -23,10 +23,10 @@ public class RouteDataColorAction extends DataColorAction {
 //    W algorytmie używam tego tak: 0 - nie używane scieżki, 1 - najlepszy
 //    z poprzedniego pokolenia, 2 najlepszy z aktualnego pokolenia
     static private int[] palette = new int[]{
-        ColorLib.rgb(20, 20, 20), //marked==0
-        ColorLib.rgb(255, 0, 0), //marked==1
-        ColorLib.rgb(0, 255, 0), //marked==2
-        ColorLib.rgb(0, 0, 255)   //marked==3
+        ColorLib.rgb(240, 240, 240), //marked==0
+        ColorLib.rgb(255, 180, 180), //marked==1
+        ColorLib.rgb(150, 200, 150), //marked==2
+        ColorLib.rgb(50, 255, 50)   //marked==3
     };
 
     public RouteDataColorAction(){

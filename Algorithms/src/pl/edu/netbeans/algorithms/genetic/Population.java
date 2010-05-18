@@ -133,7 +133,6 @@ public class Population {
 
     @SuppressWarnings("unchecked")
     private void clearGraph() {
-        //FIXME: problemy z ustawianiem wartości
         //nadanie parametrom marked wszystkich krawędzi wartości 0
         Iterator<Tuple> it = this.graph.getEdges().tuples();
         while (it.hasNext()) {
