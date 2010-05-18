@@ -11,6 +11,11 @@
         </folder>
     </folder>
     <folder name="Menu">
+        <file name="Edit_hidden"/>
+        <file name="View_hidden"/>
+        <file name="GoTo_hidden"/>
+        <file name="Tools_hidden"/>
+        <file name="Help_hidden"/>
         <folder name="Window">
             <file name="VisualizerAction.shadow">
                 <attr name="originalFile" stringvalue="Actions/Window/pl-edu-netbeans-visualization-VisualizerAction.instance"/>
