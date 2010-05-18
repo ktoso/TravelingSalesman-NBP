@@ -14,14 +14,24 @@ import org.openide.NotifyDescriptor;
 import org.openide.WizardDescriptor;
 import org.openide.util.Exceptions;
 import org.openide.util.HelpCtx;
+import org.openide.util.Lookup;
+import org.openide.util.Lookup.Result;
 import org.openide.util.actions.CallableSystemAction;
+import org.openide.windows.TopComponent;
+import pl.edu.netbeans.visualization.VisualizerTopComponent;
+import prefuse.data.Edge;
 import prefuse.data.Graph;
+import prefuse.data.Node;
 import prefuse.data.io.DataIOException;
 import prefuse.data.io.GraphMLWriter;
 
 // An example action demonstrating how the wizard could be called from within
 // your code. You can copy-paste the code below wherever you need.
 public final class GenerateGraphWizardAction extends CallableSystemAction {
+
+    //FIXME: prototypowy setup max pozycji miast
+    public static final int MAX_NODE_X = 200;
+    public static final int MAX_NODE_Y = 200;
 
     private WizardDescriptor.Panel[] panels;
 
@@ -121,26 +131,44 @@ public final class GenerateGraphWizardAction extends CallableSystemAction {
         //dodaję obsługę potrzebnych nam dodatkowych informacji
         graph.addColumn("name", String.class);
         graph.addColumn("weight", int.class, 1);
+        graph.addColumn("marked", int.class);
+        //w kierunku ustalonych koordynatów
+        graph.addColumn("x", int.class, 100);
+        graph.addColumn("y", int.class, 100);
 
         CityNameProvider cities = new CityNameProvider();
 
         //TODO: progress bar?
+        //dla każdego node, ustaw mu imię
         for (int i = 0; i < nodeCount; i++) {
             graph.addNode().setString("name", cities.getRandomName());
+
+            //oraz dla każdej krawędzi, ustal pewne dane
             for (int j = 0; j < i; j++) {
                 graph.addEdge(i, j);
-                graph.getEdge(graph.getNode(i), graph.getNode(j)).setInt("weight", cities.getRandomDistance());
+                
+                Node self = graph.getNode(i);
+                Node target = graph.getNode(j);
+
+                self.setInt("x", cities.getRandomPosition(MAX_NODE_X));
+                self.setInt("y", cities.getRandomPosition(MAX_NODE_Y));
+
+                Edge edge = graph.getEdge(self, target);
+
+                //TODO: usuń mnie i zastąp obliczeniem odległości od self do target
+                edge.setInt("weight", cities.getRandomDistance());
             }
         }
 
         GraphMLWriter writer = new GraphMLWriter();
+        String nodesFilename = "data/" + nodeCount + "nodes.xml";
         try {
-            File file = new File("data/" + nodeCount + "nodes.xml");
-            if (!file.exists()) {
-                file.createNewFile();
+            File nodesFile = new File(nodesFilename);
+            if (!nodesFile.exists()) {
+                nodesFile.createNewFile();
             }
 
-            writer.writeGraph(graph, file);
+            writer.writeGraph(graph, nodesFile);
         } catch (DataIOException ex) {
             Exceptions.printStackTrace(ex);
         } catch (IOException ex) {
@@ -151,5 +179,9 @@ public final class GenerateGraphWizardAction extends CallableSystemAction {
         DialogDisplayer.getDefault().notify(new NotifyDescriptor.Message("Zakończono generowanie węzłów..."));
 
         //TODO: napisać otwieranie edytowa z nową symulacją
+        Lookup  global = Lookup.getDefault();
+        VisualizerTopComponent top = new VisualizerTopComponent();
+        top.open(nodesFilename);
+        top.requestActive();
     }
 }

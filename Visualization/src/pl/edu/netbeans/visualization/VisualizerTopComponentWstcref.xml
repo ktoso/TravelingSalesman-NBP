@@ -5,5 +5,4 @@
 <tc-ref version="2.0" >
     <module name="pl.edu.netbeans.visualization" spec="1.0"/>
     <tc-id id="VisualizerTopComponent"/>
-    <state opened="true"/>
 </tc-ref>

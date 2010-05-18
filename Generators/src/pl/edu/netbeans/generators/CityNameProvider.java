@@ -60,7 +60,14 @@ class CityNameProvider {
         return names.get(random.nextInt(names.size()));
     }
 
+    /*
+     * TODO: FIXME: Usuń mnie, jestem tylko dla celów prototypowania!!!!!
+     */
     int getRandomDistance() {
         return 1 + random.nextInt(10);
+    }
+
+    int getRandomPosition(int max) {
+        return random.nextInt(max);
     }
 }

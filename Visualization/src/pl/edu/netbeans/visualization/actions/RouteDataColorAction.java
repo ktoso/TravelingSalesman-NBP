@@ -3,11 +3,7 @@
 package pl.edu.netbeans.visualization.actions;
 
 import prefuse.Constants;
-import prefuse.action.assignment.ColorAction;
 import prefuse.action.assignment.DataColorAction;
-import prefuse.data.expression.BooleanLiteral;
-import prefuse.data.expression.Predicate;
-import prefuse.data.expression.parser.ExpressionParser;
 import prefuse.util.ColorLib;
 import prefuse.visual.VisualItem;
 

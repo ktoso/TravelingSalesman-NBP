@@ -11,13 +11,11 @@ import org.openide.windows.WindowManager;
 import org.netbeans.api.settings.ConvertAsProperties;
 import pl.edu.netbeans.algorithms.FirstTSSolverAction;
 import pl.edu.netbeans.visualization.actions.RouteDataColorAction;
-import prefuse.Constants;
 import prefuse.Display;
 import prefuse.Visualization;
 import prefuse.action.ActionList;
 import prefuse.action.RepaintAction;
 import prefuse.action.assignment.ColorAction;
-import prefuse.action.assignment.DataColorAction;
 import prefuse.action.layout.graph.ForceDirectedLayout;
 import prefuse.activity.Activity;
 import prefuse.controls.DragControl;
@@ -27,7 +25,6 @@ import prefuse.controls.PanControl;
 import prefuse.controls.WheelZoomControl;
 import prefuse.controls.ZoomControl;
 import prefuse.controls.ZoomToFitControl;
-import prefuse.data.Edge;
 import prefuse.data.Graph;
 import prefuse.data.io.DataIOException;
 import prefuse.data.io.GraphMLReader;
@@ -44,21 +41,23 @@ autostore = false)
 public final class VisualizerTopComponent extends TopComponent {
 
     private static VisualizerTopComponent instance;
-    /** path to the icon used by the component and its open action */
-//    static final String ICON_PATH = "SET/PATH/TO/ICON/HERE";
     private static final String PREFERRED_ID = "VisualizerTopComponent";
+    private Graph graph = null;
+    private Visualization vis = null;
 
     public VisualizerTopComponent() {
         initComponents();
         setName(NbBundle.getMessage(VisualizerTopComponent.class, "CTL_VisualizerTopComponent"));
         setToolTipText(NbBundle.getMessage(VisualizerTopComponent.class, "HINT_VisualizerTopComponent"));
-//        setIcon(ImageUtilities.loadImage(ICON_PATH, true));
-        putClientProperty(TopComponent.PROP_CLOSING_DISABLED, Boolean.TRUE);
+
         putClientProperty(TopComponent.PROP_DRAGGING_DISABLED, Boolean.TRUE);
         putClientProperty(TopComponent.PROP_MAXIMIZATION_DISABLED, Boolean.TRUE);
         putClientProperty(TopComponent.PROP_UNDOCKING_DISABLED, Boolean.TRUE);
+    }
 
-        initGraph();
+    public void open(String filename) {
+        super.open();
+        initGraph(filename);
     }
 
     /** This method is called from within the constructor to
@@ -161,14 +160,28 @@ public final class VisualizerTopComponent extends TopComponent {
         return PREFERRED_ID;
     }
 
-    private void initGraph() {
-        //todo: usunąć na rzecz wstrzykiwanej ścieżki!!!
-        String path = "data/12nodes.xml";
-        Graph graph = loadGraph(path);
+    /**
+     * Głupawe czyszczenie zasobów, nullowanie potencjalnie zbędne
+     * @return
+     */
+    @Override
+    public boolean canClose() {
+        vis = null;
+
+        if (graph != null) {
+            graph.clear();
+            graph = null;
+        }
+        
+        return super.canClose();
+    }
+
+    private void initGraph(String filename) {
+        loadGraph(filename);
 
         // add the graph to the visualization as the data group "graph"
         // nodes and edges are accessible as "graph.nodes" and "graph.edges"
-        Visualization vis = new Visualization();
+        vis = new Visualization();
         vis.add("graph", graph);
 
         //poniższa seria akcji będzie wykonywana w nieskończoność
@@ -221,13 +234,16 @@ public final class VisualizerTopComponent extends TopComponent {
         vis.run("color");  // assign the colors
         vis.run("layout"); // start up the animated layout
 
-        
+
         revalidate();
         repaint();
     }
 
-    private Graph loadGraph(String path) {
-        Graph graph = null;
+    /**
+     * Load the graph into the current graph field.
+     * @param path the path to the GraphML to read ("data/12nodes.xml")
+     */
+    private void loadGraph(String path) {
         try {
             String filename = path;
             graph = new GraphMLReader().readGraph(filename);
@@ -239,8 +255,6 @@ public final class VisualizerTopComponent extends TopComponent {
 
         if (graph == null) {
             System.err.println("NULL graph! Exiting...");
-            System.exit(1);
         }
-        return graph;
     }
 }
