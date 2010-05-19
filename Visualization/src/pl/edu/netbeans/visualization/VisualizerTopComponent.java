@@ -10,12 +10,14 @@ import org.openide.windows.WindowManager;
 //import org.openide.util.ImageUtilities;
 import org.netbeans.api.settings.ConvertAsProperties;
 import pl.edu.netbeans.algorithms.FirstTSSolverAction;
+import pl.edu.netbeans.visualization.actions.CitiesLayoutAction;
 import pl.edu.netbeans.visualization.actions.RouteDataColorAction;
 import prefuse.Display;
 import prefuse.Visualization;
 import prefuse.action.ActionList;
 import prefuse.action.RepaintAction;
 import prefuse.action.assignment.ColorAction;
+import prefuse.action.layout.SpecifiedLayout;
 import prefuse.action.layout.graph.ForceDirectedLayout;
 import prefuse.activity.Activity;
 import prefuse.controls.DragControl;
@@ -172,7 +174,7 @@ public final class VisualizerTopComponent extends TopComponent {
             graph.clear();
             graph = null;
         }
-        
+
         return super.canClose();
     }
 
@@ -186,7 +188,8 @@ public final class VisualizerTopComponent extends TopComponent {
 
         //poniższa seria akcji będzie wykonywana w nieskończoność
         ActionList layout = new ActionList(Activity.INFINITY);
-        layout.add(new ForceDirectedLayout("graph", true, false));
+        //layout.add(new ForceDirectedLayout("graph", true, false));
+        layout.add(new SpecifiedLayout("graph.nodes", "x", "y"));
         //TODO: zdobywać to przez opcje oraz lookup najlepiej
         layout.add(new FirstTSSolverAction(graph));
         //layout.add(new MockTSSolverAction(graph));
@@ -217,7 +220,6 @@ public final class VisualizerTopComponent extends TopComponent {
         // create a new Display that pull from our Visualization
         Display display = new Display(vis);
         display.addControlListener(new FocusControl(1));
-        display.addControlListener(new DragControl());
         display.addControlListener(new PanControl());
         display.addControlListener(new ZoomControl());
         display.addControlListener(new WheelZoomControl());

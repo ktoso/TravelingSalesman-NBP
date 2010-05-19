@@ -11,6 +11,7 @@ import java.io.FileReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Random;
+import prefuse.data.Node;
 
 /**
  *
@@ -60,14 +61,25 @@ class CityNameProvider {
         return names.get(random.nextInt(names.size()));
     }
 
-    /*
-     * TODO: FIXME: Usuń mnie, jestem tylko dla celów prototypowania!!!!!
-     */
-    int getRandomDistance() {
-        return 1 + random.nextInt(10);
+    public int getRandomPosition(int max) {
+        return random.nextInt(max);
     }
 
-    int getRandomPosition(int max) {
-        return random.nextInt(max);
+    /**
+     * Oblicza odległość między dwoma punktami
+     * @param self pierwszy node
+     * @param target drugi node
+     * @return
+     */
+    public int calculateDistance(Node self, Node target) {
+        int x1 = self.getInt("x");
+        int y1 = self.getInt("y");
+
+        int x2 = target.getInt("x");
+        int y2 = target.getInt("y");
+
+        double distance = Math.sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2));
+
+        return (int) Math.round(distance);
     }
 }

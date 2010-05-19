@@ -19,5 +19,4 @@ public class CitiesLayoutAction extends SpecifiedLayout{
         super(group, xField, yField);
     }
 
-
 }

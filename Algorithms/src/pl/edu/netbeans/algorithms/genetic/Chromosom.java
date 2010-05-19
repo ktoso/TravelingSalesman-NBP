@@ -133,10 +133,10 @@ public class Chromosom extends LinkedList<Integer> implements Comparable<Chromos
             int source = get(i);
             int target = get(i + 1);
 
-            Edge e = this.graph.getEdge(this.graph.getEdge(source, target));
+            Edge e = graph.getEdge(graph.getEdge(source, target));
 
             if (e == null) {
-                e = this.graph.getEdge(this.graph.getEdge(target, source));
+                e = graph.getEdge(graph.getEdge(target, source));
             }
 
             if (e != null) {

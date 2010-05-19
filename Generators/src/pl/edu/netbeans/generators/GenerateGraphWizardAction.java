@@ -32,7 +32,6 @@ public final class GenerateGraphWizardAction extends CallableSystemAction {
     //FIXME: prototypowy setup max pozycji miast
     public static final int MAX_NODE_X = 200;
     public static final int MAX_NODE_Y = 200;
-
     private WizardDescriptor.Panel[] panels;
 
     public void performAction() {
@@ -133,8 +132,8 @@ public final class GenerateGraphWizardAction extends CallableSystemAction {
         graph.addColumn("weight", int.class, 1);
         graph.addColumn("marked", int.class);
         //w kierunku ustalonych koordynatów
-        graph.addColumn("x", int.class, 100);
-        graph.addColumn("y", int.class, 100);
+        graph.addColumn("x", int.class, 0);
+        graph.addColumn("y", int.class, 0);
 
         CityNameProvider cities = new CityNameProvider();
 
@@ -143,20 +142,20 @@ public final class GenerateGraphWizardAction extends CallableSystemAction {
         for (int i = 0; i < nodeCount; i++) {
             graph.addNode().setString("name", cities.getRandomName());
 
+            Node self = graph.getNode(i);
+            self.setInt("x", cities.getRandomPosition(MAX_NODE_X));
+            self.setInt("y", cities.getRandomPosition(MAX_NODE_Y));
+
             //oraz dla każdej krawędzi, ustal pewne dane
             for (int j = 0; j < i; j++) {
                 graph.addEdge(i, j);
-                
-                Node self = graph.getNode(i);
-                Node target = graph.getNode(j);
 
-                self.setInt("x", cities.getRandomPosition(MAX_NODE_X));
-                self.setInt("y", cities.getRandomPosition(MAX_NODE_Y));
+                Node target = graph.getNode(j);
 
                 Edge edge = graph.getEdge(self, target);
 
-                //TODO: usuń mnie i zastąp obliczeniem odległości od self do target
-                edge.setInt("weight", cities.getRandomDistance());
+                //TODO: do sprawdzenia czy ok
+                edge.setInt("weight", cities.calculateDistance(self, target));
             }
         }
 
@@ -178,8 +177,8 @@ public final class GenerateGraphWizardAction extends CallableSystemAction {
 
         DialogDisplayer.getDefault().notify(new NotifyDescriptor.Message("Zakończono generowanie węzłów..."));
 
-        //TODO: napisać otwieranie edytowa z nową symulacją
-        Lookup  global = Lookup.getDefault();
+        //TODO: rewrite na lookup
+//        Lookup  global = Lookup.getDefault();
         VisualizerTopComponent top = new VisualizerTopComponent();
         top.open(nodesFilename);
         top.requestActive();
