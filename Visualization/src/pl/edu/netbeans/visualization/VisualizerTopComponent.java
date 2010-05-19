@@ -10,7 +10,6 @@ import org.openide.windows.WindowManager;
 //import org.openide.util.ImageUtilities;
 import org.netbeans.api.settings.ConvertAsProperties;
 import pl.edu.netbeans.algorithms.FirstTSSolverAction;
-import pl.edu.netbeans.visualization.actions.CitiesLayoutAction;
 import pl.edu.netbeans.visualization.actions.RouteDataColorAction;
 import prefuse.Display;
 import prefuse.Visualization;
@@ -18,9 +17,7 @@ import prefuse.action.ActionList;
 import prefuse.action.RepaintAction;
 import prefuse.action.assignment.ColorAction;
 import prefuse.action.layout.SpecifiedLayout;
-import prefuse.action.layout.graph.ForceDirectedLayout;
 import prefuse.activity.Activity;
-import prefuse.controls.DragControl;
 import prefuse.controls.FocusControl;
 import prefuse.controls.NeighborHighlightControl;
 import prefuse.controls.PanControl;
@@ -45,6 +42,7 @@ public final class VisualizerTopComponent extends TopComponent {
     private static VisualizerTopComponent instance;
     private static final String PREFERRED_ID = "VisualizerTopComponent";
     private Graph graph = null;
+    private String nodes = "graph.nodes";
     private Visualization vis = null;
 
     public VisualizerTopComponent() {
@@ -189,7 +187,7 @@ public final class VisualizerTopComponent extends TopComponent {
         //poniższa seria akcji będzie wykonywana w nieskończoność
         ActionList layout = new ActionList(Activity.INFINITY);
         //layout.add(new ForceDirectedLayout("graph", true, false));
-        layout.add(new SpecifiedLayout("graph.nodes", "x", "y"));
+        layout.add(new SpecifiedLayout(nodes,"x", "y"));
         //TODO: zdobywać to przez opcje oraz lookup najlepiej
         layout.add(new FirstTSSolverAction(graph));
         //layout.add(new MockTSSolverAction(graph));
@@ -197,20 +195,20 @@ public final class VisualizerTopComponent extends TopComponent {
 
 
         LabelRenderer r = new LabelRenderer("name");
+        r.setRoundedCorner(8, 8);
 
         // create a new default renderer factory
         // return our name label renderer as the default for all non-EdgeItems
         // includes straight line edges for EdgeItems by default
         vis.setRendererFactory(new DefaultRendererFactory(r));
 
-//        DataColorAction fill = new DataColorAction("graph.nodes", "gender", Constants.NOMINAL, VisualItem.FILLCOLOR, palette);
-        ColorAction text = new ColorAction("graph.nodes", VisualItem.TEXTCOLOR, ColorLib.gray(0));
-//        ColorAction edges = new ColorAction("graph.edges", VisualItem.STROKECOLOR, ColorLib.gray(200));
+        ColorAction text = new ColorAction(nodes, VisualItem.TEXTCOLOR, ColorLib.gray(0));
+        ColorAction fill = new ColorAction(nodes, VisualItem.FILLCOLOR, ColorLib.rgb(200,200,255));//kolor Node'ów
         ColorAction dataMarked = new RouteDataColorAction();
 
         ActionList color = new ActionList(Activity.INFINITY);
+        color.add(fill);
         color.add(text);
-//        color.add(edges);
         color.add(dataMarked);
 
         // add the actions to the visualization
