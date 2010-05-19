@@ -1,0 +1,5 @@
+Manifest-Version: 1.0
+OpenIDE-Module: pl.edu.netbeans.toolbox
+OpenIDE-Module-Localizing-Bundle: pl/edu/netbeans/toolbox/Bundle.properties
+OpenIDE-Module-Specification-Version: 1.0
+

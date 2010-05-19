@@ -15,6 +15,7 @@ import org.openide.WizardDescriptor;
 import org.openide.util.Exceptions;
 import org.openide.util.HelpCtx;
 import org.openide.util.actions.CallableSystemAction;
+import pl.edu.netbeans.toolbox.Pair;
 import pl.edu.netbeans.visualization.VisualizerTopComponent;
 import prefuse.data.Edge;
 import prefuse.data.Graph;
@@ -140,8 +141,12 @@ public final class GenerateGraphWizardAction extends CallableSystemAction {
             graph.addNode().setString("name", cities.getRandomName());
 
             Node self = graph.getNode(i);
-            self.setInt("x", cities.getRandomPosition(MAX_NODE_X));
-            self.setInt("y", cities.getRandomPosition(MAX_NODE_Y));
+            Pair<Integer, Integer> pos = cities.getRandomPosition(MAX_NODE_X);
+            int x = pos.first();
+            int y = pos.second();
+
+            self.setInt("x", x);
+            self.setInt("y", y);
 
             //oraz dla każdej krawędzi, ustal pewne dane
             for (int j = 0; j < i; j++) {

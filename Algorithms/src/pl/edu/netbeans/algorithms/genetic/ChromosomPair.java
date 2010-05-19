@@ -4,25 +4,15 @@
  */
 package pl.edu.netbeans.algorithms.genetic;
 
+import pl.edu.netbeans.toolbox.Pair;
+
 /**
  *
  * @author bartek
  */
-public class ChromosomPair {
+public class ChromosomPair extends Pair<Chromosom, Chromosom> {
 
-    private Chromosom first;
-    private Chromosom second;
-
-    public ChromosomPair(Chromosom f, Chromosom s) {
-        first = f;
-        second = s;
-    }
-
-    public Chromosom first() {
-        return first;
-    }
-
-    public Chromosom second() {
-        return second;
+    public ChromosomPair(Chromosom first, Chromosom second) {
+        super(first, second);
     }
 }
