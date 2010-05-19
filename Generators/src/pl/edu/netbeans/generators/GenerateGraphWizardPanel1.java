@@ -80,6 +80,11 @@ public class GenerateGraphWizardPanel1 implements WizardDescriptor.ValidatingPan
     // by the user.
     public void storeSettings(Object settings) {
         ((WizardDescriptor) settings).putProperty("nodeCount", ((GenerateGraphVisualPanel1) getComponent()).getNodeCount());
+        ((WizardDescriptor) settings).putProperty("graphFilename", ((GenerateGraphVisualPanel1) getComponent()).getGraphFilename());
+        ((WizardDescriptor) settings).putProperty("maxGenerations", ((GenerateGraphVisualPanel1) getComponent()).getMaxGenerations());
+        ((WizardDescriptor) settings).putProperty("maxGenerationsWGB", ((GenerateGraphVisualPanel1) getComponent()).getMaxGenerationsWithoutGettingBetter());
+        ((WizardDescriptor) settings).putProperty("loadingExistingGraph", ((GenerateGraphVisualPanel1) getComponent()).isLoadingExisting());
+        ((WizardDescriptor) settings).putProperty("populationSize", ((GenerateGraphVisualPanel1) getComponent()).getPopulationSize());
     }
 
     public void readSettings(Object settings) {
@@ -88,12 +93,37 @@ public class GenerateGraphWizardPanel1 implements WizardDescriptor.ValidatingPan
 
     @Override
     public void validate() throws WizardValidationException {
-
-        String nodeCount = component.getNodeCount();
-        if (nodeCount.isEmpty()) {
-            throw new WizardValidationException(null, "Proszę podać liczbę wierzchołków", null);
+        if ( ! component.isLoadingExisting() ) {
+            String nodeCount = component.getNodeCount();
+            if (nodeCount.isEmpty()) {
+                throw new WizardValidationException(null, "Proszę podać liczbę wierzchołków", null);
+            }
+            if (!nodeCount.matches("\\d+")) {
+                throw new WizardValidationException(null, "Proszę podać poprawną liczbę całkowitą", null);
+            }
         }
-        if (!nodeCount.matches("\\d+")) {
+
+        String maxGenerations = component.getMaxGenerations();
+        if (maxGenerations.isEmpty()) {
+            throw new WizardValidationException(null, "Proszę podać maksymalną ilość generacji", null);
+        }
+        if (!maxGenerations.matches("\\d+")) {
+            throw new WizardValidationException(null, "Proszę podać poprawną liczbę całkowitą", null);
+        }
+
+        String maxGenerationsWGB = component.getMaxGenerationsWithoutGettingBetter();
+        if (maxGenerationsWGB.isEmpty()) {
+            throw new WizardValidationException(null, "Proszę podać maksymalną ilość generacji bez poprawy dopasowania", null);
+        }
+        if (!maxGenerationsWGB.matches("\\d+")) {
+            throw new WizardValidationException(null, "Proszę podać poprawną liczbę całkowitą", null);
+        }
+
+        String populationSize = component.getPopulationSize();
+        if (populationSize.isEmpty()) {
+            throw new WizardValidationException(null, "Proszę podać rozmiar populacji", null);
+        }
+        if (!populationSize.matches("\\d+")) {
             throw new WizardValidationException(null, "Proszę podać poprawną liczbę całkowitą", null);
         }
     }

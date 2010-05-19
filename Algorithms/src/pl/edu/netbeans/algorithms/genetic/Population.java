@@ -23,21 +23,46 @@ public class Population {
     Random generator = new Random();
     private final Graph graph;
     private int iloscPokolenBezZmiany = 0;
-    private int maxPokolenBezZmiany = 200;
+    private int maxPokolenBezZmiany = 500;
     private boolean shouldStop = false;
-    private int maxNumerGeneracji = 1500;
+    private int maxNumerGeneracji = 5000;
+    private int dlugoscChromosomu;
+
+    public int getMaxNumerGeneracji() {
+        return maxNumerGeneracji;
+    }
+
+    public void setMaxNumerGeneracji(int maxNumerGeneracji) {
+        this.maxNumerGeneracji = maxNumerGeneracji;
+    }
+
+    public int getMaxPokolenBezZmiany() {
+        return maxPokolenBezZmiany;
+    }
+
+    public void setMaxPokolenBezZmiany(int maxPokolenBezZmiany) {
+        this.maxPokolenBezZmiany = maxPokolenBezZmiany;
+    }
+
+    public int getOsobnikowPopulacji() {
+        return osobnikowPopulacji;
+    }
+
+    public void setOsobnikowPopulacji(int osobnikowPopulacji) {
+        this.osobnikowPopulacji = osobnikowPopulacji;
+    }
 
     /**
      * populacja powinna mieć też graf na podstawie którego bedzie oceniać chromosomy
      * @param osobnikowPopulacji
      * @param g
      */
-    public Population(int osobnikowPopulacji, Graph g) {
-        this.graph = g;
-        int dlugoscChromosomu = g.getNodeCount();
-        this.osobnikowPopulacji = osobnikowPopulacji;
+    public Population(int op, Graph g) {
+        graph = g;
+        dlugoscChromosomu = g.getNodeCount();
+        osobnikowPopulacji = op;
         for (int i = 0; i < osobnikowPopulacji; ++i) {
-            pop.add(new Chromosom(dlugoscChromosomu, this.graph));
+            pop.add(new Chromosom(dlugoscChromosomu, graph));
             pop.get(i).create();
         }
 
@@ -46,7 +71,7 @@ public class Population {
 
         //fixme: nie powinno nigdy do tego dochodzić, usunąć to try/catch!!
         try {
-            Collections.sort(this.pop);
+            Collections.sort(pop);
         } catch (ArrayIndexOutOfBoundsException ex) {
             ex.printStackTrace();
         }
@@ -55,16 +80,16 @@ public class Population {
 
     public void nextGeneration() throws Exception {
         LinkedList<Chromosom> newPop = new LinkedList<Chromosom>();
-        int halfsize = this.pop.size() / 2;
+        int halfsize = pop.size() / 2;
 
         for (int i = 0; i < halfsize; ++i) {
             //krzyżuj pierwszą połowę osobników z losowym osobnikiem z grupiej połowy
             ChromosomPair childern = pop.get(i).crossover(pop.get(halfsize + generator.nextInt(this.pop.size() - halfsize)));
             Chromosom ch1 = childern.first();
             Chromosom ch2 = childern.second();
-            if (getBoolean(iloscPokolenBezZmiany / maxPokolenBezZmiany * 100)) {
-                ch1 = ch1.mutation(iloscPokolenBezZmiany);
-                ch2 = ch2.mutation(iloscPokolenBezZmiany);
+            if (getBoolean(iloscPokolenBezZmiany / maxPokolenBezZmiany * 500)) {
+                ch1 = ch1.mutation(iloscPokolenBezZmiany / maxPokolenBezZmiany * dlugoscChromosomu);
+                ch2 = ch2.mutation(iloscPokolenBezZmiany / maxPokolenBezZmiany * dlugoscChromosomu);
             }
 
             newPop.add(ch1);

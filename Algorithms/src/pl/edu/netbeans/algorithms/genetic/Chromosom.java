@@ -53,10 +53,14 @@ public class Chromosom extends LinkedList<Integer> implements Comparable<Chromos
         Chromosom child1 = new Chromosom(length, this.graph);
         Chromosom child2 = new Chromosom(length, this.graph);
 
-        /*
-         * TODO: jakieś randomy
-         */
-        int from = generator.nextInt(length);
+
+        // Znajdz najdłuższą scieżkę do przecięcia
+        int from = 0;
+        for ( int i = 0; i < length; ++i) {
+            if ( getEdgeWeight(i) > getEdgeWeight(from) ) {
+                from = i;
+            }
+        }
         int to = from + generator.nextInt(length - 1);
 
         for (int i = from; i < to; ++i) {
@@ -127,22 +131,32 @@ public class Chromosom extends LinkedList<Integer> implements Comparable<Chromos
         return b.toString();
     }
 
+    /**
+     * Pobiera wagę sciezki i-tego miasta do masta i+1-ego
+     * @param i numer miasta w tablicy porządku
+     * @return waga scieżki do kolejnego miasta
+     */
+    private double getEdgeWeight(int i) {
+        int source = get(i);
+        int target = get(i+1);
+
+        Edge e = graph.getEdge(graph.getEdge(source, target));
+
+        if (e == null) {
+            e = graph.getEdge(graph.getEdge(target, source));
+        }
+
+        if (e != null) {
+            return e.getDouble("weight");
+        }
+
+        return 0;
+    }
+
     public double fitness() {
         double f = 0;
         for (int i = 0; i < size(); ++i) {
-            int source = get(i);
-            int target = get(i + 1);
-
-            Edge e = graph.getEdge(graph.getEdge(source, target));
-
-            if (e == null) {
-                e = graph.getEdge(graph.getEdge(target, source));
-            }
-
-            if (e != null) {
-                f += e.getDouble("weight");
-            }
-
+            f += getEdgeWeight(i);
         }
         return f;
     }

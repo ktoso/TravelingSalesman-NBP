@@ -10,6 +10,7 @@ import org.openide.windows.WindowManager;
 //import org.openide.util.ImageUtilities;
 import org.netbeans.api.settings.ConvertAsProperties;
 import pl.edu.netbeans.algorithms.FirstTSSolverAction;
+import pl.edu.netbeans.algorithms.genetic.Population;
 import pl.edu.netbeans.visualization.actions.RouteDataColorAction;
 import prefuse.Display;
 import prefuse.Visualization;
@@ -44,6 +45,7 @@ public final class VisualizerTopComponent extends TopComponent {
     private Graph graph = null;
     private String nodes = "graph.nodes";
     private Visualization vis = null;
+    private FirstTSSolverAction Solver;
 
     public VisualizerTopComponent() {
         initComponents();
@@ -58,6 +60,10 @@ public final class VisualizerTopComponent extends TopComponent {
     public void open(String filename) {
         super.open();
         initGraph(filename);
+    }
+
+    public Population getPopulation() {
+        return Solver.getPopulation();
     }
 
     /** This method is called from within the constructor to
@@ -189,7 +195,8 @@ public final class VisualizerTopComponent extends TopComponent {
         //layout.add(new ForceDirectedLayout("graph", true, false));
         layout.add(new SpecifiedLayout(nodes,"x", "y"));
         //TODO: zdobywać to przez opcje oraz lookup najlepiej
-        layout.add(new FirstTSSolverAction(graph));
+        Solver = new FirstTSSolverAction(graph);
+        layout.add(Solver);
         //layout.add(new MockTSSolverAction(graph));
         layout.add(new RepaintAction());
 

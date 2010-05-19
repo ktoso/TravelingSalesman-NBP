@@ -27,6 +27,26 @@ public final class GenerateGraphVisualPanel1 extends JPanel {
         return nodeCount.getText();
     }
 
+    public boolean isLoadingExisting() {
+        return loadExisting.isSelected();
+    }
+
+    public String getGraphFilename() {
+        return graphFilename.getSelectedItem().toString();
+    }
+
+    public String getMaxGenerations() {
+        return maxGenerations.getText();
+    }
+
+    public String getMaxGenerationsWithoutGettingBetter() {
+        return maxGenerationsWGB.getText();
+    }
+
+    public String getPopulationSize() {
+        return populationSize.getText();
+    }
+
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -46,7 +66,7 @@ public final class GenerateGraphVisualPanel1 extends JPanel {
         jLabel5 = new javax.swing.JLabel();
         maxGenerationsWGB = new javax.swing.JTextField();
         maxGenerations = new javax.swing.JTextField();
-        generationSize = new javax.swing.JTextField();
+        populationSize = new javax.swing.JTextField();
 
         org.openide.awt.Mnemonics.setLocalizedText(jLabel1, org.openide.util.NbBundle.getMessage(GenerateGraphVisualPanel1.class, "GenerateGraphVisualPanel1.jLabel1.text")); // NOI18N
 
@@ -66,7 +86,7 @@ public final class GenerateGraphVisualPanel1 extends JPanel {
 
         maxGenerations.setText(org.openide.util.NbBundle.getMessage(GenerateGraphVisualPanel1.class, "GenerateGraphVisualPanel1.maxGenerations.text")); // NOI18N
 
-        generationSize.setText(org.openide.util.NbBundle.getMessage(GenerateGraphVisualPanel1.class, "GenerateGraphVisualPanel1.generationSize.text")); // NOI18N
+        populationSize.setText(org.openide.util.NbBundle.getMessage(GenerateGraphVisualPanel1.class, "GenerateGraphVisualPanel1.populationSize.text")); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -106,7 +126,7 @@ public final class GenerateGraphVisualPanel1 extends JPanel {
                                             .addComponent(jLabel5))
                                         .addGap(12, 12, 12)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(generationSize, javax.swing.GroupLayout.DEFAULT_SIZE, 107, Short.MAX_VALUE)
+                                            .addComponent(populationSize, javax.swing.GroupLayout.DEFAULT_SIZE, 107, Short.MAX_VALUE)
                                             .addComponent(maxGenerations, javax.swing.GroupLayout.DEFAULT_SIZE, 107, Short.MAX_VALUE))))
                                 .addGap(13, 13, 13)))
                         .addGap(53, 53, 53)))
@@ -138,12 +158,11 @@ public final class GenerateGraphVisualPanel1 extends JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(generationSize, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(populationSize, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(70, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField generationSize;
     private javax.swing.JComboBox graphFilename;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -155,6 +174,7 @@ public final class GenerateGraphVisualPanel1 extends JPanel {
     private javax.swing.JTextField maxGenerations;
     private javax.swing.JTextField maxGenerationsWGB;
     private javax.swing.JTextField nodeCount;
+    private javax.swing.JTextField populationSize;
     // End of variables declaration//GEN-END:variables
 
     private void initMyComponents() {

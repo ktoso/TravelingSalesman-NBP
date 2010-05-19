@@ -5,7 +5,7 @@
         <folder name="File">
             <file name="pl-edu-netbeans-generators-GenerateGraphWizardAction.instance">
                 <attr name="delegate" newvalue="pl.edu.netbeans.generators.GenerateGraphWizardAction"/>
-                <!--<attr name="iconBase" stringvalue="org/demo/wizard/icon.png"/>-->
+                <attr name="iconBase" stringvalue="org/demo/wizard/icon.png"/>
                 <attr name="instanceCreate" methodvalue="org.openide.awt.Actions.alwaysEnabled"/>
                 <attr name="noIconInMenu" stringvalue="false"/>
             </file>

@@ -45,6 +45,11 @@ public class FirstTSSolverAction extends SolverAction implements TSSolverAction 
         
     }
 
+
+    public Population getPopulation() {
+        return population;
+    }
+
     public String getHumanReadibleName() {
         return "Pierwszy algorytm";
     }

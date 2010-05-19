@@ -10,7 +10,6 @@ import java.io.IOException;
 import java.text.MessageFormat;
 import javax.swing.JComponent;
 import org.openide.DialogDisplayer;
-import org.openide.NotifyDescriptor;
 import org.openide.WizardDescriptor;
 import org.openide.util.Exceptions;
 import org.openide.util.HelpCtx;
@@ -112,17 +111,41 @@ public final class GenerateGraphWizardAction extends CallableSystemAction {
 
         if (!cancelled) {
             String nodeCount = (String) wizardDescriptor.getProperty("nodeCount");
-            DialogDisplayer.getDefault().notify(new NotifyDescriptor.Message("Rozpoczynam generowanie " + nodeCount + " węzłów..."));
+            Boolean loadingExistingGraph = (Boolean) wizardDescriptor.getProperty("loadingExistingGraph");
+//            DialogDisplayer.getDefault().notify(new NotifyDescriptor.Message("Rozpoczynam generowanie " + nodeCount + " węzłów..."));
+            String nodesFilename = "data/example.xml";
+            if (loadingExistingGraph) {
+                nodesFilename = "data/" + (String) wizardDescriptor.getProperty("graphFilename");
+            } else {
+                nodesFilename = doGenerateGraph(Integer.parseInt(nodeCount));//pewne iż jest integerem, przeszło walidację
+            }
 
-            doGenerateGraph(Integer.parseInt(nodeCount));//pewne iż jest integerem, przeszło walidację
+            String maxG = (String) wizardDescriptor.getProperty("maxGenerations");
+            String maxGWGB = (String) wizardDescriptor.getProperty("maxGenerationsWGB");
+            String popSize = (String) wizardDescriptor.getProperty("populationSize");
+
+            
+
+            //TODO: rewrite na lookup
+            //Lookup  global = Lookup.getDefault();
+            VisualizerTopComponent top = new VisualizerTopComponent();
+            top.open(nodesFilename);
+
+            top.getPopulation().setMaxNumerGeneracji(Integer.parseInt(maxG));
+            top.getPopulation().setMaxPokolenBezZmiany(Integer.parseInt(maxGWGB));
+            top.getPopulation().setOsobnikowPopulacji(Integer.parseInt(popSize));
+
+
+            top.requestActive();
         }
     }
 
     /**
      * Generuje oraz otwiera nowy graf o podanej licznie wierzchołków.
      * Nazwy miast może pobrać z data/cities.txt
+     * @return nazwa pliku z grafem
      */
-    private void doGenerateGraph(int nodeCount) {
+    private String doGenerateGraph(int nodeCount) {
         Graph graph = new Graph(false);
 
         //dodaję obsługę potrzebnych nam dodatkowych informacji
@@ -176,13 +199,11 @@ public final class GenerateGraphWizardAction extends CallableSystemAction {
             Exceptions.printStackTrace(ex);
         }
 
+        return nodesFilename;
 
-        DialogDisplayer.getDefault().notify(new NotifyDescriptor.Message("Zakończono generowanie węzłów..."));
 
-        //TODO: rewrite na lookup
-//        Lookup  global = Lookup.getDefault();
-        VisualizerTopComponent top = new VisualizerTopComponent();
-        top.open(nodesFilename);
-        top.requestActive();
+//        DialogDisplayer.getDefault().notify(new NotifyDescriptor.Message("Zakończono generowanie węzłów..."));
+
+
     }
 }
