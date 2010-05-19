@@ -24,6 +24,8 @@ public class Population {
     private final Graph graph;
     private int iloscPokolenBezZmiany = 0;
     private int maxPokolenBezZmiany = 200;
+    private boolean shouldStop = false;
+    private int maxNumerGeneracji = 1500;
 
     /**
      * populacja powinna mieć też graf na podstawie którego bedzie oceniać chromosomy
@@ -108,6 +110,11 @@ public class Population {
 
         numerGeneracji++;
 
+        shouldStop =
+                iloscPokolenBezZmiany > maxPokolenBezZmiany ||
+                numerGeneracji > maxNumerGeneracji;
+        
+
 
 
 //        System.out.println("Populacja: ");
@@ -129,6 +136,11 @@ public class Population {
 
     private boolean getBoolean(int percent) {
         return (generator.nextInt(100) < percent);
+    }
+
+
+    public boolean shouldStop() {
+        return shouldStop;
     }
 
     @SuppressWarnings("unchecked")

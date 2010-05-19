@@ -24,24 +24,22 @@ public class FirstTSSolverAction extends SolverAction implements TSSolverAction 
 
     @Override
     public void run(double frac) {
+        if ( population.shouldStop() ) {
+            getVisualization().getAction("layout").setEnabled(false);
+            Chromosom ch = population.getBestChromosom();
+            log("--- ALGORYTM ZAKONCZONY ---");
+            log("Best (" + ch.fitness() + "):" );
+            log( ch.toString() );
+            return;
+        }
+
         try {
-            this.population.nextGeneration();
-            Chromosom ch = this.population.getBestChromosom();
-            log("Generation " + this.population.getNumerGeneracji() + ": best chromosom: " + ch + " (" + ch.fitness() + ")");
-
-//            Czy w ten sposób możemy konczyć symulację (warunek stopu może być inny)?
-//            if ( this.population.getNumerGeneracji() > 100 ) {
-//                getVisualization().removeAction("layout");
-//            }
-            
-            //testing testing testing testing testing testing testing
-//            graph.getEdge(1).setInt("marked", ( this.population.getNumerGeneracji() / 100) % 4 );
-            //System.out.println(this.population.getNumerGeneracji() + " : " + graph.getEdge(1).getInt("marked") );
-            //testing testing testing testing testing testing testing
-
+            population.nextGeneration();
+            Chromosom ch = population.getBestChromosom();
+            log("Generation " + population.getNumerGeneracji() + ": best chromosom: " + ch + " (" + ch.fitness() + ")");
             
         } catch (Exception ex) {
-            log("ERROR: " + ex.getMessage() );
+            log("ERROR: " + ex );
         }
 
         
