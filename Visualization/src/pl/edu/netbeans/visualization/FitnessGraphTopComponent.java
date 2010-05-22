@@ -3,14 +3,19 @@
 package pl.edu.netbeans.visualization;
 
 import java.awt.BorderLayout;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Logger;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.plot.XYPlot;
 import org.jfree.data.category.CategoryDataset;
-import org.jfree.data.category.DefaultCategoryDataset;
-import org.jfree.data.time.TimeSeries;
+import org.jfree.data.xy.XYDataset;
+import org.jfree.data.xy.XYSeries;
+import org.jfree.data.xy.XYSeriesCollection;
 import org.openide.util.NbBundle;
 import org.openide.windows.TopComponent;
 import org.openide.windows.WindowManager;
@@ -19,7 +24,7 @@ import org.netbeans.api.settings.ConvertAsProperties;
 import org.openide.util.Lookup;
 import org.openide.util.LookupEvent;
 import org.openide.util.LookupListener;
-import prefuse.Visualization;
+import pl.edu.netbeans.toolbox.ChartDataDTO;
 
 /**
  * Top component which displays something.
@@ -32,12 +37,9 @@ public final class FitnessGraphTopComponent extends TopComponent implements Look
     /** path to the icon used by the component and its open action */
 //    static final String ICON_PATH = "SET/PATH/TO/ICON/HERE";
     private static final String PREFERRED_ID = "FitnessGraphTopComponent";
-    private Visualization vis = null;
     int panelHeight, panelWidth;
     /** The time series data. */
-    private TimeSeries series;
-    /** Ostatnio dodana wartość */
-    private double lastValue = 0;
+    private Map<String, XYSeries> series = new HashMap<String, XYSeries>();
 
     public FitnessGraphTopComponent() {
         initComponents();
@@ -60,14 +62,26 @@ public final class FitnessGraphTopComponent extends TopComponent implements Look
      */
     public void setupGraph() {
 
-        final CategoryDataset dataset = createMockDataset();
-//        final JFreeChart chart = createAreaChart(dataset);
+        final XYDataset dataset = new XYSeriesCollection();
         final JFreeChart chart = createXYChart(dataset);
 
         final ChartPanel chartPanel = new ChartPanel(chart);
 
         this.add(chartPanel, BorderLayout.NORTH);
         chartPanel.setPreferredSize(new java.awt.Dimension(500, 270));
+    }
+
+    private JFreeChart createXYChart(XYDataset dataset) {
+        final JFreeChart result = ChartFactory.createTimeSeriesChart(
+                "Wykres fitness chromosomu", "Iteracja", "Wartość",
+                dataset, true, false, false);
+
+        final XYPlot plot = result.getXYPlot();
+        ValueAxis axis = plot.getDomainAxis();
+        axis.setAutoRange(true);
+        axis = plot.getRangeAxis();
+
+        return result;
     }
 
     /**
@@ -83,14 +97,6 @@ public final class FitnessGraphTopComponent extends TopComponent implements Look
                 true, false, false);
 
         result.setAntiAlias(true);
-
-//        final JFreeChart result = ChartFactory.createTimeSeriesChart(
-//                "Wykres fitness chromosomu", "Iteracja", "Wartość",
-//                dataset, true, false, false);
-//        final XYPlot plot = result.getXYPlot();
-//        ValueAxis axis = plot.getDomainAxis();
-//        axis.setAutoRange(true);
-//        axis = plot.getRangeAxis();
         return result;
     }
 
@@ -195,49 +201,25 @@ public final class FitnessGraphTopComponent extends TopComponent implements Look
             return;
         }
 
+        for (Object r : res.allInstances()) {
+            if (r instanceof ChartDataDTO) {
+                addDTO2Series((ChartDataDTO) r);
+            }
+        }
+
         debugText.setText("" + res.allItems());
     }
 
-    /**
-     * Zwraca przykładowe dane dla wykresu.
-     * @return przykładowe dane dla wykresu.
-     */
-    private CategoryDataset createMockDataset() {
-        // row keys...
-        final String series1 = "First";
-        final String series3 = "Third";
+    private void addDTO2Series(ChartDataDTO chartDataDTO) {
+        String id = chartDataDTO.getSimId();
+        int iteration = chartDataDTO.getIteracja();
+        double fitness = chartDataDTO.getFitness();
 
-        // column keys...
-        final Double type1 = 0.;
-        final Double type2 = 1.;
-        final Double type3 = 2.;
-        final Double type4 = 3.;
-        final Double type5 = 4.;
-        final Double type6 = 5.;
-        final Double type7 = 6.;
-        final Double type8 = 7.;
+        if (!series.containsKey(id)) {
+            series.put(id, null);
+        }
 
-        // create the dataset...
-        final DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-
-        dataset.addValue(10.0, series1, type1);
-        dataset.addValue(40.0, series1, type2);
-        dataset.addValue(30.0, series1, type3);
-        dataset.addValue(50.0, series1, type4);
-        dataset.addValue(50.0, series1, type5);
-        dataset.addValue(70.0, series1, type6);
-        dataset.addValue(70.0, series1, type7);
-        dataset.addValue(80.0, series1, type8);
-
-        dataset.addValue(44.0, series3, type1);
-        dataset.addValue(43.0, series3, type2);
-        dataset.addValue(42.0, series3, type3);
-        dataset.addValue(43.0, series3, type4);
-        dataset.addValue(46.0, series3, type5);
-        dataset.addValue(43.0, series3, type6);
-        dataset.addValue(44.0, series3, type7);
-        dataset.addValue(43.0, series3, type8);
-
-        return dataset;
+        XYSeries s = series.get(id);
+        s.add(iteration, fitness);
     }
 }

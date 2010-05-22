@@ -13,6 +13,7 @@ import org.openide.windows.TopComponent;
 import org.openide.windows.WindowManager;
 import pl.edu.netbeans.algorithms.genetic.Chromosom;
 import pl.edu.netbeans.algorithms.genetic.Population;
+import pl.edu.netbeans.toolbox.ChartDataDTO;
 import prefuse.data.Graph;
 
 /**
@@ -24,11 +25,14 @@ public class FirstTSSolverAction extends SolverAction implements TSSolverAction,
 
     private final Population population;
     private int iloscOsobnikow = 50; // Pwoinno być ustawiane w programie
+    
+    /**Służy indentyfikacji różnych serii danych podczas rysowania wykresów*/
+    private final String SIMULATION_ID = "sim-from-" + System.currentTimeMillis();
 
     /*Kosmiczna komunikacja między-wątkowo-modułowa poprzez dynamiczne lookupy*/
     InstanceContent dynamicContent = new InstanceContent();
     Lookup myLookup = new AbstractLookup(dynamicContent);
- 
+
     public FirstTSSolverAction(Graph graph) {
         super(graph);
         population = new Population(iloscOsobnikow, graph);
@@ -53,7 +57,7 @@ public class FirstTSSolverAction extends SolverAction implements TSSolverAction,
             log("Generation " + population.getNumerGeneracji() + ": best chromosom: " + ch + " (" + ch.fitness() + ")");
 
             /* Słuchający tego lookup zostaną powiadomieni o zmianie, przerysują wykres */
-            dynamicContent.add(ch.fitness());
+            dynamicContent.add(new ChartDataDTO(population.getNumerGeneracji(), ch.fitness(), SIMULATION_ID));
 
         } catch (Exception ex) {
             log("ERROR in FirstTSSolver: " + ex);
@@ -94,8 +98,8 @@ public class FirstTSSolverAction extends SolverAction implements TSSolverAction,
             JOptionPane.showMessageDialog(null, "NIE ZNALEZIONO FitnessGraphTopComponent!!!", "Wystąpił dość krytyczny błąd!", JOptionPane.ERROR_MESSAGE);
         }
 
-        //reaguj na dodania Doubli - czyli kolejnych wartości fitness
-        Lookup.Result res = myLookup.lookup(new Lookup.Template(Double.class));
+        //reaguj na dodania DTO; w nich przekazujemy wszystkie istotne innym informacje
+        Lookup.Result res = myLookup.lookup(new Lookup.Template(ChartDataDTO.class));
         res.addLookupListener((LookupListener) drawer);
     }
 }
