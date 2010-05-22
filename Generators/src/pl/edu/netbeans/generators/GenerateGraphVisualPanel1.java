@@ -13,7 +13,7 @@ import javax.swing.JPanel;
 
 public final class GenerateGraphVisualPanel1 extends JPanel {
 
-    private static final String DATA_FOLDER = "../data";
+    private static final String DATA_FOLDER = "data/";
 
     /** Creates new form GenerateGraphVisualPanel1 */
     public GenerateGraphVisualPanel1() {
@@ -95,6 +95,11 @@ public final class GenerateGraphVisualPanel1 extends JPanel {
         });
 
         maxGenerations.setText(org.openide.util.NbBundle.getMessage(GenerateGraphVisualPanel1.class, "GenerateGraphVisualPanel1.maxGenerations.text")); // NOI18N
+        maxGenerations.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                maxGenerationsActionPerformed(evt);
+            }
+        });
 
         populationSize.setText(org.openide.util.NbBundle.getMessage(GenerateGraphVisualPanel1.class, "GenerateGraphVisualPanel1.populationSize.text")); // NOI18N
 
@@ -131,9 +136,9 @@ public final class GenerateGraphVisualPanel1 extends JPanel {
                                     .addComponent(jLabel3))
                                 .addGap(10, 10, 10)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(maxGenerationsWGB, javax.swing.GroupLayout.DEFAULT_SIZE, 109, Short.MAX_VALUE)
-                                    .addComponent(maxGenerations, javax.swing.GroupLayout.DEFAULT_SIZE, 109, Short.MAX_VALUE)
-                                    .addComponent(populationSize, javax.swing.GroupLayout.DEFAULT_SIZE, 109, Short.MAX_VALUE))
+                                    .addComponent(maxGenerationsWGB, javax.swing.GroupLayout.DEFAULT_SIZE, 110, Short.MAX_VALUE)
+                                    .addComponent(maxGenerations, javax.swing.GroupLayout.DEFAULT_SIZE, 110, Short.MAX_VALUE)
+                                    .addComponent(populationSize, javax.swing.GroupLayout.DEFAULT_SIZE, 110, Short.MAX_VALUE))
                                 .addGap(13, 13, 13)))
                         .addGap(53, 53, 53)))
                 .addContainerGap())
@@ -172,6 +177,11 @@ public final class GenerateGraphVisualPanel1 extends JPanel {
     private void maxGenerationsWGBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_maxGenerationsWGBActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_maxGenerationsWGBActionPerformed
+
+    private void maxGenerationsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_maxGenerationsActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_maxGenerationsActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox graphFilename;
     private javax.swing.JLabel jLabel1;

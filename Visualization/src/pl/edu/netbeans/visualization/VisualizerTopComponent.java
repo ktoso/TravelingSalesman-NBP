@@ -174,6 +174,7 @@ public final class VisualizerTopComponent extends TopComponent {
      */
     @Override
     public boolean canClose() {
+        vis.removeAction("layout");
         vis = null;
 
         if (graph != null) {
@@ -212,7 +213,7 @@ public final class VisualizerTopComponent extends TopComponent {
         vis.setRendererFactory(new DefaultRendererFactory(r));
 
         ColorAction text = new ColorAction(nodes, VisualItem.TEXTCOLOR, ColorLib.gray(0));
-        ColorAction fill = new ColorAction(nodes, VisualItem.FILLCOLOR, ColorLib.rgb(200, 200, 255));//kolor Node'ów
+        ColorAction fill = new ColorAction(nodes, VisualItem.FILLCOLOR, ColorLib.rgba(200, 200, 255, 150));//kolor Node'ów
         ColorAction dataMarked = new RouteDataColorAction();
 
         ActionList color = new ActionList(Activity.INFINITY);

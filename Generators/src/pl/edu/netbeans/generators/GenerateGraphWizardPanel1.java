@@ -126,6 +126,10 @@ public class GenerateGraphWizardPanel1 implements WizardDescriptor.ValidatingPan
         if (!populationSize.matches("\\d+")) {
             throw new WizardValidationException(null, "Proszę podać poprawną liczbę całkowitą", null);
         }
+        Integer popSize = Integer.parseInt(populationSize);
+        if (popSize < 10 || popSize > 1000) {
+            throw new WizardValidationException(null, "Rozmiar populacji musi być liczbą z przedziału (10, 1000)", null);
+        }
     }
 }
 
