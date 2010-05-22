@@ -56,8 +56,8 @@ public class Chromosom extends LinkedList<Integer> implements Comparable<Chromos
 
         // Znajdz najdłuższą scieżkę do przecięcia
         int from = 0;
-        for ( int i = 0; i < length; ++i) {
-            if ( getEdgeWeight(i) > getEdgeWeight(from) ) {
+        for (int i = 0; i < length; ++i) {
+            if (getEdgeWeight(i) > getEdgeWeight(from)) {
                 from = i;
             }
         }
@@ -137,8 +137,13 @@ public class Chromosom extends LinkedList<Integer> implements Comparable<Chromos
      * @return waga scieżki do kolejnego miasta
      */
     private double getEdgeWeight(int i) {
+        //FIXME: HACK: brzydkie, ale lepsz "na szybko" to niż jazda po krawędziach których nie ma (nulle)
+        if (i < 0) {
+            return Integer.MAX_VALUE;
+        }
+
         int source = get(i);
-        int target = get(i+1);
+        int target = get(i + 1);
 
         Edge e = graph.getEdge(graph.getEdge(source, target));
 

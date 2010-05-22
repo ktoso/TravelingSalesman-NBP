@@ -3,8 +3,10 @@
 package pl.edu.netbeans.visualization;
 
 import java.awt.BorderLayout;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
 import java.util.logging.Logger;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -12,7 +14,6 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
-import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
@@ -39,14 +40,14 @@ public final class FitnessGraphTopComponent extends TopComponent implements Look
 //    static final String ICON_PATH = "SET/PATH/TO/ICON/HERE";
     private static final String PREFERRED_ID = "FitnessGraphTopComponent";
     private Visualization vis = null;
-    int panelHeight, panelWidth;
     /** The time series data. */
-    private Map<String, XYSeries> series = new HashMap<String, XYSeries>();
+    private XYSeriesCollection dataset;
+    private List<String> knownIDs = new ArrayList<String>(10);
+    private static int calledCounter = 0;
 
     public FitnessGraphTopComponent() {
         initComponents();
         setupChart();
-
 
         setName(NbBundle.getMessage(FitnessGraphTopComponent.class, "CTL_FitnessGraphTopComponent"));
         setToolTipText(NbBundle.getMessage(FitnessGraphTopComponent.class, "HINT_FitnessGraphTopComponent"));
@@ -62,8 +63,7 @@ public final class FitnessGraphTopComponent extends TopComponent implements Look
      * @param title  the frame title.
      */
     public void setupChart() {
-
-        final XYDataset dataset = new XYSeriesCollection();
+        dataset = new XYSeriesCollection();
         final JFreeChart chart = createXYChart(dataset);
 
         final ChartPanel chartPanel = new ChartPanel(chart);
@@ -72,32 +72,21 @@ public final class FitnessGraphTopComponent extends TopComponent implements Look
         chartPanel.setPreferredSize(new java.awt.Dimension(500, 270));
     }
 
-    private JFreeChart createXYChart(XYDataset dataset) {
-        final JFreeChart result = ChartFactory.createTimeSeriesChart(
-                "Wykres fitness chromosomu", "Iteracja", "Wartość",
-                dataset, true, false, false);
-
-        final XYPlot plot = result.getXYPlot();
-        ValueAxis axis = plot.getDomainAxis();
-        axis.setAutoRange(true);
-        axis = plot.getRangeAxis();
-
-        return result;
-    }
-
     /**
-     * Creates a sample chart.
-     *
-     * @param dataset  the dataset.
-     * @return A sample chart.
+     * Buduje i zwraca wykres typu XY (liniowy) odpowiednio poustawiany i poopisywany
+     * @param dataset źródło danych dla tego wykresu
+     * @return przygotowany do użycia wykres
      */
-    private JFreeChart createAreaChart(final CategoryDataset dataset) {
-        final JFreeChart result = ChartFactory.createAreaChart(
-                "Fittnes chromosomu", "Iteracja", "Wartość",
+    private JFreeChart createXYChart(XYDataset dataset) {
+        final JFreeChart result = ChartFactory.createXYLineChart(
+                "Wykres fitness chromosomu", "Iteracja", "Wartość",
                 dataset, PlotOrientation.VERTICAL,
                 true, false, false);
 
-        result.setAntiAlias(true);
+        final XYPlot plot = result.getXYPlot();
+        ValueAxis axis = plot.getRangeAxis();
+        axis.setAutoRange(true);
+
         return result;
     }
 
@@ -109,18 +98,40 @@ public final class FitnessGraphTopComponent extends TopComponent implements Look
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        debugText = new javax.swing.JTextField();
+        jPanel1 = new javax.swing.JPanel();
+        clearBtn = new javax.swing.JButton();
 
         setLayout(new java.awt.BorderLayout());
 
-        debugText.setText(org.openide.util.NbBundle.getMessage(FitnessGraphTopComponent.class, "FitnessGraphTopComponent.debugText.text")); // NOI18N
-        /*
-        add(debugText, java.awt.BorderLayout.CENTER);
-        */
-        add(debugText, java.awt.BorderLayout.SOUTH);
+        org.openide.awt.Mnemonics.setLocalizedText(clearBtn, org.openide.util.NbBundle.getMessage(FitnessGraphTopComponent.class, "FitnessGraphTopComponent.clearBtn.text")); // NOI18N
+        clearBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clearBtnActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(clearBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 537, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(clearBtn)
+                .addContainerGap(287, Short.MAX_VALUE))
+        );
+
+        add(jPanel1, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void clearBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearBtnActionPerformed
+        dataset.removeAllSeries();
+    }//GEN-LAST:event_clearBtnActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField debugText;
+    private javax.swing.JButton clearBtn;
+    private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 
     /**
@@ -166,7 +177,7 @@ public final class FitnessGraphTopComponent extends TopComponent implements Look
 
     @Override
     public void componentClosed() {
-        // TODO add custom code on component closing
+        dataset.removeAllSeries();
     }
 
     void writeProperties(java.util.Properties p) {
@@ -197,18 +208,27 @@ public final class FitnessGraphTopComponent extends TopComponent implements Look
     @Override
     public void resultChanged(LookupEvent ev) {
         Lookup.Result res = (Lookup.Result) ev.getSource();
-        if (res == null) {
-            System.err.println("null Lookup.Result in FitnessGraph...");
-            return;
-        }
+        Collection instances = res.allInstances();
 
-        for (Object r : res.allInstances()) {
-            if (r instanceof ChartDataDTO) {
-                addDTO2Series((ChartDataDTO) r);
+        if (!instances.isEmpty()) {
+            Iterator it = instances.iterator();
+            while (it.hasNext()) {
+                ChartDataDTO o = (ChartDataDTO) it.next();
+                addDTO2Series(o);
             }
+
+//            for (Object r : instances) {
+//                if (r instanceof ChartDataDTO) {
+//                    addDTO2Series((ChartDataDTO) r);
+//                }
+//            }
+
+            System.out.println("" + res.allItems());
+        } else {
+            System.err.println("no instances in FitnessGraph...");
         }
 
-        debugText.setText("" + res.allItems());
+        System.out.println("--called: " + calledCounter++ + "--");
     }
 
     private void addDTO2Series(ChartDataDTO chartDataDTO) {
@@ -216,11 +236,20 @@ public final class FitnessGraphTopComponent extends TopComponent implements Look
         int iteration = chartDataDTO.getIteracja();
         double fitness = chartDataDTO.getFitness();
 
-        if (!series.containsKey(id)) {
-            series.put(id, null);
+        if (!isSeriesIdKnown(id)) {
+            addSeriesForId(id);
         }
 
-        XYSeries s = series.get(id);
+        XYSeries s = dataset.getSeries(id);
         s.add(iteration, fitness);
+    }
+
+    private boolean isSeriesIdKnown(String id) {
+        return knownIDs.contains(id);
+    }
+
+    private void addSeriesForId(String id) {
+        dataset.addSeries(new XYSeries(id));
+        knownIDs.add(id);
     }
 }

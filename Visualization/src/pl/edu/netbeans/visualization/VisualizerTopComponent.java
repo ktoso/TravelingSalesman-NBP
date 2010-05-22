@@ -59,6 +59,8 @@ public final class VisualizerTopComponent extends TopComponent {
 
     public void open(String filename) {
         super.open();
+        super.setName(filename);
+
         initGraph(filename);
     }
 

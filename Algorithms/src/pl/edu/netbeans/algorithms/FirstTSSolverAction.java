@@ -23,11 +23,13 @@ import prefuse.data.Graph;
  */
 public class FirstTSSolverAction extends SolverAction implements TSSolverAction, Lookup.Provider {//bo zdaje się tak sensownie jest do tego się dobrać przez lookup następnie
 
+    /**Bardzo istotna zmienna, zachowuje ostatnio wysłany DTO, aby w kolejnej iteracji być w stanie go usunąć, umożliwiając banalne rysowanie wykresu przez inny moduł*/
+    private ChartDataDTO lastSentByMe;
     private final Population population;
     private int iloscOsobnikow = 50; // Pwoinno być ustawiane w programie
-    
     /**Służy indentyfikacji różnych serii danych podczas rysowania wykresów*/
-    private final String SIMULATION_ID = "sim-from-" + System.currentTimeMillis();
+    private static int simcount = 1;
+    private String SIMULATION_ID = "symulacja " + FirstTSSolverAction.simcount++;
 
     /*Kosmiczna komunikacja między-wątkowo-modułowa poprzez dynamiczne lookupy*/
     InstanceContent dynamicContent = new InstanceContent();
@@ -48,15 +50,21 @@ public class FirstTSSolverAction extends SolverAction implements TSSolverAction,
             log("--- ALGORYTM ZAKONCZONY ---");
             log("Best (" + ch.fitness() + "):");
             log(ch.toString());
+
             return;
         }
 
-            population.nextGeneration();
-            Chromosom ch = population.getBestChromosom();
-            log("Generation " + population.getNumerGeneracji() + ": best chromosom: " + ch + " (" + ch.fitness() + ")");
+        population.nextGeneration();
+        Chromosom ch = population.getBestChromosom();
+        int numerGeneracji = population.getNumerGeneracji();
+        double fitness = ch.fitness();
 
-            /* Słuchający tego lookup zostaną powiadomieni o zmianie, przerysują wykres */
-            dynamicContent.add(new ChartDataDTO(population.getNumerGeneracji(), ch.fitness(), SIMULATION_ID));
+        log("Generation " + numerGeneracji + ": best chromosom: " + ch + " (" + fitness + ")");
+
+        removeLastSent();
+        /* Słuchający tego lookup zostaną powiadomieni o zmianie, przerysują wykres */
+        lastSentByMe = new ChartDataDTO(numerGeneracji, fitness, SIMULATION_ID);
+        dynamicContent.add(lastSentByMe);
 
 //        } catch (NullPointerException ex) {
 //            log("ERROR in FirstTSSolver: " + ex);
@@ -64,6 +72,14 @@ public class FirstTSSolverAction extends SolverAction implements TSSolverAction,
 //        }
 
 
+    }
+
+    private void removeLastSent() {
+        if (lastSentByMe == null) {
+            return;
+        }
+
+        dynamicContent.remove(lastSentByMe);
     }
 
     public Population getPopulation() {
@@ -94,7 +110,7 @@ public class FirstTSSolverAction extends SolverAction implements TSSolverAction,
         //znajdź implementację LineChartDrawer
         TopComponent drawer = WindowManager.getDefault().findTopComponent("FitnessGraphTopComponent");
         if (drawer == null) {
-            JOptionPane.showMessageDialog(null, "NIE ZNALEZIONO FitnessGraphTopComponent!!!", "Wystąpił dość krytyczny błąd!", JOptionPane.ERROR_MESSAGE);
+            throw new RuntimeException("Nie znaleziono implementacji FitnessGraphTopComponent. Nikt mnie nie słucha!");
         }
 
         //reaguj na dodania DTO; w nich przekazujemy wszystkie istotne innym informacje
