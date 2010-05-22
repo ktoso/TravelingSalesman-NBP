@@ -4,16 +4,13 @@ package pl.edu.netbeans.visualization;
 
 import java.awt.BorderLayout;
 import java.util.logging.Logger;
-import javax.swing.JButton;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
-import org.jfree.chart.axis.ValueAxis;
-import org.jfree.chart.plot.XYPlot;
-import org.jfree.data.time.Millisecond;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.category.CategoryDataset;
+import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.time.TimeSeries;
-import org.jfree.data.time.TimeSeriesCollection;
-import org.jfree.data.xy.XYDataset;
 import org.openide.util.NbBundle;
 import org.openide.windows.TopComponent;
 import org.openide.windows.WindowManager;
@@ -37,7 +34,6 @@ public final class FitnessGraphTopComponent extends TopComponent implements Look
     private static final String PREFERRED_ID = "FitnessGraphTopComponent";
     private Visualization vis = null;
     int panelHeight, panelWidth;
-
     /** The time series data. */
     private TimeSeries series;
     /** Ostatnio dodana wartość */
@@ -46,6 +42,7 @@ public final class FitnessGraphTopComponent extends TopComponent implements Look
     public FitnessGraphTopComponent() {
         initComponents();
 //        initGraph();
+        setupGraph();
 
 
         setName(NbBundle.getMessage(FitnessGraphTopComponent.class, "CTL_FitnessGraphTopComponent"));
@@ -63,18 +60,14 @@ public final class FitnessGraphTopComponent extends TopComponent implements Look
      */
     public void setupGraph() {
 
-        this.series = new TimeSeries("Random Data", Millisecond.class);
-        final TimeSeriesCollection dataset = new TimeSeriesCollection(this.series);
-        final JFreeChart chart = createChart(dataset);
+        final CategoryDataset dataset = createMockDataset();
+//        final JFreeChart chart = createAreaChart(dataset);
+        final JFreeChart chart = createXYChart(dataset);
 
         final ChartPanel chartPanel = new ChartPanel(chart);
-        final JButton button = new JButton("Add New Data Item");
-        button.setActionCommand("ADD_DATA");
-//        button.addActionListener(this);
 
-        this.add(chartPanel);
-        this.add(button, BorderLayout.SOUTH);
-        this.setPreferredSize(new java.awt.Dimension(500, 270));
+        this.add(chartPanel, BorderLayout.NORTH);
+        chartPanel.setPreferredSize(new java.awt.Dimension(500, 270));
     }
 
     /**
@@ -83,21 +76,21 @@ public final class FitnessGraphTopComponent extends TopComponent implements Look
      * @param dataset  the dataset.
      * @return A sample chart.
      */
-    private JFreeChart createChart(final XYDataset dataset) {
-        final JFreeChart result = ChartFactory.createTimeSeriesChart(
-                "Dynamic Data Demo",
-                "Time",
-                "Value",
-                dataset,
-                true,
-                true,
-                false);
-        final XYPlot plot = result.getXYPlot();
-        ValueAxis axis = plot.getDomainAxis();
-        axis.setAutoRange(true);
-        axis.setFixedAutoRange(60000.0);  // 60 seconds
-        axis = plot.getRangeAxis();
-        axis.setRange(0.0, 200.0);
+    private JFreeChart createAreaChart(final CategoryDataset dataset) {
+        final JFreeChart result = ChartFactory.createAreaChart(
+                "Fittnes chromosomu", "Iteracja", "Wartość",
+                dataset, PlotOrientation.VERTICAL,
+                true, false, false);
+
+        result.setAntiAlias(true);
+
+//        final JFreeChart result = ChartFactory.createTimeSeriesChart(
+//                "Wykres fitness chromosomu", "Iteracja", "Wartość",
+//                dataset, true, false, false);
+//        final XYPlot plot = result.getXYPlot();
+//        ValueAxis axis = plot.getDomainAxis();
+//        axis.setAutoRange(true);
+//        axis = plot.getRangeAxis();
         return result;
     }
 
@@ -109,25 +102,18 @@ public final class FitnessGraphTopComponent extends TopComponent implements Look
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jTextField1 = new javax.swing.JTextField();
+        debugText = new javax.swing.JTextField();
 
-        jTextField1.setText(org.openide.util.NbBundle.getMessage(FitnessGraphTopComponent.class, "FitnessGraphTopComponent.jTextField1.text")); // NOI18N
+        setLayout(new java.awt.BorderLayout());
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(281, Short.MAX_VALUE))
-        );
+        debugText.setText(org.openide.util.NbBundle.getMessage(FitnessGraphTopComponent.class, "FitnessGraphTopComponent.debugText.text")); // NOI18N
+        /*
+        add(debugText, java.awt.BorderLayout.CENTER);
+        */
+        add(debugText, java.awt.BorderLayout.SOUTH);
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField debugText;
     // End of variables declaration//GEN-END:variables
 
     /**
@@ -201,78 +187,6 @@ public final class FitnessGraphTopComponent extends TopComponent implements Look
         return PREFERRED_ID;
     }
 
-    private void initGraph() {
-//        vis = new Visualization();
-//
-//
-//        graph = new Graph();
-//        graph.addColumn("x", int.class);
-//        graph.addColumn("y", int.class);
-//
-//        Node n1 = graph.addNode();
-//        n1.setInt("x", 0);
-//        n1.setInt("y", 10);
-//
-//        Node n2 = graph.addNode();
-//        n1.setInt("x", 10);
-//        n1.setInt("y", 30);
-//
-//        Node n3 = graph.addNode();
-//        n1.setInt("x", 20);
-//        n1.setInt("y", 5);
-//
-//        graph.addEdge(n1, n2);
-//        graph.addEdge(n2, n3);
-//
-//
-//
-//        Renderer nodeR = new ShapeRenderer(20);
-//        // draw aggregates as polygons with curved edges
-//        Renderer polyR = new PolygonRenderer(Constants.POLY_TYPE_CURVE);
-//        ((PolygonRenderer) polyR).setCurveSlack(0.15f);
-//
-//        DefaultRendererFactory drf = new DefaultRendererFactory();
-//        drf.setDefaultRenderer(nodeR);
-////        drf.add("ingroup('aggregates')", polyR);
-//        drf.add("TRUE", polyR);
-//        vis.setRendererFactory(drf);
-//
-//        vis.add("graph", graph);
-//
-//
-//        ActionList layout = new ActionList(Activity.INFINITY);
-//        layout.add(new SpecifiedLayout(nodes, "x", "y"));
-//        layout.add(new RepaintAction());
-//
-//
-//
-//        ColorAction text = new ColorAction(nodes, VisualItem.TEXTCOLOR, ColorLib.gray(0));
-//        ColorAction fill = new ColorAction(nodes, VisualItem.FILLCOLOR, ColorLib.rgb(200, 200, 255));//kolor Node'ów
-//        ColorAction dataMarked = new ColorAction(nodes, VisualItem.FILLCOLOR, ColorLib.red(100));
-//
-//        ActionList color = new ActionList(Activity.INFINITY);
-//        color.add(fill);
-//        color.add(text);
-//        color.add(dataMarked);
-//
-//        // add the actions to the visualization
-//        vis.putAction("color", color);
-//        vis.putAction("layout", layout);
-//
-//
-//        Display display = new Display(vis);
-//        display.pan(300, 300);
-//
-//        add(new MyAggregateDemo());
-//
-//
-//        vis.run("color");  // assign the colors
-//        vis.run("layout"); // start up the animated layout
-//
-//        revalidate();
-//        repaint();
-    }
-
     @Override
     public void resultChanged(LookupEvent ev) {
         Lookup.Result res = (Lookup.Result) ev.getSource();
@@ -281,6 +195,49 @@ public final class FitnessGraphTopComponent extends TopComponent implements Look
             return;
         }
 
-        jTextField1.setText("" + res.allItems());
+        debugText.setText("" + res.allItems());
+    }
+
+    /**
+     * Zwraca przykładowe dane dla wykresu.
+     * @return przykładowe dane dla wykresu.
+     */
+    private CategoryDataset createMockDataset() {
+        // row keys...
+        final String series1 = "First";
+        final String series3 = "Third";
+
+        // column keys...
+        final Double type1 = 0.;
+        final Double type2 = 1.;
+        final Double type3 = 2.;
+        final Double type4 = 3.;
+        final Double type5 = 4.;
+        final Double type6 = 5.;
+        final Double type7 = 6.;
+        final Double type8 = 7.;
+
+        // create the dataset...
+        final DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+
+        dataset.addValue(10.0, series1, type1);
+        dataset.addValue(40.0, series1, type2);
+        dataset.addValue(30.0, series1, type3);
+        dataset.addValue(50.0, series1, type4);
+        dataset.addValue(50.0, series1, type5);
+        dataset.addValue(70.0, series1, type6);
+        dataset.addValue(70.0, series1, type7);
+        dataset.addValue(80.0, series1, type8);
+
+        dataset.addValue(44.0, series3, type1);
+        dataset.addValue(43.0, series3, type2);
+        dataset.addValue(42.0, series3, type3);
+        dataset.addValue(43.0, series3, type4);
+        dataset.addValue(46.0, series3, type5);
+        dataset.addValue(43.0, series3, type6);
+        dataset.addValue(44.0, series3, type7);
+        dataset.addValue(43.0, series3, type8);
+
+        return dataset;
     }
 }
