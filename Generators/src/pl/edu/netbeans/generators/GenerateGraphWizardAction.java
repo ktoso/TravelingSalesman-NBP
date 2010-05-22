@@ -116,7 +116,7 @@ public final class GenerateGraphWizardAction extends CallableSystemAction {
 
             String nodesFilename;
             if (loadingExistingGraph) {
-                nodesFilename = DATA_FOLDER + (String) wizardDescriptor.getProperty("graphFilename");
+                nodesFilename = DATA_FOLDER + File.separator + (String) wizardDescriptor.getProperty("graphFilename");
             } else {
                 nodesFilename = doGenerateGraph(Integer.parseInt(nodeCount));//pewne iż jest integerem, przeszło walidację
             }

@@ -2,7 +2,18 @@
  */
 package pl.edu.netbeans.visualization;
 
+import java.awt.BorderLayout;
 import java.util.logging.Logger;
+import javax.swing.JButton;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.axis.ValueAxis;
+import org.jfree.chart.plot.XYPlot;
+import org.jfree.data.time.Millisecond;
+import org.jfree.data.time.TimeSeries;
+import org.jfree.data.time.TimeSeriesCollection;
+import org.jfree.data.xy.XYDataset;
 import org.openide.util.NbBundle;
 import org.openide.windows.TopComponent;
 import org.openide.windows.WindowManager;
@@ -12,7 +23,6 @@ import org.openide.util.Lookup;
 import org.openide.util.LookupEvent;
 import org.openide.util.LookupListener;
 import prefuse.Visualization;
-import prefuse.data.Graph;
 
 /**
  * Top component which displays something.
@@ -25,10 +35,13 @@ public final class FitnessGraphTopComponent extends TopComponent implements Look
     /** path to the icon used by the component and its open action */
 //    static final String ICON_PATH = "SET/PATH/TO/ICON/HERE";
     private static final String PREFERRED_ID = "FitnessGraphTopComponent";
-    private Graph graph = null;
-    private String nodes = "graph.nodes";
     private Visualization vis = null;
     int panelHeight, panelWidth;
+
+    /** The time series data. */
+    private TimeSeries series;
+    /** Ostatnio dodana wartość */
+    private double lastValue = 0;
 
     public FitnessGraphTopComponent() {
         initComponents();
@@ -41,6 +54,51 @@ public final class FitnessGraphTopComponent extends TopComponent implements Look
         putClientProperty(TopComponent.PROP_CLOSING_DISABLED, Boolean.TRUE);
         putClientProperty(TopComponent.PROP_MAXIMIZATION_DISABLED, Boolean.TRUE);
         putClientProperty(TopComponent.PROP_SLIDING_DISABLED, Boolean.TRUE);
+    }
+
+    /**
+     * Constructs a new demonstration application.
+     *
+     * @param title  the frame title.
+     */
+    public void setupGraph() {
+
+        this.series = new TimeSeries("Random Data", Millisecond.class);
+        final TimeSeriesCollection dataset = new TimeSeriesCollection(this.series);
+        final JFreeChart chart = createChart(dataset);
+
+        final ChartPanel chartPanel = new ChartPanel(chart);
+        final JButton button = new JButton("Add New Data Item");
+        button.setActionCommand("ADD_DATA");
+//        button.addActionListener(this);
+
+        this.add(chartPanel);
+        this.add(button, BorderLayout.SOUTH);
+        this.setPreferredSize(new java.awt.Dimension(500, 270));
+    }
+
+    /**
+     * Creates a sample chart.
+     *
+     * @param dataset  the dataset.
+     * @return A sample chart.
+     */
+    private JFreeChart createChart(final XYDataset dataset) {
+        final JFreeChart result = ChartFactory.createTimeSeriesChart(
+                "Dynamic Data Demo",
+                "Time",
+                "Value",
+                dataset,
+                true,
+                true,
+                false);
+        final XYPlot plot = result.getXYPlot();
+        ValueAxis axis = plot.getDomainAxis();
+        axis.setAutoRange(true);
+        axis.setFixedAutoRange(60000.0);  // 60 seconds
+        axis = plot.getRangeAxis();
+        axis.setRange(0.0, 200.0);
+        return result;
     }
 
     /** This method is called from within the constructor to
@@ -218,11 +276,11 @@ public final class FitnessGraphTopComponent extends TopComponent implements Look
     @Override
     public void resultChanged(LookupEvent ev) {
         Lookup.Result res = (Lookup.Result) ev.getSource();
-        if(res == null){
+        if (res == null) {
             System.err.println("null Lookup.Result in FitnessGraph...");
             return;
         }
-        
+
         jTextField1.setText("" + res.allItems());
     }
 }
