@@ -7,7 +7,6 @@ import java.util.logging.Logger;
 import org.openide.util.NbBundle;
 import org.openide.windows.TopComponent;
 import org.openide.windows.WindowManager;
-//import org.openide.util.ImageUtilities;
 import org.netbeans.api.settings.ConvertAsProperties;
 import pl.edu.netbeans.algorithms.FirstTSSolverAction;
 import pl.edu.netbeans.algorithms.genetic.Population;
@@ -45,15 +44,16 @@ public final class VisualizerTopComponent extends TopComponent {
     private Graph graph = null;
     private String nodes = "graph.nodes";
     private Visualization vis = null;
-    private FirstTSSolverAction Solver;
+    private FirstTSSolverAction solver;
+    int panelHeight, panelWidth;
 
     public VisualizerTopComponent() {
         initComponents();
         setName(NbBundle.getMessage(VisualizerTopComponent.class, "CTL_VisualizerTopComponent"));
         setToolTipText(NbBundle.getMessage(VisualizerTopComponent.class, "HINT_VisualizerTopComponent"));
 
-        putClientProperty(TopComponent.PROP_DRAGGING_DISABLED, Boolean.TRUE);
-        putClientProperty(TopComponent.PROP_MAXIMIZATION_DISABLED, Boolean.TRUE);
+        putClientProperty(TopComponent.PROP_DRAGGING_DISABLED, Boolean.FALSE);
+        putClientProperty(TopComponent.PROP_MAXIMIZATION_DISABLED, Boolean.FALSE);
         putClientProperty(TopComponent.PROP_UNDOCKING_DISABLED, Boolean.TRUE);
     }
 
@@ -63,7 +63,7 @@ public final class VisualizerTopComponent extends TopComponent {
     }
 
     public Population getPopulation() {
-        return Solver.getPopulation();
+        return solver.getPopulation();
     }
 
     /** This method is called from within the constructor to
@@ -128,7 +128,7 @@ public final class VisualizerTopComponent extends TopComponent {
 
     @Override
     public int getPersistenceType() {
-        return TopComponent.PERSISTENCE_ALWAYS;
+        return TopComponent.PERSISTENCE_ALWAYS;//nie zapamiętuj że był otwarty
     }
 
     @Override
@@ -193,10 +193,10 @@ public final class VisualizerTopComponent extends TopComponent {
         //poniższa seria akcji będzie wykonywana w nieskończoność
         ActionList layout = new ActionList(Activity.INFINITY);
         //layout.add(new ForceDirectedLayout("graph", true, false));
-        layout.add(new SpecifiedLayout(nodes,"x", "y"));
+        layout.add(new SpecifiedLayout(nodes, "x", "y"));
         //TODO: zdobywać to przez opcje oraz lookup najlepiej
-        Solver = new FirstTSSolverAction(graph);
-        layout.add(Solver);
+        solver = new FirstTSSolverAction(graph);
+        layout.add(solver);
         //layout.add(new MockTSSolverAction(graph));
         layout.add(new RepaintAction());
 
@@ -210,7 +210,7 @@ public final class VisualizerTopComponent extends TopComponent {
         vis.setRendererFactory(new DefaultRendererFactory(r));
 
         ColorAction text = new ColorAction(nodes, VisualItem.TEXTCOLOR, ColorLib.gray(0));
-        ColorAction fill = new ColorAction(nodes, VisualItem.FILLCOLOR, ColorLib.rgb(200,200,255));//kolor Node'ów
+        ColorAction fill = new ColorAction(nodes, VisualItem.FILLCOLOR, ColorLib.rgb(200, 200, 255));//kolor Node'ów
         ColorAction dataMarked = new RouteDataColorAction();
 
         ActionList color = new ActionList(Activity.INFINITY);
@@ -237,6 +237,9 @@ public final class VisualizerTopComponent extends TopComponent {
 
         jPanel.setLayout(new BorderLayout());
         jPanel.add(display, BorderLayout.CENTER);
+        panelWidth = jPanel.getWidth();
+        panelHeight = jPanel.getHeight();
+
 
         vis.run("color");  // assign the colors
         vis.run("layout"); // start up the animated layout
@@ -257,11 +260,11 @@ public final class VisualizerTopComponent extends TopComponent {
         } catch (DataIOException e) {
             e.printStackTrace();
             System.err.println("Error loading graph. Exiting...");
-            System.exit(1);
         }
 
         if (graph == null) {
             System.err.println("NULL graph! Exiting...");
+            throw new RuntimeException("Null graph! Check why!");
         }
     }
 }

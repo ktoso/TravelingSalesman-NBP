@@ -27,8 +27,9 @@ import prefuse.data.io.GraphMLWriter;
 public final class GenerateGraphWizardAction extends CallableSystemAction {
 
     //FIXME: prototypowy setup max pozycji miast
-    public static final int MAX_NODE_X = 200;
+    public static final int MAX_NODE_X = 300;
     public static final int MAX_NODE_Y = 200;
+    private static final String DATA_FOLDER = "../data";
     private WizardDescriptor.Panel[] panels;
 
     public void performAction() {
@@ -112,10 +113,10 @@ public final class GenerateGraphWizardAction extends CallableSystemAction {
         if (!cancelled) {
             String nodeCount = (String) wizardDescriptor.getProperty("nodeCount");
             Boolean loadingExistingGraph = (Boolean) wizardDescriptor.getProperty("loadingExistingGraph");
-//            DialogDisplayer.getDefault().notify(new NotifyDescriptor.Message("Rozpoczynam generowanie " + nodeCount + " węzłów..."));
-            String nodesFilename = "data/example.xml";
+
+            String nodesFilename;
             if (loadingExistingGraph) {
-                nodesFilename = "data/" + (String) wizardDescriptor.getProperty("graphFilename");
+                nodesFilename = DATA_FOLDER + (String) wizardDescriptor.getProperty("graphFilename");
             } else {
                 nodesFilename = doGenerateGraph(Integer.parseInt(nodeCount));//pewne iż jest integerem, przeszło walidację
             }
@@ -124,7 +125,7 @@ public final class GenerateGraphWizardAction extends CallableSystemAction {
             String maxGWGB = (String) wizardDescriptor.getProperty("maxGenerationsWGB");
             String popSize = (String) wizardDescriptor.getProperty("populationSize");
 
-            
+
 
             //TODO: rewrite na lookup
             //Lookup  global = Lookup.getDefault();
@@ -185,7 +186,7 @@ public final class GenerateGraphWizardAction extends CallableSystemAction {
         }
 
         GraphMLWriter writer = new GraphMLWriter();
-        String nodesFilename = "data/" + nodeCount + "nodes.xml";
+        String nodesFilename = DATA_FOLDER + File.separator + nodeCount + "nodes.xml";
         try {
             File nodesFile = new File(nodesFilename);
             if (!nodesFile.exists()) {
@@ -200,10 +201,5 @@ public final class GenerateGraphWizardAction extends CallableSystemAction {
         }
 
         return nodesFilename;
-
-
-//        DialogDisplayer.getDefault().notify(new NotifyDescriptor.Message("Zakończono generowanie węzłów..."));
-
-
     }
 }

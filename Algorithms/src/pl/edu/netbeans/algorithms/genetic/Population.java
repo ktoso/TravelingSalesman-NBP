@@ -94,7 +94,6 @@ public class Population {
 
             newPop.add(ch1);
             newPop.add(ch2);
-
         }
 
         Collections.sort(this.pop);

@@ -12,8 +12,11 @@ import java.io.IOException;
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
+import org.openide.DialogDescriptor;
+import org.openide.DialogDisplayer;
 import pl.edu.netbeans.toolbox.Pair;
 import prefuse.data.Node;
+import prefuse.util.display.DisplayLib;
 
 /**
  *
@@ -22,16 +25,18 @@ import prefuse.data.Node;
 class CityNameProvider {
 
     private List<String> names = new LinkedList<String>();
-    private String filePath = "data/cities.txt";
+    private static final String DATA_FOLDER = "../data";
+    private static final String CITIES_FILE = "cities.txt";
     private Random random = new Random();
     private final static int NODE_SPACING = 5;
     Set<Pair<Integer, Integer>> taken = new HashSet<Pair<Integer, Integer>>();
 
     public CityNameProvider() {
-        File file = new File(filePath);
+        File file = new File(DATA_FOLDER + File.separator + CITIES_FILE);
         BufferedReader reader = null;
 
         try {
+            System.out.println(file.getAbsolutePath());
             reader = new BufferedReader(new FileReader(file));
             String text = null;
 
@@ -51,10 +56,10 @@ class CityNameProvider {
                 e.printStackTrace();
             }
         }
-    }
 
-    public void setFilePath(String filePath) {
-        this.filePath = filePath;
+        if(names.size() == 0){
+            throw new RuntimeException("No city names where read!");
+        }
     }
 
     /**

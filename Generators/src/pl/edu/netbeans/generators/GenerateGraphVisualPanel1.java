@@ -6,9 +6,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileFilter;
+import java.util.Arrays;
+import java.util.Comparator;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 public final class GenerateGraphVisualPanel1 extends JPanel {
+
+    private static final String DATA_FOLDER = "../data";
 
     /** Creates new form GenerateGraphVisualPanel1 */
     public GenerateGraphVisualPanel1() {
@@ -83,6 +88,11 @@ public final class GenerateGraphVisualPanel1 extends JPanel {
         org.openide.awt.Mnemonics.setLocalizedText(jLabel5, org.openide.util.NbBundle.getMessage(GenerateGraphVisualPanel1.class, "GenerateGraphVisualPanel1.jLabel5.text")); // NOI18N
 
         maxGenerationsWGB.setText(org.openide.util.NbBundle.getMessage(GenerateGraphVisualPanel1.class, "GenerateGraphVisualPanel1.maxGenerationsWGB.text")); // NOI18N
+        maxGenerationsWGB.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                maxGenerationsWGBActionPerformed(evt);
+            }
+        });
 
         maxGenerations.setText(org.openide.util.NbBundle.getMessage(GenerateGraphVisualPanel1.class, "GenerateGraphVisualPanel1.maxGenerations.text")); // NOI18N
 
@@ -108,7 +118,7 @@ public final class GenerateGraphVisualPanel1 extends JPanel {
                                 .addComponent(loadExisting))))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 367, Short.MAX_VALUE))
+                        .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 368, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -116,18 +126,14 @@ public final class GenerateGraphVisualPanel1 extends JPanel {
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(12, 12, 12)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel3)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(maxGenerationsWGB, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel4)
-                                            .addComponent(jLabel5))
-                                        .addGap(12, 12, 12)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(populationSize, javax.swing.GroupLayout.DEFAULT_SIZE, 107, Short.MAX_VALUE)
-                                            .addComponent(maxGenerations, javax.swing.GroupLayout.DEFAULT_SIZE, 107, Short.MAX_VALUE))))
+                                    .addComponent(jLabel4)
+                                    .addComponent(jLabel5)
+                                    .addComponent(jLabel3))
+                                .addGap(10, 10, 10)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(maxGenerationsWGB, javax.swing.GroupLayout.DEFAULT_SIZE, 109, Short.MAX_VALUE)
+                                    .addComponent(maxGenerations, javax.swing.GroupLayout.DEFAULT_SIZE, 109, Short.MAX_VALUE)
+                                    .addComponent(populationSize, javax.swing.GroupLayout.DEFAULT_SIZE, 109, Short.MAX_VALUE))
                                 .addGap(13, 13, 13)))
                         .addGap(53, 53, 53)))
                 .addContainerGap())
@@ -162,6 +168,10 @@ public final class GenerateGraphVisualPanel1 extends JPanel {
                 .addContainerGap(70, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void maxGenerationsWGBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_maxGenerationsWGBActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_maxGenerationsWGBActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox graphFilename;
     private javax.swing.JLabel jLabel1;
@@ -178,25 +188,49 @@ public final class GenerateGraphVisualPanel1 extends JPanel {
     // End of variables declaration//GEN-END:variables
 
     private void initMyComponents() {
-        
-        File datapath = new File("data");
+
+        //generators/../data
+        File datapath = new File(DATA_FOLDER);
+
         File files[] = datapath.listFiles(new FileFilter() {
+
             public boolean accept(File pathname) {
                 return pathname.getName().matches(".*.xml");
+            }
+        });
+
+        //sensowne sortowanie zebranych plików, "\dnodes" są sortowane po wartościach tych liczb 100 > 5 etc.
+        Arrays.sort(files, new Comparator<File>() {
+
+            private final static String PATTERN = "^(\\d)*nodes.xml$";
+
+            public int compare(File o1, File o2) {
+                String s1 = o1.getName();
+                String s2 = o2.getName();
+
+                if (s1.matches(PATTERN) && s2.matches(PATTERN)) {
+                    return extractInteger(s1).compareTo(extractInteger(s2));
+                }
+
+                return o1.compareTo(o2);
+            }
+
+            private Integer extractInteger(String filename) {
+                return Integer.parseInt(filename.substring(0, filename.indexOf('n')));
             }
         });
 
         for (File f : files) {
             graphFilename.addItem(f.getName());
         }
-        
+
         graphFilename.setEnabled(false);
 
         loadExisting.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
-                graphFilename.setEnabled( ! graphFilename.isEnabled() );
-                nodeCount.setEnabled( ! nodeCount.isEnabled() );
+                graphFilename.setEnabled(!graphFilename.isEnabled());
+                nodeCount.setEnabled(!nodeCount.isEnabled());
             }
         });
     }

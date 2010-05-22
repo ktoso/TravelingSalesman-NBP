@@ -116,7 +116,7 @@ public class DataMountain extends Display {
         frame.setVisible(true);
     }
     
-    public static JComponent demo() {
+        public static JComponent demo() {
         String datafile = "/amazon.txt";
         Table data = null;
         try {

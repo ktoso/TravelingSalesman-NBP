@@ -3,6 +3,11 @@
 <filesystem>
     <folder name="Actions">
         <folder name="Window">
+            <file name="pl-edu-netbeans-visualization-FitnessGraphAction.instance">
+                <attr name="component" methodvalue="pl.edu.netbeans.visualization.FitnessGraphTopComponent.findInstance"/>
+                <attr name="displayName" bundlevalue="pl.edu.netbeans.visualization.Bundle#CTL_FitnessGraphAction"/>
+                <attr name="instanceCreate" methodvalue="org.openide.windows.TopComponent.openAction"/>
+            </file>
             <file name="pl-edu-netbeans-visualization-VisualizerAction.instance">
                 <attr name="component" methodvalue="pl.edu.netbeans.visualization.VisualizerTopComponent.findInstance"/>
                 <attr name="displayName" bundlevalue="pl.edu.netbeans.visualization.Bundle#CTL_VisualizerAction"/>
@@ -17,6 +22,9 @@
         <file name="Tools_hidden"/>
         <file name="Help_hidden"/>
         <folder name="Window">
+            <file name="FitnessGraphAction.shadow">
+                <attr name="originalFile" stringvalue="Actions/Window/pl-edu-netbeans-visualization-FitnessGraphAction.instance"/>
+            </file>
             <file name="VisualizerAction.shadow">
                 <attr name="originalFile" stringvalue="Actions/Window/pl-edu-netbeans-visualization-VisualizerAction.instance"/>
             </file>
@@ -24,12 +32,19 @@
     </folder>
     <folder name="Windows2">
         <folder name="Components">
+            <file name="FitnessGraphTopComponent.settings" url="FitnessGraphTopComponentSettings.xml"/>
             <file name="VisualizerTopComponent.settings" url="VisualizerTopComponentSettings.xml"/>
         </folder>
         <folder name="Modes">
+            <folder name="CssPreviewTCWsmode">
+                <file name="FitnessGraphTopComponent.wstcref" url="FitnessGraphTopComponentWstcref.xml"/>
+            </folder>
+            <folder name="output"> <!-- Na dole, tuż obok output -->
+                </folder>
             <folder name="editor">
                 <file name="VisualizerTopComponent.wstcref" url="VisualizerTopComponentWstcref.xml"/>
             </folder>
+            <folder name="rightSlidingSide"/>
         </folder>
     </folder>
     <!--testowanie czy GIT działa - RiaL-->
