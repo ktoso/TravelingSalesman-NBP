@@ -28,7 +28,7 @@ public class FirstTSSolverAction extends SolverAction implements TSSolverAction,
     /*Kosmiczna komunikacja między-wątkowo-modułowa poprzez dynamiczne lookupy*/
     InstanceContent dynamicContent = new InstanceContent();
     Lookup myLookup = new AbstractLookup(dynamicContent);
-
+ 
     public FirstTSSolverAction(Graph graph) {
         super(graph);
         population = new Population(iloscOsobnikow, graph);

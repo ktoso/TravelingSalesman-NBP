@@ -3,7 +3,6 @@
 package pl.edu.netbeans.visualization;
 
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 import org.openide.util.NbBundle;
 import org.openide.windows.TopComponent;
 import org.openide.windows.WindowManager;
@@ -12,24 +11,8 @@ import org.netbeans.api.settings.ConvertAsProperties;
 import org.openide.util.Lookup;
 import org.openide.util.LookupEvent;
 import org.openide.util.LookupListener;
-import org.openide.util.lookup.AbstractLookup;
-import pl.edu.netbeans.algorithms.FirstTSSolverAction;
-import prefuse.Constants;
-import prefuse.Display;
 import prefuse.Visualization;
-import prefuse.action.ActionList;
-import prefuse.action.RepaintAction;
-import prefuse.action.assignment.ColorAction;
-import prefuse.action.layout.SpecifiedLayout;
-import prefuse.activity.Activity;
 import prefuse.data.Graph;
-import prefuse.data.Node;
-import prefuse.render.DefaultRendererFactory;
-import prefuse.render.PolygonRenderer;
-import prefuse.render.Renderer;
-import prefuse.render.ShapeRenderer;
-import prefuse.util.ColorLib;
-import prefuse.visual.VisualItem;
 
 /**
  * Top component which displays something.
