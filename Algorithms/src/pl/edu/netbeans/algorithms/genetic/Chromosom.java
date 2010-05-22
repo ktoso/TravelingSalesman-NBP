@@ -42,10 +42,10 @@ public class Chromosom extends LinkedList<Integer> implements Comparable<Chromos
         }
     }
 
-    public ChromosomPair crossover(Chromosom ch) throws Exception {
+    public ChromosomPair crossover(Chromosom ch) {
 
         if (size() != ch.size()) {
-            throw new Exception("Niezgodnośc rozmiarów chromosomów");
+            throw new RuntimeException("Niezgodnośc rozmiarów chromosomów");
         }
 
         int length = size();

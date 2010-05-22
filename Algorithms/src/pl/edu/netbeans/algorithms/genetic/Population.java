@@ -78,7 +78,7 @@ public class Population {
 
     }
 
-    public void nextGeneration() throws Exception {
+    public void nextGeneration() {//e......
         LinkedList<Chromosom> newPop = new LinkedList<Chromosom>();
         int halfsize = pop.size() / 2;
 

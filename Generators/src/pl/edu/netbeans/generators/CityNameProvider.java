@@ -12,11 +12,8 @@ import java.io.IOException;
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
-import org.openide.DialogDescriptor;
-import org.openide.DialogDisplayer;
 import pl.edu.netbeans.toolbox.Pair;
 import prefuse.data.Node;
-import prefuse.util.display.DisplayLib;
 
 /**
  *
@@ -30,6 +27,8 @@ class CityNameProvider {
     private Random random = new Random();
     private final static int NODE_SPACING = 5;
     Set<Pair<Integer, Integer>> taken = new HashSet<Pair<Integer, Integer>>();
+    private static final int Y_MAX = 200;
+    private static final int X_MAX = 400;
 
     public CityNameProvider() {
         File file = new File(DATA_FOLDER + File.separator + CITIES_FILE);
@@ -75,22 +74,20 @@ class CityNameProvider {
     }
 
     /**
-     *
-     * @param max maksymalne X/Y po jakich rozrzucamy nasze obiekty
+     * Zwraca losową pozycję do wykorzystania przez miasto
      * @return na pewno nie zajęta jeszcze pozycja!
      */
-    public Pair<Integer, Integer> getRandomPosition(int max) {
+    public Pair<Integer, Integer> getRandomPosition() {
         Pair<Integer, Integer> ent = null;
 
         int x = 0;
         int y = 0;
 
-
         /** Na wypadek jakby nawet po 100 iteracjach ciągle znajdywał zajęte miejsca */
         int antiLock = 0;
         while (placeIsTaken(x, y) && antiLock < 100) {
-            x = random.nextInt(max) * NODE_SPACING;
-            y = random.nextInt(max) * NODE_SPACING;
+            x = random.nextInt(X_MAX) * NODE_SPACING;
+            y = random.nextInt(Y_MAX) * NODE_SPACING;
 
             antiLock++;
         }

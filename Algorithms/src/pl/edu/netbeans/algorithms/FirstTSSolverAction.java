@@ -51,7 +51,6 @@ public class FirstTSSolverAction extends SolverAction implements TSSolverAction,
             return;
         }
 
-        try {
             population.nextGeneration();
             Chromosom ch = population.getBestChromosom();
             log("Generation " + population.getNumerGeneracji() + ": best chromosom: " + ch + " (" + ch.fitness() + ")");
@@ -59,10 +58,10 @@ public class FirstTSSolverAction extends SolverAction implements TSSolverAction,
             /* Słuchający tego lookup zostaną powiadomieni o zmianie, przerysują wykres */
             dynamicContent.add(new ChartDataDTO(population.getNumerGeneracji(), ch.fitness(), SIMULATION_ID));
 
-        } catch (Exception ex) {
-            log("ERROR in FirstTSSolver: " + ex);
-            throw new RuntimeException(ex);
-        }
+//        } catch (NullPointerException ex) {
+//            log("ERROR in FirstTSSolver: " + ex);
+//            throw new RuntimeException(ex);
+//        }
 
 
     }

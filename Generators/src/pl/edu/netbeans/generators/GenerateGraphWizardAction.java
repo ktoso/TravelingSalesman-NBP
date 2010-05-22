@@ -25,10 +25,6 @@ import prefuse.data.io.GraphMLWriter;
 // An example action demonstrating how the wizard could be called from within
 // your code. You can copy-paste the code below wherever you need.
 public final class GenerateGraphWizardAction extends CallableSystemAction {
-
-    //FIXME: prototypowy setup max pozycji miast
-    public static final int MAX_NODE_X = 300;
-    public static final int MAX_NODE_Y = 200;
     private static final String DATA_FOLDER = "../data";
     private WizardDescriptor.Panel[] panels;
 
@@ -165,7 +161,7 @@ public final class GenerateGraphWizardAction extends CallableSystemAction {
             graph.addNode().setString("name", cities.getRandomName());
 
             Node self = graph.getNode(i);
-            Pair<Integer, Integer> pos = cities.getRandomPosition(MAX_NODE_X);
+            Pair<Integer, Integer> pos = cities.getRandomPosition();
             int x = pos.first();
             int y = pos.second();
 

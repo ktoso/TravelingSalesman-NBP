@@ -25,6 +25,7 @@ import org.openide.util.Lookup;
 import org.openide.util.LookupEvent;
 import org.openide.util.LookupListener;
 import pl.edu.netbeans.toolbox.ChartDataDTO;
+import prefuse.Visualization;
 
 /**
  * Top component which displays something.
@@ -37,14 +38,14 @@ public final class FitnessGraphTopComponent extends TopComponent implements Look
     /** path to the icon used by the component and its open action */
 //    static final String ICON_PATH = "SET/PATH/TO/ICON/HERE";
     private static final String PREFERRED_ID = "FitnessGraphTopComponent";
+    private Visualization vis = null;
     int panelHeight, panelWidth;
     /** The time series data. */
     private Map<String, XYSeries> series = new HashMap<String, XYSeries>();
 
     public FitnessGraphTopComponent() {
         initComponents();
-//        initGraph();
-        setupGraph();
+        setupChart();
 
 
         setName(NbBundle.getMessage(FitnessGraphTopComponent.class, "CTL_FitnessGraphTopComponent"));
@@ -60,7 +61,7 @@ public final class FitnessGraphTopComponent extends TopComponent implements Look
      *
      * @param title  the frame title.
      */
-    public void setupGraph() {
+    public void setupChart() {
 
         final XYDataset dataset = new XYSeriesCollection();
         final JFreeChart chart = createXYChart(dataset);
