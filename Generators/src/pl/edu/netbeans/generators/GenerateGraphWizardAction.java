@@ -29,7 +29,7 @@ public final class GenerateGraphWizardAction extends CallableSystemAction {
     //FIXME: prototypowy setup max pozycji miast
     public static final int MAX_NODE_X = 300;
     public static final int MAX_NODE_Y = 200;
-    private static final String DATA_FOLDER = "../data";
+    private static final String DATA_FOLDER = "data/";
     private WizardDescriptor.Panel[] panels;
 
     public void performAction() {

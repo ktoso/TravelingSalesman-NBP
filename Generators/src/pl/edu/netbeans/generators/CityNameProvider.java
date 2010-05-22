@@ -25,7 +25,7 @@ import prefuse.util.display.DisplayLib;
 class CityNameProvider {
 
     private List<String> names = new LinkedList<String>();
-    private static final String DATA_FOLDER = "../data";
+    private static final String DATA_FOLDER = "data/";
     private static final String CITIES_FILE = "cities.txt";
     private Random random = new Random();
     private final static int NODE_SPACING = 5;
