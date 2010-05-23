@@ -224,26 +224,21 @@ public final class FitnessGraphTopComponent extends TopComponent implements Look
                 ChartDataDTO o = (ChartDataDTO) it.next();
                 addDTO2Series(o);
             }
-
-            System.out.println("" + res.allItems());
-        } else {
-            System.err.println("no instances in FitnessGraph...");
+//            debug stuff
+//            System.out.println("" + res.allItems());
         }
 
-        System.out.println("--called: " + calledCounter++ + "--");
+//        debug stuff
+//        System.out.println("--called: " + calledCounter++ + "--");
     }
 
     private synchronized void addDTO2Series(ChartDataDTO chartDataDTO) {
         String id = chartDataDTO.getSimId();
         int iteration = chartDataDTO.getIteracja();
-        double fitness = chartDataDTO.getFitness();
 
-        if (!isSeriesIdKnown(id)) {
-            addSeriesForId(id);
-        }
-
-        XYSeries s = dataset.getSeries(id);
-        s.add(iteration, fitness);
+        addToSeries(id + " max", iteration, chartDataDTO.getMaxFitness());
+        addToSeries(id + " avg", iteration, chartDataDTO.getAvgFitness());
+        addToSeries(id + " min", iteration, chartDataDTO.getMinFitness());
     }
 
     private boolean isSeriesIdKnown(String id) {
@@ -253,5 +248,20 @@ public final class FitnessGraphTopComponent extends TopComponent implements Look
     private void addSeriesForId(String id) {
         dataset.addSeries(new XYSeries(id));
         knownIDs.add(id);
+    }
+
+    /**
+     * Opakowuje dodawanie nowego series w razie jego braku oraz dodaje przekazany parametr
+     * @param id ID series'a
+     * @param iteration numer iteracji
+     * @param val wartość do wpisania
+     */
+    private void addToSeries(String id, int iteration, double val) {
+        if (!isSeriesIdKnown(id)) {
+            addSeriesForId(id);
+        }
+
+        XYSeries s = dataset.getSeries(id);
+        s.add(iteration, val);
     }
 }

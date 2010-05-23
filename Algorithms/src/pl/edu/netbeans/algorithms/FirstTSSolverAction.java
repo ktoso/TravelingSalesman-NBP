@@ -56,13 +56,15 @@ public class FirstTSSolverAction extends SolverAction implements TSSolverAction,
         population.nextGeneration();
         Chromosom ch = population.getBestChromosom();
         int numerGeneracji = population.getNumerGeneracji();
-        double fitness = ch.fitness();
+        double avgFitness = population.getAvgFitness();
+        double maxFitness = population.getWorstFittness();
+        double minFitness = population.getBestFitness();
 
-        log("Generacja " + numerGeneracji + ": naj. chromosom: " + ch + " (" + fitness + ")");
+        log("Generacja " + numerGeneracji + ": naj. chromosom: " + ch + " (" + avgFitness + ")");
 
 //        removeLastSent();
         /* Słuchający tego lookup zostaną powiadomieni o zmianie, przerysują wykres */
-        lastSentByMe = new ChartDataDTO(numerGeneracji, fitness, SIMULATION_ID);
+        lastSentByMe = new ChartDataDTO(SIMULATION_ID, numerGeneracji, avgFitness, maxFitness, minFitness);
         dynamicContent.add(lastSentByMe);
         res.allItems();
 
