@@ -26,7 +26,7 @@ import prefuse.data.io.GraphMLWriter;
 // your code. You can copy-paste the code below wherever you need.
 public final class GenerateGraphWizardAction extends CallableSystemAction {
 
-    private static final String DATA_FOLDER = "../data";
+    private static final String DATA_FOLDER = "data/";
     //FIXME: prototypowy setup max pozycji miast
     public static final int MAX_NODE_X = 300;
     public static final int MAX_NODE_Y = 200;

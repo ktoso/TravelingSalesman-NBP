@@ -13,7 +13,7 @@ import javax.swing.JPanel;
 
 public final class GenerateGraphVisualPanel1 extends JPanel {
 
-    private static final String DATA_FOLDER = "../data";
+    private static final String DATA_FOLDER = "data/";
 
     /** Creates new form GenerateGraphVisualPanel1 */
     public GenerateGraphVisualPanel1() {
