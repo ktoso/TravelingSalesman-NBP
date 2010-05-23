@@ -1,6 +1,5 @@
 /*
  */
-
 package pl.edu.netbeans.toolbox;
 
 /**
@@ -9,5 +8,4 @@ package pl.edu.netbeans.toolbox;
  * @author ktoso
  */
 public interface LineChartDrawer {
-    public void updateAndDraw(int x, double y, String id);
 }

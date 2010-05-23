@@ -254,8 +254,4 @@ public final class FitnessGraphTopComponent extends TopComponent implements Look
         dataset.addSeries(new XYSeries(id));
         knownIDs.add(id);
     }
-
-    public void updateAndDraw(int x, double y, String id) {
-        addDTO2Series(new ChartDataDTO(x, y, id));
-    }
 }
