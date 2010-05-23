@@ -154,6 +154,22 @@ public class Population {
         return pop.getFirst();
     }
 
+    public double getBestFitness() {
+        return pop.getFirst().fitness();
+    }
+
+    public double getWorstFittness() {
+        return pop.getLast().fitness();
+    }
+
+    public double getAvgFitness() {
+        double averangeFittnes = 0;
+        for (Chromosom ch : pop) {
+            averangeFittnes += ch.fitness();
+        }
+        return averangeFittnes/pop.size();
+    }
+
     public int getNumerGeneracji() {
         return numerGeneracji;
     }
