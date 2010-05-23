@@ -3,6 +3,7 @@
 package pl.edu.netbeans.visualization;
 
 import java.awt.BorderLayout;
+import java.awt.Point;
 import java.util.logging.Logger;
 import org.openide.util.NbBundle;
 import org.openide.windows.TopComponent;
@@ -174,8 +175,10 @@ public final class VisualizerTopComponent extends TopComponent {
      */
     @Override
     public boolean canClose() {
-        vis.removeAction("layout");
-        vis = null;
+        if (vis != null) {//nie możesz tego nie sprawdzać...
+            vis.removeAction("layout");
+            vis = null;
+        }
 
         if (graph != null) {
             graph.clear();
@@ -227,14 +230,16 @@ public final class VisualizerTopComponent extends TopComponent {
 
         // create a new Display that pull from our Visualization
         Display display = new Display(vis);
-        display.addControlListener(new FocusControl(1));
+//        display.addControlListener(new FocusControl(1));
         display.addControlListener(new PanControl());
         display.addControlListener(new ZoomControl());
         display.addControlListener(new WheelZoomControl());
         display.addControlListener(new ZoomToFitControl());
-        display.addControlListener(new NeighborHighlightControl());
+//        display.addControlListener(new NeighborHighlightControl());
 
-        display.pan(300, 300);
+        //drobna poprawka aby było wszystko lepiej widoczne
+        display.pan(-100, -100);
+        display.zoom(new Point(100, 100), 0.7);
 
         add(display);
 

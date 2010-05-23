@@ -2,13 +2,11 @@
  */
 package pl.edu.netbeans.algorithms;
 
-import java.util.Random;
-import javax.swing.JOptionPane;
+import org.openide.util.Exceptions;
 import org.openide.util.Lookup;
 import org.openide.util.LookupListener;
 import org.openide.util.lookup.AbstractLookup;
 import org.openide.util.lookup.InstanceContent;
-import org.openide.util.lookup.ProxyLookup;
 import org.openide.windows.TopComponent;
 import org.openide.windows.WindowManager;
 import pl.edu.netbeans.algorithms.genetic.Chromosom;
@@ -29,11 +27,12 @@ public class FirstTSSolverAction extends SolverAction implements TSSolverAction,
     private int iloscOsobnikow = 50; // Pwoinno być ustawiane w programie
     /**Służy indentyfikacji różnych serii danych podczas rysowania wykresów*/
     private static int simcount = 1;
-    private String SIMULATION_ID = "symulacja " + FirstTSSolverAction.simcount++;
+    private final String SIMULATION_ID = "symulacja " + FirstTSSolverAction.simcount++;
 
     /*Kosmiczna komunikacja między-wątkowo-modułowa poprzez dynamiczne lookupy*/
-    InstanceContent dynamicContent = new InstanceContent();
-    Lookup myLookup = new AbstractLookup(dynamicContent);
+    private InstanceContent dynamicContent = new InstanceContent();
+    private Lookup myLookup = new AbstractLookup(dynamicContent);
+    private Lookup.Result res;
 
     public FirstTSSolverAction(Graph graph) {
         super(graph);
@@ -59,19 +58,15 @@ public class FirstTSSolverAction extends SolverAction implements TSSolverAction,
         int numerGeneracji = population.getNumerGeneracji();
         double fitness = ch.fitness();
 
-        log("Generation " + numerGeneracji + ": best chromosom: " + ch + " (" + fitness + ")");
+        log("Generacja " + numerGeneracji + ": naj. chromosom: " + ch + " (" + fitness + ")");
 
-        removeLastSent();
+//        removeLastSent();
         /* Słuchający tego lookup zostaną powiadomieni o zmianie, przerysują wykres */
         lastSentByMe = new ChartDataDTO(numerGeneracji, fitness, SIMULATION_ID);
         dynamicContent.add(lastSentByMe);
+        res.allItems();
 
-//        } catch (NullPointerException ex) {
-//            log("ERROR in FirstTSSolver: " + ex);
-//            throw new RuntimeException(ex);
-//        }
-
-
+        waitAMomentPlease(300);
     }
 
     private void removeLastSent() {
@@ -106,6 +101,7 @@ public class FirstTSSolverAction extends SolverAction implements TSSolverAction,
      * aby ten reagował na każdorazową zmianę w naszym lookup - aktualizował wykres
      * //Zdaje się że pomijamy Visualizera dzięki temu, super!//
      */
+    @SuppressWarnings("unchecked")
     private void setupLineGraphDrawerListener() {
         //znajdź implementację LineChartDrawer
         TopComponent drawer = WindowManager.getDefault().findTopComponent("FitnessGraphTopComponent");
@@ -114,8 +110,17 @@ public class FirstTSSolverAction extends SolverAction implements TSSolverAction,
         }
 
         //reaguj na dodania DTO; w nich przekazujemy wszystkie istotne innym informacje
-        Lookup.Result res = myLookup.lookup(new Lookup.Template(ChartDataDTO.class));
+        res = myLookup.lookup(new Lookup.Template(ChartDataDTO.class));
+        res.allItems();//zdaje się odświeżać wnętrzności takiego lookupa (ładować spis klas)
         res.addLookupListener((LookupListener) drawer);
+    }
+
+    private void waitAMomentPlease(int time) {
+        try {
+            Thread.sleep(time);
+        } catch (InterruptedException ex) {
+            Exceptions.printStackTrace(ex);
+        }
     }
 }
 //        Może sie kiedyś przyda!

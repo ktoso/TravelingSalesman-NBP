@@ -26,6 +26,7 @@ import org.openide.util.Lookup;
 import org.openide.util.LookupEvent;
 import org.openide.util.LookupListener;
 import pl.edu.netbeans.toolbox.ChartDataDTO;
+import pl.edu.netbeans.toolbox.LineChartDrawer;
 import prefuse.Visualization;
 
 /**
@@ -33,7 +34,7 @@ import prefuse.Visualization;
  */
 @ConvertAsProperties(dtd = "-//pl.edu.netbeans.visualization//FitnessGraph//EN",
 autostore = false)
-public final class FitnessGraphTopComponent extends TopComponent implements LookupListener {
+public final class FitnessGraphTopComponent extends TopComponent implements LookupListener, LineChartDrawer {
 
     private static FitnessGraphTopComponent instance;
     /** path to the icon used by the component and its open action */
@@ -44,6 +45,7 @@ public final class FitnessGraphTopComponent extends TopComponent implements Look
     private XYSeriesCollection dataset;
     private List<String> knownIDs = new ArrayList<String>(10);
     private static int calledCounter = 0;
+    private ChartPanel chartPanel;
 
     public FitnessGraphTopComponent() {
         initComponents();
@@ -66,7 +68,7 @@ public final class FitnessGraphTopComponent extends TopComponent implements Look
         dataset = new XYSeriesCollection();
         final JFreeChart chart = createXYChart(dataset);
 
-        final ChartPanel chartPanel = new ChartPanel(chart);
+        chartPanel = new ChartPanel(chart);
 
         this.add(chartPanel, BorderLayout.NORTH);
         chartPanel.setPreferredSize(new java.awt.Dimension(500, 270));
@@ -187,6 +189,12 @@ public final class FitnessGraphTopComponent extends TopComponent implements Look
         // TODO store your settings
     }
 
+    @Override
+    public boolean canClose() {
+        chartPanel.updateUI();
+        return super.canClose();
+    }
+
     Object readProperties(java.util.Properties p) {
         if (instance == null) {
             instance = this;
@@ -217,12 +225,6 @@ public final class FitnessGraphTopComponent extends TopComponent implements Look
                 addDTO2Series(o);
             }
 
-//            for (Object r : instances) {
-//                if (r instanceof ChartDataDTO) {
-//                    addDTO2Series((ChartDataDTO) r);
-//                }
-//            }
-
             System.out.println("" + res.allItems());
         } else {
             System.err.println("no instances in FitnessGraph...");
@@ -231,7 +233,7 @@ public final class FitnessGraphTopComponent extends TopComponent implements Look
         System.out.println("--called: " + calledCounter++ + "--");
     }
 
-    private void addDTO2Series(ChartDataDTO chartDataDTO) {
+    private synchronized void addDTO2Series(ChartDataDTO chartDataDTO) {
         String id = chartDataDTO.getSimId();
         int iteration = chartDataDTO.getIteracja();
         double fitness = chartDataDTO.getFitness();
@@ -251,5 +253,9 @@ public final class FitnessGraphTopComponent extends TopComponent implements Look
     private void addSeriesForId(String id) {
         dataset.addSeries(new XYSeries(id));
         knownIDs.add(id);
+    }
+
+    public void updateAndDraw(int x, double y, String id) {
+        addDTO2Series(new ChartDataDTO(x, y, id));
     }
 }
