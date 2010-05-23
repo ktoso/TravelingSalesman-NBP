@@ -8,12 +8,10 @@ import java.io.File;
 import java.io.FileFilter;
 import java.util.Arrays;
 import java.util.Comparator;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import pl.edu.netbeans.toolbox.Constants;
 
 public final class GenerateGraphVisualPanel1 extends JPanel {
-
-    private static final String DATA_FOLDER = "../data";
 
     /** Creates new form GenerateGraphVisualPanel1 */
     public GenerateGraphVisualPanel1() {
@@ -199,7 +197,8 @@ public final class GenerateGraphVisualPanel1 extends JPanel {
     private void initMyComponents() {
 
         //generators/../data
-        File datapath = new File(DATA_FOLDER);
+        File datapath = new File(Constants.DATA_FOLDER);
+        System.out.println("DATA_FOLDER: "+ datapath.getAbsolutePath());
 
         File files[] = datapath.listFiles(new FileFilter() {
 

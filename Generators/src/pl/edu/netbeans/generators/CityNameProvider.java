@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
+import pl.edu.netbeans.toolbox.Constants;
 import pl.edu.netbeans.toolbox.Pair;
 import prefuse.data.Node;
 
@@ -22,7 +23,6 @@ import prefuse.data.Node;
 class CityNameProvider {
 
     private List<String> names = new LinkedList<String>();
-    private static final String DATA_FOLDER = "../data";
     private static final String CITIES_FILE = "cities.txt";
     private Random random = new Random();
     private final static int NODE_SPACING = 5;
@@ -31,7 +31,7 @@ class CityNameProvider {
     private static final int X_MAX = 400;
 
     public CityNameProvider() {
-        File file = new File(DATA_FOLDER + File.separator + CITIES_FILE);
+        File file = new File(Constants.DATA_FOLDER + File.separator + CITIES_FILE);
         BufferedReader reader = null;
 
         try {

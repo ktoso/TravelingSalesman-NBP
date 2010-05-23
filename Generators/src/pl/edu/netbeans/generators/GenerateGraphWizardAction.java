@@ -14,6 +14,7 @@ import org.openide.WizardDescriptor;
 import org.openide.util.Exceptions;
 import org.openide.util.HelpCtx;
 import org.openide.util.actions.CallableSystemAction;
+import pl.edu.netbeans.toolbox.Constants;
 import pl.edu.netbeans.toolbox.Pair;
 import pl.edu.netbeans.visualization.VisualizerTopComponent;
 import prefuse.data.Edge;
@@ -26,8 +27,6 @@ import prefuse.data.io.GraphMLWriter;
 // your code. You can copy-paste the code below wherever you need.
 public final class GenerateGraphWizardAction extends CallableSystemAction {
 
-    private static final String DATA_FOLDER = "../data";
-    //FIXME: prototypowy setup max pozycji miast
     public static final int MAX_NODE_X = 300;
     public static final int MAX_NODE_Y = 200;
     private WizardDescriptor.Panel[] panels;
@@ -116,7 +115,7 @@ public final class GenerateGraphWizardAction extends CallableSystemAction {
 
             String nodesFilename;
             if (loadingExistingGraph) {
-                nodesFilename = DATA_FOLDER + File.separator + (String) wizardDescriptor.getProperty("graphFilename");
+                nodesFilename = Constants.DATA_FOLDER + File.separator + (String) wizardDescriptor.getProperty("graphFilename");
             } else {
                 nodesFilename = doGenerateGraph(Integer.parseInt(nodeCount));//pewne iż jest integerem, przeszło walidację
             }
@@ -186,7 +185,7 @@ public final class GenerateGraphWizardAction extends CallableSystemAction {
         }
 
         GraphMLWriter writer = new GraphMLWriter();
-        String nodesFilename = DATA_FOLDER + File.separator + nodeCount + "nodes.xml";
+        String nodesFilename = Constants.DATA_FOLDER + File.separator + nodeCount + "nodes.xml";
         try {
             File nodesFile = new File(nodesFilename);
             if (!nodesFile.exists()) {
