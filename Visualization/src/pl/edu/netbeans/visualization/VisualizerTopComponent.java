@@ -5,6 +5,7 @@ package pl.edu.netbeans.visualization;
 import java.awt.BorderLayout;
 import java.awt.Point;
 import java.util.logging.Logger;
+import javax.swing.JButton;
 import org.openide.util.NbBundle;
 import org.openide.windows.TopComponent;
 import org.openide.windows.WindowManager;
@@ -245,6 +246,7 @@ public final class VisualizerTopComponent extends TopComponent {
 
         jPanel.setLayout(new BorderLayout());
         jPanel.add(display, BorderLayout.CENTER);
+        jPanel.add(new JButton("test"), BorderLayout.SOUTH);
         panelWidth = jPanel.getWidth();
         panelHeight = jPanel.getHeight();
 
