@@ -8,6 +8,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Random;
+import pl.edu.netbeans.toolbox.RandomNG;
 import prefuse.data.Graph;
 import prefuse.data.Tuple;
 
@@ -20,7 +21,7 @@ public class Population {
     LinkedList<Chromosom> pop = new LinkedList<Chromosom>();
     int numerGeneracji = 0;
     int osobnikowPopulacji = 0;
-    Random generator = new Random();
+    RandomNG generator = new RandomNG();
     private final Graph graph;
     private int iloscPokolenBezZmiany = 0;
     private int maxPokolenBezZmiany = 500;
@@ -68,58 +69,86 @@ public class Population {
 
         // na samym początku ustaw każdej krawedzi parametr marked=0
         clearGraph();
+        //i najlepszej losowej trasie marked=2
+        pop.getFirst().mark(2);
 
-        //fixme: nie powinno nigdy do tego dochodzić, usunąć to try/catch!!
-        try {
-            Collections.sort(pop);
-        } catch (ArrayIndexOutOfBoundsException ex) {
-            ex.printStackTrace();
-        }
+        Collections.sort(pop);
 
     }
 
-    public void nextGeneration() {//e......
-        LinkedList<Chromosom> newPop = new LinkedList<Chromosom>();
-        int halfsize = pop.size() / 2;
+    /**
+     * Funkcja tworzy kolejne pokolenie które jest odrzucane lub przyjmowane na
+     * podstawie wartości dopasowania najlepszego chromosomu
+     */
+    public void nextGeneration() {
 
-        for (int i = 0; i < halfsize; ++i) {
-            //krzyżuj pierwszą połowę osobników z losowym osobnikiem z grupiej połowy
-            ChromosomPair childern = pop.get(i).crossover(pop.get(halfsize + generator.nextInt(this.pop.size() - halfsize)));
-            Chromosom ch1 = childern.first();
-            Chromosom ch2 = childern.second();
-            if (getBoolean(iloscPokolenBezZmiany / maxPokolenBezZmiany * 500)) {
-                ch1 = ch1.mutation(iloscPokolenBezZmiany / maxPokolenBezZmiany * dlugoscChromosomu);
-                ch2 = ch2.mutation(iloscPokolenBezZmiany / maxPokolenBezZmiany * dlugoscChromosomu);
-            }
+        System.out.println("pop-fisrt: " + pop.getFirst().fitness());
+        System.out.println("pop-last: " + pop.getLast().fitness());
 
-            newPop.add(ch1);
-            newPop.add(ch2);
+        int size = pop.size();
+        double fitnessSum = 0;
+        for (Chromosom ch : pop) {
+            fitnessSum += 1 / ch.fitness();
         }
 
-        Collections.sort(this.pop);
+        // Dystrybuanta każdego chromosomu
+        double[] q = new double[size];
+        for (int i = 0; i < size; ++i) {
+            q[i] = 0;
+            for (int j = 0; j <= i; ++j) {
+                q[i] += 1 / pop.get(j).fitness();
+            }
+            q[i] /= fitnessSum;
+        }
+
+        // Losowanie osobników do krzyżowania
+        int forCrossoverCount = generator.nextInt(size / 2) * 2;
+        LinkedList<Chromosom> forCrossover = new LinkedList<Chromosom>();
+        for (int i = 0; i < forCrossoverCount; ++i) {
+            double r = generator.nextDouble();
+            int j = 0;
+            while (r > q[j]) {
+                j++;
+            }
+            forCrossover.add(pop.get(j));
+        }
+
+        // Losowanie osobników do nowej populacji
+        LinkedList<Chromosom> newPop = new LinkedList<Chromosom>();
+        for (int i = 0; i < size - forCrossoverCount; ++i) {
+            double r = generator.nextDouble();
+            int j = 0;
+            while (r > q[j]) {
+                j++;
+            }
+            newPop.add(pop.get(j));
+        }
+
+        /* Krzyżowanie:
+         * Krzyzują się tylko wybrane wczesniej osobniki
+         */
+        while (forCrossover.size() > 0) { //długość tej listy jest parzysta wiec moge pobierać w każdej pętli dwa obiekty
+
+            Chromosom fistParent = forCrossover.removeFirst();
+            Chromosom secondParent = forCrossover.removeFirst();
+
+            ChromosomPair childern = fistParent.crossover(secondParent);
+
+            newPop.add(childern.first());
+            newPop.add(childern.second());
+        }
+
+        // Mutacje: każdy osobnik ma (iloscPokolenBezZmiany/maxpokolenBezZmiany)*0.5
+        // szans na mutacje rosną wraz z iloscią pokolen bez zmiany
+        for (int i = 0; i < size; ++i) {
+            if (generator.nextBoolean((iloscPokolenBezZmiany / maxPokolenBezZmiany) * 0.5)) {
+                newPop.set(i, newPop.get(i).mutation(iloscPokolenBezZmiany / maxPokolenBezZmiany));
+            }
+        }
+
         Collections.sort(newPop);
 
-//        double oldAvgFitness = 0;
-//        double newAvgFitness = 0;
-//
-//        for( Chromosom ch : this.pop ) {
-//            oldAvgFitness += 1/ch.fitness();
-//        }
-//        oldAvgFitness = this.pop.size()/oldAvgFitness;
-//
-//        for( Chromosom ch : newPop ) {
-//            newAvgFitness += 1/ch.fitness();
-//        }
-//        newAvgFitness = newPop.size()/newAvgFitness;
-//
-//        if (newAvgFitness < oldAvgFitness) {
-//            this.pop = newPop;
-//        }
-
-
-//        this.pop = newPop;
-
-        if (this.pop.getFirst().fitness() > newPop.getFirst().fitness()) {
+        if ( pop.getFirst().compareTo(newPop.getFirst()) > 0) {
             // Jeśli się coś zmieniło to ustawiamy wszystkim krawedziom
             // marked=0, najlepszej sciezce ze starego pokolenia marked=1,
             // a najlepszej sciezce z aktualnego pokolenia marked=2
@@ -132,22 +161,14 @@ public class Population {
             iloscPokolenBezZmiany++;
         }
 
+
+
         numerGeneracji++;
 
         shouldStop =
-                iloscPokolenBezZmiany > maxPokolenBezZmiany ||
-                numerGeneracji > maxNumerGeneracji;
-        
+                iloscPokolenBezZmiany > maxPokolenBezZmiany
+                || numerGeneracji > maxNumerGeneracji;
 
-
-
-//        System.out.println("Populacja: ");
-//        for( Chromosom ch : this.pop ) {
-//            System.out.println("\t" + ch.fitness() + ": " + ch);
-//        }
-
-//        System.out.println("Best: " + pop.getFirst() );
-//        System.out.println(" Fitness: " + pop.getFirst().fitness() );
     }
 
     public Chromosom getBestChromosom() {
@@ -167,17 +188,12 @@ public class Population {
         for (Chromosom ch : pop) {
             averangeFittnes += ch.fitness();
         }
-        return averangeFittnes/pop.size();
+        return averangeFittnes / pop.size();
     }
 
     public int getNumerGeneracji() {
         return numerGeneracji;
     }
-
-    private boolean getBoolean(int percent) {
-        return (generator.nextInt(100) < percent);
-    }
-
 
     public boolean shouldStop() {
         return shouldStop;

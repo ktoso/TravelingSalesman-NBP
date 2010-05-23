@@ -55,12 +55,13 @@ public class Chromosom extends LinkedList<Integer> implements Comparable<Chromos
 
 
         // Znajdz najdłuższą scieżkę do przecięcia
-        int from = 0;
-        for (int i = 0; i < length; ++i) {
-            if (getEdgeWeight(i) > getEdgeWeight(from)) {
-                from = i;
-            }
-        }
+//        int from = 0;
+//        for (int i = 0; i < length; ++i) {
+//            if (getEdgeWeight(i) > getEdgeWeight(from)) {
+//                from = i;
+//            }
+//        }
+        int from = generator.nextInt(length);
         int to = from + generator.nextInt(length - 1);
 
         for (int i = from; i < to; ++i) {
@@ -84,7 +85,13 @@ public class Chromosom extends LinkedList<Integer> implements Comparable<Chromos
         return new ChromosomPair(child1, child2);
     }
 
-    public Chromosom mutation(int mutationSize) {
+
+    /**
+     * Funkcja mutująca dany chromosom
+     * @param mutationSize liczba z przedziału (0, 1) określająca rozmiar mutacji
+     * @return Zmutowany chromosom
+     */
+    public Chromosom mutation(double mutationSize) {
         int length = size();
 
         Chromosom child = new Chromosom(length, this.graph);
@@ -92,8 +99,9 @@ public class Chromosom extends LinkedList<Integer> implements Comparable<Chromos
         for (int i = 0; i < length; ++i) {
             child.set(i, get(i));
         }
-
-        mutationSize = (mutationSize > length) ? length : mutationSize;
+        
+        mutationSize = (mutationSize>1?1:mutationSize)*length;
+        
         //ilość zamian genów w mutacji
         for (int i = 0; i < mutationSize; ++i) {
             int from = generator.nextInt(length);
@@ -128,6 +136,8 @@ public class Chromosom extends LinkedList<Integer> implements Comparable<Chromos
             }
 //            b.append(i).append(" ");
         }
+
+        b.append(" (" + fitness() + " )");
         return b.toString();
     }
 

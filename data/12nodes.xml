@@ -4,7 +4,7 @@
   xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns
   http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd">
 
-  <!-- prefuse GraphML Writer | Wed May 19 21:03:31 CEST 2010 -->
+  <!-- prefuse GraphML Writer | Sun May 23 15:58:28 CEST 2010 -->
   <key id="name" for="node" attr.name="name" attr.type="string"/>
   <key id="weight" for="node" attr.name="weight" attr.type="int">
     <default>1</default>
@@ -35,549 +35,549 @@
   <graph edgedefault="undirected">
     <!-- nodes -->
     <node id="0">
-      <data key="name">Wejherowo</data>
+      <data key="name">Jastrowie</data>
       <data key="weight">1</data>
       <data key="marked">-1</data>
       <data key="x">0</data>
       <data key="y">0</data>
     </node>
     <node id="1">
-      <data key="name">Golczewo</data>
+      <data key="name">Che&#322;mno</data>
       <data key="weight">1</data>
       <data key="marked">-1</data>
-      <data key="x">120</data>
-      <data key="y">15</data>
+      <data key="x">1175</data>
+      <data key="y">555</data>
     </node>
     <node id="2">
-      <data key="name">Lubin</data>
+      <data key="name">Radziej&#243;w</data>
       <data key="weight">1</data>
       <data key="marked">-1</data>
-      <data key="x">475</data>
-      <data key="y">110</data>
+      <data key="x">515</data>
+      <data key="y">710</data>
     </node>
     <node id="3">
-      <data key="name">Rawa Mazowiecka</data>
+      <data key="name">Orzysz</data>
       <data key="weight">1</data>
       <data key="marked">-1</data>
-      <data key="x">450</data>
-      <data key="y">25</data>
+      <data key="x">340</data>
+      <data key="y">400</data>
     </node>
     <node id="4">
-      <data key="name">Braniewo</data>
+      <data key="name">Kalisz Pomorski</data>
       <data key="weight">1</data>
       <data key="marked">-1</data>
-      <data key="x">475</data>
-      <data key="y">130</data>
+      <data key="x">245</data>
+      <data key="y">140</data>
     </node>
     <node id="5">
-      <data key="name">Tuchola</data>
+      <data key="name">Resko</data>
       <data key="weight">1</data>
       <data key="marked">-1</data>
-      <data key="x">890</data>
-      <data key="y">795</data>
+      <data key="x">1850</data>
+      <data key="y">110</data>
     </node>
     <node id="6">
-      <data key="name">Niepo&#322;omice</data>
+      <data key="name">Szczyrk</data>
       <data key="weight">1</data>
       <data key="marked">-1</data>
-      <data key="x">220</data>
-      <data key="y">235</data>
+      <data key="x">1720</data>
+      <data key="y">280</data>
     </node>
     <node id="7">
-      <data key="name">Sztum</data>
+      <data key="name">Pi&#322;a</data>
       <data key="weight">1</data>
       <data key="marked">-1</data>
-      <data key="x">80</data>
-      <data key="y">15</data>
+      <data key="x">340</data>
+      <data key="y">25</data>
     </node>
     <node id="8">
-      <data key="name">&#321;obez</data>
+      <data key="name">&#346;widnik</data>
       <data key="weight">1</data>
       <data key="marked">-1</data>
-      <data key="x">610</data>
-      <data key="y">540</data>
+      <data key="x">965</data>
+      <data key="y">345</data>
     </node>
     <node id="9">
-      <data key="name">Pilica</data>
+      <data key="name">Zi&#281;bice</data>
       <data key="weight">1</data>
       <data key="marked">-1</data>
-      <data key="x">640</data>
-      <data key="y">955</data>
+      <data key="x">1620</data>
+      <data key="y">820</data>
     </node>
     <node id="10">
-      <data key="name">Ch&#281;ciny</data>
+      <data key="name">Radzionk&#243;w</data>
       <data key="weight">1</data>
       <data key="marked">-1</data>
-      <data key="x">775</data>
-      <data key="y">580</data>
+      <data key="x">290</data>
+      <data key="y">865</data>
     </node>
     <node id="11">
-      <data key="name">Wroc&#322;aw</data>
+      <data key="name">Sosnowiec</data>
       <data key="weight">1</data>
       <data key="marked">-1</data>
-      <data key="x">610</data>
-      <data key="y">460</data>
+      <data key="x">1965</data>
+      <data key="y">205</data>
     </node>
 
     <!-- edges -->
     <edge id="0" source="1" target="0">
       <data key="name">null</data>
-      <data key="weight">121</data>
+      <data key="weight">1299</data>
       <data key="marked">-1</data>
       <data key="x">0</data>
       <data key="y">0</data>
     </edge>
     <edge id="1" source="2" target="0">
       <data key="name">null</data>
-      <data key="weight">488</data>
+      <data key="weight">877</data>
       <data key="marked">-1</data>
       <data key="x">0</data>
       <data key="y">0</data>
     </edge>
     <edge id="2" source="2" target="1">
       <data key="name">null</data>
-      <data key="weight">367</data>
+      <data key="weight">678</data>
       <data key="marked">-1</data>
       <data key="x">0</data>
       <data key="y">0</data>
     </edge>
     <edge id="3" source="3" target="0">
       <data key="name">null</data>
-      <data key="weight">451</data>
+      <data key="weight">525</data>
       <data key="marked">-1</data>
       <data key="x">0</data>
       <data key="y">0</data>
     </edge>
     <edge id="4" source="3" target="1">
       <data key="name">null</data>
-      <data key="weight">330</data>
+      <data key="weight">849</data>
       <data key="marked">-1</data>
       <data key="x">0</data>
       <data key="y">0</data>
     </edge>
     <edge id="5" source="3" target="2">
       <data key="name">null</data>
-      <data key="weight">89</data>
+      <data key="weight">356</data>
       <data key="marked">-1</data>
       <data key="x">0</data>
       <data key="y">0</data>
     </edge>
     <edge id="6" source="4" target="0">
       <data key="name">null</data>
-      <data key="weight">492</data>
+      <data key="weight">282</data>
       <data key="marked">-1</data>
       <data key="x">0</data>
       <data key="y">0</data>
     </edge>
     <edge id="7" source="4" target="1">
       <data key="name">null</data>
-      <data key="weight">373</data>
+      <data key="weight">1018</data>
       <data key="marked">-1</data>
       <data key="x">0</data>
       <data key="y">0</data>
     </edge>
     <edge id="8" source="4" target="2">
       <data key="name">null</data>
-      <data key="weight">20</data>
+      <data key="weight">631</data>
       <data key="marked">-1</data>
       <data key="x">0</data>
       <data key="y">0</data>
     </edge>
     <edge id="9" source="4" target="3">
       <data key="name">null</data>
-      <data key="weight">108</data>
+      <data key="weight">277</data>
       <data key="marked">-1</data>
       <data key="x">0</data>
       <data key="y">0</data>
     </edge>
     <edge id="10" source="5" target="0">
       <data key="name">null</data>
-      <data key="weight">1193</data>
+      <data key="weight">1853</data>
       <data key="marked">-1</data>
       <data key="x">0</data>
       <data key="y">0</data>
     </edge>
     <edge id="11" source="5" target="1">
       <data key="name">null</data>
-      <data key="weight">1096</data>
+      <data key="weight">808</data>
       <data key="marked">-1</data>
       <data key="x">0</data>
       <data key="y">0</data>
     </edge>
     <edge id="12" source="5" target="2">
       <data key="name">null</data>
-      <data key="weight">801</data>
+      <data key="weight">1464</data>
       <data key="marked">-1</data>
       <data key="x">0</data>
       <data key="y">0</data>
     </edge>
     <edge id="13" source="5" target="3">
       <data key="name">null</data>
-      <data key="weight">887</data>
+      <data key="weight">1538</data>
       <data key="marked">-1</data>
       <data key="x">0</data>
       <data key="y">0</data>
     </edge>
     <edge id="14" source="5" target="4">
       <data key="name">null</data>
-      <data key="weight">784</data>
+      <data key="weight">1605</data>
       <data key="marked">-1</data>
       <data key="x">0</data>
       <data key="y">0</data>
     </edge>
     <edge id="15" source="6" target="0">
       <data key="name">null</data>
-      <data key="weight">322</data>
+      <data key="weight">1743</data>
       <data key="marked">-1</data>
       <data key="x">0</data>
       <data key="y">0</data>
     </edge>
     <edge id="16" source="6" target="1">
       <data key="name">null</data>
-      <data key="weight">242</data>
+      <data key="weight">610</data>
       <data key="marked">-1</data>
       <data key="x">0</data>
       <data key="y">0</data>
     </edge>
     <edge id="17" source="6" target="2">
       <data key="name">null</data>
-      <data key="weight">284</data>
+      <data key="weight">1279</data>
       <data key="marked">-1</data>
       <data key="x">0</data>
       <data key="y">0</data>
     </edge>
     <edge id="18" source="6" target="3">
       <data key="name">null</data>
-      <data key="weight">311</data>
+      <data key="weight">1385</data>
       <data key="marked">-1</data>
       <data key="x">0</data>
       <data key="y">0</data>
     </edge>
     <edge id="19" source="6" target="4">
       <data key="name">null</data>
-      <data key="weight">276</data>
+      <data key="weight">1482</data>
       <data key="marked">-1</data>
       <data key="x">0</data>
       <data key="y">0</data>
     </edge>
     <edge id="20" source="6" target="5">
       <data key="name">null</data>
-      <data key="weight">873</data>
+      <data key="weight">214</data>
       <data key="marked">-1</data>
       <data key="x">0</data>
       <data key="y">0</data>
     </edge>
     <edge id="21" source="7" target="0">
       <data key="name">null</data>
-      <data key="weight">81</data>
+      <data key="weight">341</data>
       <data key="marked">-1</data>
       <data key="x">0</data>
       <data key="y">0</data>
     </edge>
     <edge id="22" source="7" target="1">
       <data key="name">null</data>
-      <data key="weight">40</data>
+      <data key="weight">989</data>
       <data key="marked">-1</data>
       <data key="x">0</data>
       <data key="y">0</data>
     </edge>
     <edge id="23" source="7" target="2">
       <data key="name">null</data>
-      <data key="weight">406</data>
+      <data key="weight">707</data>
       <data key="marked">-1</data>
       <data key="x">0</data>
       <data key="y">0</data>
     </edge>
     <edge id="24" source="7" target="3">
       <data key="name">null</data>
-      <data key="weight">370</data>
+      <data key="weight">375</data>
       <data key="marked">-1</data>
       <data key="x">0</data>
       <data key="y">0</data>
     </edge>
     <edge id="25" source="7" target="4">
       <data key="name">null</data>
-      <data key="weight">411</data>
+      <data key="weight">149</data>
       <data key="marked">-1</data>
       <data key="x">0</data>
       <data key="y">0</data>
     </edge>
     <edge id="26" source="7" target="5">
       <data key="name">null</data>
-      <data key="weight">1124</data>
+      <data key="weight">1512</data>
       <data key="marked">-1</data>
       <data key="x">0</data>
       <data key="y">0</data>
     </edge>
     <edge id="27" source="7" target="6">
       <data key="name">null</data>
-      <data key="weight">261</data>
+      <data key="weight">1403</data>
       <data key="marked">-1</data>
       <data key="x">0</data>
       <data key="y">0</data>
     </edge>
     <edge id="28" source="8" target="0">
       <data key="name">null</data>
-      <data key="weight">815</data>
+      <data key="weight">1025</data>
       <data key="marked">-1</data>
       <data key="x">0</data>
       <data key="y">0</data>
     </edge>
     <edge id="29" source="8" target="1">
       <data key="name">null</data>
-      <data key="weight">718</data>
+      <data key="weight">297</data>
       <data key="marked">-1</data>
       <data key="x">0</data>
       <data key="y">0</data>
     </edge>
     <edge id="30" source="8" target="2">
       <data key="name">null</data>
-      <data key="weight">451</data>
+      <data key="weight">579</data>
       <data key="marked">-1</data>
       <data key="x">0</data>
       <data key="y">0</data>
     </edge>
     <edge id="31" source="8" target="3">
       <data key="name">null</data>
-      <data key="weight">539</data>
+      <data key="weight">627</data>
       <data key="marked">-1</data>
       <data key="x">0</data>
       <data key="y">0</data>
     </edge>
     <edge id="32" source="8" target="4">
       <data key="name">null</data>
-      <data key="weight">432</data>
+      <data key="weight">749</data>
       <data key="marked">-1</data>
       <data key="x">0</data>
       <data key="y">0</data>
     </edge>
     <edge id="33" source="8" target="5">
       <data key="name">null</data>
-      <data key="weight">379</data>
+      <data key="weight">916</data>
       <data key="marked">-1</data>
       <data key="x">0</data>
       <data key="y">0</data>
     </edge>
     <edge id="34" source="8" target="6">
       <data key="name">null</data>
-      <data key="weight">495</data>
+      <data key="weight">758</data>
       <data key="marked">-1</data>
       <data key="x">0</data>
       <data key="y">0</data>
     </edge>
     <edge id="35" source="8" target="7">
       <data key="name">null</data>
-      <data key="weight">746</data>
+      <data key="weight">702</data>
       <data key="marked">-1</data>
       <data key="x">0</data>
       <data key="y">0</data>
     </edge>
     <edge id="36" source="9" target="0">
       <data key="name">null</data>
-      <data key="weight">1150</data>
+      <data key="weight">1816</data>
       <data key="marked">-1</data>
       <data key="x">0</data>
       <data key="y">0</data>
     </edge>
     <edge id="37" source="9" target="1">
       <data key="name">null</data>
-      <data key="weight">1074</data>
+      <data key="weight">518</data>
       <data key="marked">-1</data>
       <data key="x">0</data>
       <data key="y">0</data>
     </edge>
     <edge id="38" source="9" target="2">
       <data key="name">null</data>
-      <data key="weight">861</data>
+      <data key="weight">1110</data>
       <data key="marked">-1</data>
       <data key="x">0</data>
       <data key="y">0</data>
     </edge>
     <edge id="39" source="9" target="3">
       <data key="name">null</data>
-      <data key="weight">949</data>
+      <data key="weight">1347</data>
       <data key="marked">-1</data>
       <data key="x">0</data>
       <data key="y">0</data>
     </edge>
     <edge id="40" source="9" target="4">
       <data key="name">null</data>
-      <data key="weight">841</data>
+      <data key="weight">1534</data>
       <data key="marked">-1</data>
       <data key="x">0</data>
       <data key="y">0</data>
     </edge>
     <edge id="41" source="9" target="5">
       <data key="name">null</data>
-      <data key="weight">297</data>
+      <data key="weight">746</data>
       <data key="marked">-1</data>
       <data key="x">0</data>
       <data key="y">0</data>
     </edge>
     <edge id="42" source="9" target="6">
       <data key="name">null</data>
-      <data key="weight">834</data>
+      <data key="weight">549</data>
       <data key="marked">-1</data>
       <data key="x">0</data>
       <data key="y">0</data>
     </edge>
     <edge id="43" source="9" target="7">
       <data key="name">null</data>
-      <data key="weight">1094</data>
+      <data key="weight">1507</data>
       <data key="marked">-1</data>
       <data key="x">0</data>
       <data key="y">0</data>
     </edge>
     <edge id="44" source="9" target="8">
       <data key="name">null</data>
-      <data key="weight">416</data>
+      <data key="weight">809</data>
       <data key="marked">-1</data>
       <data key="x">0</data>
       <data key="y">0</data>
     </edge>
     <edge id="45" source="10" target="0">
       <data key="name">null</data>
-      <data key="weight">968</data>
+      <data key="weight">912</data>
       <data key="marked">-1</data>
       <data key="x">0</data>
       <data key="y">0</data>
     </edge>
     <edge id="46" source="10" target="1">
       <data key="name">null</data>
-      <data key="weight">865</data>
+      <data key="weight">938</data>
       <data key="marked">-1</data>
       <data key="x">0</data>
       <data key="y">0</data>
     </edge>
     <edge id="47" source="10" target="2">
       <data key="name">null</data>
-      <data key="weight">558</data>
+      <data key="weight">273</data>
       <data key="marked">-1</data>
       <data key="x">0</data>
       <data key="y">0</data>
     </edge>
     <edge id="48" source="10" target="3">
       <data key="name">null</data>
-      <data key="weight">643</data>
+      <data key="weight">468</data>
       <data key="marked">-1</data>
       <data key="x">0</data>
       <data key="y">0</data>
     </edge>
     <edge id="49" source="10" target="4">
       <data key="name">null</data>
-      <data key="weight">541</data>
+      <data key="weight">726</data>
       <data key="marked">-1</data>
       <data key="x">0</data>
       <data key="y">0</data>
     </edge>
     <edge id="50" source="10" target="5">
       <data key="name">null</data>
-      <data key="weight">244</data>
+      <data key="weight">1733</data>
       <data key="marked">-1</data>
       <data key="x">0</data>
       <data key="y">0</data>
     </edge>
     <edge id="51" source="10" target="6">
       <data key="name">null</data>
-      <data key="weight">653</data>
+      <data key="weight">1545</data>
       <data key="marked">-1</data>
       <data key="x">0</data>
       <data key="y">0</data>
     </edge>
     <edge id="52" source="10" target="7">
       <data key="name">null</data>
-      <data key="weight">896</data>
+      <data key="weight">841</data>
       <data key="marked">-1</data>
       <data key="x">0</data>
       <data key="y">0</data>
     </edge>
     <edge id="53" source="10" target="8">
       <data key="name">null</data>
-      <data key="weight">170</data>
+      <data key="weight">852</data>
       <data key="marked">-1</data>
       <data key="x">0</data>
       <data key="y">0</data>
     </edge>
     <edge id="54" source="10" target="9">
       <data key="name">null</data>
-      <data key="weight">399</data>
+      <data key="weight">1331</data>
       <data key="marked">-1</data>
       <data key="x">0</data>
       <data key="y">0</data>
     </edge>
     <edge id="55" source="11" target="0">
       <data key="name">null</data>
-      <data key="weight">764</data>
+      <data key="weight">1976</data>
       <data key="marked">-1</data>
       <data key="x">0</data>
       <data key="y">0</data>
     </edge>
     <edge id="56" source="11" target="1">
       <data key="name">null</data>
-      <data key="weight">662</data>
+      <data key="weight">864</data>
       <data key="marked">-1</data>
       <data key="x">0</data>
       <data key="y">0</data>
     </edge>
     <edge id="57" source="11" target="2">
       <data key="name">null</data>
-      <data key="weight">375</data>
+      <data key="weight">1535</data>
       <data key="marked">-1</data>
       <data key="x">0</data>
       <data key="y">0</data>
     </edge>
     <edge id="58" source="11" target="3">
       <data key="name">null</data>
-      <data key="weight">463</data>
+      <data key="weight">1637</data>
       <data key="marked">-1</data>
       <data key="x">0</data>
       <data key="y">0</data>
     </edge>
     <edge id="59" source="11" target="4">
       <data key="name">null</data>
-      <data key="weight">357</data>
+      <data key="weight">1721</data>
       <data key="marked">-1</data>
       <data key="x">0</data>
       <data key="y">0</data>
     </edge>
     <edge id="60" source="11" target="5">
       <data key="name">null</data>
-      <data key="weight">437</data>
+      <data key="weight">149</data>
       <data key="marked">-1</data>
       <data key="x">0</data>
       <data key="y">0</data>
     </edge>
     <edge id="61" source="11" target="6">
       <data key="name">null</data>
-      <data key="weight">450</data>
+      <data key="weight">256</data>
       <data key="marked">-1</data>
       <data key="x">0</data>
       <data key="y">0</data>
     </edge>
     <edge id="62" source="11" target="7">
       <data key="name">null</data>
-      <data key="weight">692</data>
+      <data key="weight">1635</data>
       <data key="marked">-1</data>
       <data key="x">0</data>
       <data key="y">0</data>
     </edge>
     <edge id="63" source="11" target="8">
       <data key="name">null</data>
-      <data key="weight">80</data>
+      <data key="weight">1010</data>
       <data key="marked">-1</data>
       <data key="x">0</data>
       <data key="y">0</data>
     </edge>
     <edge id="64" source="11" target="9">
       <data key="name">null</data>
-      <data key="weight">496</data>
+      <data key="weight">705</data>
       <data key="marked">-1</data>
       <data key="x">0</data>
       <data key="y">0</data>
     </edge>
     <edge id="65" source="11" target="10">
       <data key="name">null</data>
-      <data key="weight">204</data>
+      <data key="weight">1800</data>
       <data key="marked">-1</data>
       <data key="x">0</data>
       <data key="y">0</data>
