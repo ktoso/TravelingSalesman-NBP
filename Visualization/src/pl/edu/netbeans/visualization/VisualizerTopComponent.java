@@ -244,9 +244,6 @@ public final class VisualizerTopComponent extends TopComponent {
 
         add(display);
 
-        jPanel.setLayout(new BorderLayout());
-        jPanel.add(display, BorderLayout.CENTER);
-        jPanel.add(new JButton("test"), BorderLayout.SOUTH);
         panelWidth = jPanel.getWidth();
         panelHeight = jPanel.getHeight();
 
