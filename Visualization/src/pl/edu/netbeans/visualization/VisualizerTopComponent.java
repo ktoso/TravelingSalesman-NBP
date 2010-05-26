@@ -78,25 +78,10 @@ public final class VisualizerTopComponent extends TopComponent {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel = new javax.swing.JPanel();
-
         setBackground(java.awt.Color.white);
-
-        jPanel.setLayout(null);
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 594, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 445, Short.MAX_VALUE)
-        );
+        setLayout(new java.awt.BorderLayout());
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel jPanel;
     // End of variables declaration//GEN-END:variables
 
     /**
@@ -242,10 +227,10 @@ public final class VisualizerTopComponent extends TopComponent {
         display.pan(-100, -100);
         display.zoom(new Point(100, 100), 0.7);
 
-        add(display);
+        add(display, BorderLayout.CENTER);
 
-        panelWidth = jPanel.getWidth();
-        panelHeight = jPanel.getHeight();
+        panelWidth = getWidth();
+        panelHeight = getHeight();
 
 
         vis.run("color");  // assign the colors
