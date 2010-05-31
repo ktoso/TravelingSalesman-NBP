@@ -155,11 +155,13 @@ public class Population {
             clearGraph();
             this.pop.getFirst().mark(1);
             newPop.getFirst().mark(2);
-            this.pop = newPop;
             iloscPokolenBezZmiany = 0;
         } else {
             iloscPokolenBezZmiany++;
         }
+
+
+        this.pop = newPop;
 
 
 

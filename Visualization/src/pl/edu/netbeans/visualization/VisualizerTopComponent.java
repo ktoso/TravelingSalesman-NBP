@@ -13,6 +13,7 @@ import org.netbeans.api.settings.ConvertAsProperties;
 import pl.edu.netbeans.algorithms.FirstTSSolverAction;
 import pl.edu.netbeans.algorithms.genetic.Population;
 import pl.edu.netbeans.visualization.actions.RouteDataColorAction;
+import pl.edu.netbeans.visualization.renderers.PointRenderer;
 import prefuse.Display;
 import prefuse.Visualization;
 import prefuse.action.ActionList;
@@ -162,6 +163,7 @@ public final class VisualizerTopComponent extends TopComponent {
     @Override
     public boolean canClose() {
         if (vis != null) {//nie możesz tego nie sprawdzać...
+            vis.removeAction("algorythm");
             vis.removeAction("layout");
             vis = null;
         }
@@ -182,19 +184,23 @@ public final class VisualizerTopComponent extends TopComponent {
         vis = new Visualization();
         vis.add("graph", graph);
 
+        ActionList algorithm = new ActionList(Activity.INFINITY);
+        solver = new FirstTSSolverAction(graph);
+        algorithm.add(solver);
+
         //poniższa seria akcji będzie wykonywana w nieskończoność
         ActionList layout = new ActionList(Activity.INFINITY);
         //layout.add(new ForceDirectedLayout("graph", true, false));
         layout.add(new SpecifiedLayout(nodes, "x", "y"));
         //TODO: zdobywać to przez opcje oraz lookup najlepiej
-        solver = new FirstTSSolverAction(graph);
-        layout.add(solver);
+//        solver = new FirstTSSolverAction(graph);
+//        layout.add(solver);
         //layout.add(new MockTSSolverAction(graph));
         layout.add(new RepaintAction());
 
-
-        LabelRenderer r = new LabelRenderer("name");
-        r.setRoundedCorner(8, 8);
+        PointRenderer r = new PointRenderer(5);
+//        LabelRenderer r = new LabelRenderer("name");
+//        r.setRoundedCorner(8, 8);
 
         // create a new default renderer factory
         // return our name label renderer as the default for all non-EdgeItems
@@ -202,7 +208,7 @@ public final class VisualizerTopComponent extends TopComponent {
         vis.setRendererFactory(new DefaultRendererFactory(r));
 
         ColorAction text = new ColorAction(nodes, VisualItem.TEXTCOLOR, ColorLib.gray(0));
-        ColorAction fill = new ColorAction(nodes, VisualItem.FILLCOLOR, ColorLib.rgba(200, 200, 255, 150));//kolor Node'ów
+        ColorAction fill = new ColorAction(nodes, VisualItem.FILLCOLOR, ColorLib.rgb(0, 0, 0));//kolor Node'ów
         ColorAction dataMarked = new RouteDataColorAction();
 
         ActionList color = new ActionList(Activity.INFINITY);
@@ -212,6 +218,7 @@ public final class VisualizerTopComponent extends TopComponent {
 
         // add the actions to the visualization
         vis.putAction("color", color);
+        vis.putAction("algorithm", algorithm);
         vis.putAction("layout", layout);
 
         // create a new Display that pull from our Visualization
@@ -234,7 +241,11 @@ public final class VisualizerTopComponent extends TopComponent {
 
 
         vis.run("color");  // assign the colors
+        vis.run("algorithm"); // start algorithm
         vis.run("layout"); // start up the animated layout
+
+        //Odkomentować jak uda sie uruchomić akcję start/pause/step/stop
+        //vis.getAction("algorithm").setEnabled(false); // default action is stopped
 
 
         revalidate();

@@ -34,6 +34,7 @@ public class FirstTSSolverAction extends SolverAction implements TSSolverAction,
     private Lookup myLookup = new AbstractLookup(dynamicContent);
     private Lookup.Result res;
 
+
     public FirstTSSolverAction(Graph graph) {
         super(graph);
         population = new Population(iloscOsobnikow, graph);
@@ -42,9 +43,9 @@ public class FirstTSSolverAction extends SolverAction implements TSSolverAction,
     }
 
     @Override
-    public void run(double frac) {
+    public void run(double frac) {        
         if (population.shouldStop()) {
-            getVisualization().getAction("layout").setEnabled(false);
+            getVisualization().getAction("algorithm").setEnabled(false);
             Chromosom ch = population.getBestChromosom();
             log("--- ALGORYTM ZAKONCZONY ---");
             log("Best (" + ch.fitness() + "):");
@@ -69,6 +70,18 @@ public class FirstTSSolverAction extends SolverAction implements TSSolverAction,
         res.allItems();
 
         waitAMomentPlease(300);
+    }
+
+    public void play() {
+        getVisualization().getAction("algorithm").setEnabled(true);
+    }
+
+    public void pause() {
+        getVisualization().getAction("algorithm").setEnabled(false);
+    }
+
+    public void step() {
+        run(0);
     }
 
     private void removeLastSent() {
