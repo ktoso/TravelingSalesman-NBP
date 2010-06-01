@@ -5,25 +5,25 @@
         <folder name="File">
             <file name="pl-edu-netbeans-visualization-actions-StartAlgorithmAction.instance">
                 <attr name="delegate" newvalue="pl.edu.netbeans.visualization.actions.StartAlgorithmAction"/>
-                <attr name="iconBase" stringvalue="../data/play.png"/>
+                <attr name="iconBase" stringvalue="pl/edu/netbeans/visualization/icons/play.png"/>
                 <attr name="instanceCreate" methodvalue="org.openide.awt.Actions.alwaysEnabled"/>
                 <attr name="noIconInMenu" stringvalue="false"/>
             </file>
             <file name="pl-edu-netbeans-visualization-actions-PauseAlgorithmAction.instance">
                 <attr name="delegate" newvalue="pl.edu.netbeans.visualization.actions.PauseAlgorithmAction"/>
-                <attr name="iconBase" stringvalue="../data/pause.png"/>
+                <attr name="iconBase" stringvalue="pl/edu/netbeans/visualization/icons/pause.png"/>
                 <attr name="instanceCreate" methodvalue="org.openide.awt.Actions.alwaysEnabled"/>
                 <attr name="noIconInMenu" stringvalue="false"/>
             </file>
             <file name="pl-edu-netbeans-visualization-actions-StepAlgorithmAction.instance">
                 <attr name="delegate" newvalue="pl.edu.netbeans.visualization.actions.StepAlgorithmAction"/>
-                <attr name="iconBase" stringvalue="../data/step.png"/>
+                <attr name="iconBase" stringvalue="pl/edu/netbeans/visualization/icons/step.png"/>
                 <attr name="instanceCreate" methodvalue="org.openide.awt.Actions.alwaysEnabled"/>
                 <attr name="noIconInMenu" stringvalue="false"/>
             </file>
             <file name="pl-edu-netbeans-visualization-actions-StopAlgorithmAction.instance">
                 <attr name="delegate" newvalue="pl.edu.netbeans.visualization.actions.StopAlgorithmAction"/>
-                <attr name="iconBase" stringvalue="../data/stop.png"/>
+                <attr name="iconBase" stringvalue="pl/edu/netbeans/visualization/icons/stop.png"/>
                 <attr name="instanceCreate" methodvalue="org.openide.awt.Actions.alwaysEnabled"/>
                 <attr name="noIconInMenu" stringvalue="false"/>
             </file>
@@ -64,15 +64,15 @@
             </file>
             <file name="pl-edu-netbeans-visualization-actions-PauseAlgorithmAction.shadow">
                 <attr name="originalFile" stringvalue="Actions/File/pl-edu-netbeans-visualization-actions-PauseAlgorithmAction.instance"/>
-                <attr name="position" intvalue="1"/>
+                <attr name="position" intvalue="2"/>
             </file>
             <file name="pl-edu-netbeans-visualization-actions-StepAlgorithmAction.shadow">
                 <attr name="originalFile" stringvalue="Actions/File/pl-edu-netbeans-visualization-actions-StepAlgorithmAction.instance"/>
-                <attr name="position" intvalue="1"/>
+                <attr name="position" intvalue="3"/>
             </file>
             <file name="pl-edu-netbeans-visualization-actions-StopAlgorithmAction.shadow">
                 <attr name="originalFile" stringvalue="Actions/File/pl-edu-netbeans-visualization-actions-StopAlgorithmAction.instance"/>
-                <attr name="position" intvalue="1"/>
+                <attr name="position" intvalue="4"/>
             </file>
         </folder>
     </folder>
@@ -83,10 +83,10 @@
         </folder>
         <folder name="Modes">
             <folder name="CssPreviewTCWsmode">
-                <file name="FitnessGraphTopComponent.wstcref" url="FitnessGraphTopComponentWstcref.xml"/>
             </folder>
             <folder name="output"> <!-- Na dole, tuż obok output -->
-                </folder>
+                <file name="FitnessGraphTopComponent.wstcref" url="FitnessGraphTopComponentWstcref.xml"/>
+            </folder>
             <folder name="editor">
                 <file name="VisualizerTopComponent.wstcref" url="VisualizerTopComponentWstcref.xml"/>
             </folder>

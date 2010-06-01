@@ -241,11 +241,11 @@ public final class VisualizerTopComponent extends TopComponent {
 
 
         vis.run("color");  // assign the colors
-        vis.run("algorithm"); // start algorithm
+        //vis.run("algorithm"); // start algorithm
         vis.run("layout"); // start up the animated layout
 
         //Odkomentować jak uda sie uruchomić akcję start/pause/step/stop
-        //vis.getAction("algorithm").setEnabled(false); // default action is stopped
+        //vis.getAction("algorithm").setEnabled(false); // default, an action is paused
 
 
         revalidate();
@@ -268,6 +268,49 @@ public final class VisualizerTopComponent extends TopComponent {
         if (graph == null) {
             System.err.println("NULL graph! Exiting...");
             throw new RuntimeException("Null graph! Check why!");
+        }
+    }
+
+
+
+    public void play() {
+        if ( vis != null) {
+            if ( ! vis.getAction("algorithm").isRunning() ) {
+                vis.run("algorithm");
+            } else if ( ! vis.getAction("algorithm").isEnabled() ) {
+                vis.getAction("algorithm").setEnabled(true);
+            }
+            
+            System.out.println("play inside");
+        } else {
+            System.err.println("Visualization doesn't exist!");
+        }
+    }
+
+    public void pause() {
+        if ( vis != null) {
+            vis.getAction("algorithm").setEnabled(false);
+            System.out.println("pause inside");
+        } else {
+            System.err.println("Visualization doesn't exist!");
+        }
+    }
+
+    public void step() {
+        if ( vis != null) {
+            if ( ! vis.getAction("algorithm").isEnabled() ) {
+                solver.run(0);
+            }
+        } else {
+            System.err.println("Visualization doesn't exist!");
+        }
+    }
+
+    public void stop() {
+        if ( vis != null) {
+            vis.removeAction("algorithm");
+        } else {
+            System.err.println("Visualization doesn't exist!");
         }
     }
 }

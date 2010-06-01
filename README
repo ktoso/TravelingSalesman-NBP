@@ -18,3 +18,11 @@ Super szybki opis struktury plików:
 To dopiero pierwszy szkic jakby to miało wyglądać ogólnie, obawiam się troszkę sposobu wołania algorytmu na chwilę obecną... Fajnie "silne", bo taki "step-over" też damy radę dzięki temu napisać, ale trochę dziwne podejście. Będziemy myśleć co z tym...
 
 Jest to wszystko w trakcie szukania sensownych rozwiązań i integraowania algorytmów Bartka, jakoś damy radę!
+
+--------------------------------
+
+Teraz zostały już tylko poprawki kosmetyczne:
+ - Muszę dopracować akcje play/pause/step/stop ( ładniejsze buttony, słuchanie aktywności vizualizera, obsługa błedów)
+ - Michał ma zrobić dokumentacje i "fajne" grafy
+ - Ktoso ma mnie okrzyczeć za to, że nie stosuje się do standardów pisania w Javie :P
+ - Opracownie elementów w menu (wywalenie niepotrzebnych, dodanie nowych)

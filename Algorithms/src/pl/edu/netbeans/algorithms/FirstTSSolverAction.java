@@ -43,7 +43,8 @@ public class FirstTSSolverAction extends SolverAction implements TSSolverAction,
     }
 
     @Override
-    public void run(double frac) {        
+    public void run(double frac) {
+
         if (population.shouldStop()) {
             getVisualization().getAction("algorithm").setEnabled(false);
             Chromosom ch = population.getBestChromosom();
@@ -73,15 +74,21 @@ public class FirstTSSolverAction extends SolverAction implements TSSolverAction,
     }
 
     public void play() {
-        getVisualization().getAction("algorithm").setEnabled(true);
+//        getVisualization().getAction("algorithm").setEnabled(true);
+//        pause = false;
     }
 
     public void pause() {
-        getVisualization().getAction("algorithm").setEnabled(false);
+//        log("PAUZA");
+//        pause = true;
     }
 
     public void step() {
         run(0);
+    }
+    public void stop() {
+//        log("STOP");
+//        stop = true;
     }
 
     private void removeLastSent() {
@@ -138,18 +145,4 @@ public class FirstTSSolverAction extends SolverAction implements TSSolverAction,
         }
     }
 }
-//        Może sie kiedyś przyda!
-//        try {
-////            getVisualization(). weź wszystko co nas interesuje, i działaj na tej kolekcji
-////            udawanie że liczę coś...
-//            graph.getEdge(lol++).set(null, lol);//TODO: usuń mnie, jestem tylko na pokaz
-//            Thread.sleep(100);
-//            log("[OK] Usunięto krawędź o ID: " + (lol - 1));
-////            end of udawanie że liczę coś...
-//        } catch (InterruptedException ex) {
-//            Logger.getLogger(MockTSSolverAction.class.getName()).log(Level.SEVERE, null, ex);
-//            err(ex.toString());
-//        }
-////        end of udawanie że liczę coś...
-//        err("error @ " + System.currentTimeMillis());
 

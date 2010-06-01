@@ -7,7 +7,6 @@ package pl.edu.netbeans.algorithms.genetic;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.Random;
 import pl.edu.netbeans.toolbox.RandomNG;
 import prefuse.data.Graph;
 import prefuse.data.Tuple;
@@ -82,8 +81,8 @@ public class Population {
      */
     public void nextGeneration() {
 
-        System.out.println("pop-fisrt: " + pop.getFirst().fitness());
-        System.out.println("pop-last: " + pop.getLast().fitness());
+//        System.out.println("pop-fisrt: " + pop.getFirst().fitness());
+//        System.out.println("pop-last: " + pop.getLast().fitness());
 
         int size = pop.size();
         double fitnessSum = 0;
