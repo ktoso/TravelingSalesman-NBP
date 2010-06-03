@@ -3,7 +3,9 @@
 package pl.edu.netbeans.visualization;
 
 import java.awt.BorderLayout;
+import java.awt.Event;
 import java.awt.Point;
+import java.beans.PropertyChangeEvent;
 import java.util.logging.Logger;
 import javax.swing.JButton;
 import org.openide.util.NbBundle;
@@ -41,6 +43,7 @@ import prefuse.visual.VisualItem;
 @ConvertAsProperties(dtd = "-//pl.edu.netbeans.visualization//Visualizer//EN",
 autostore = false)
 public final class VisualizerTopComponent extends TopComponent {
+
 
     private static VisualizerTopComponent instance;
     private static final String PREFERRED_ID = "VisualizerTopComponent";
@@ -241,11 +244,11 @@ public final class VisualizerTopComponent extends TopComponent {
 
 
         vis.run("color");  // assign the colors
-        //vis.run("algorithm"); // start algorithm
+        vis.run("algorithm"); // start algorithm
         vis.run("layout"); // start up the animated layout
 
         //Odkomentować jak uda sie uruchomić akcję start/pause/step/stop
-        //vis.getAction("algorithm").setEnabled(false); // default, an action is paused
+        vis.getAction("algorithm").setEnabled(false); // default, an action is paused
 
 
         revalidate();
@@ -272,45 +275,72 @@ public final class VisualizerTopComponent extends TopComponent {
     }
 
 
+    public boolean isPlayable() {
+        if ( solver != null) {
+            return solver.isPaused() && !solver.isStopped();
+        } else {
+            return false;
+        }
+    }
+
+    public boolean isPauseable() {
+        if ( solver != null) {
+            return ! (solver.isPaused() || solver.isStopped() );
+        } else {
+            return false;
+        }
+    }
+
+    public boolean isStepable() {
+        return isPlayable();
+    }
+
+    public boolean isStopable() {
+        if ( solver != null) {
+            return ! solver.isStopped();
+        } else {
+            return false;
+        }
+    }
+
 
     public void play() {
-        if ( vis != null) {
-            if ( ! vis.getAction("algorithm").isRunning() ) {
-                vis.run("algorithm");
-            } else if ( ! vis.getAction("algorithm").isEnabled() ) {
-                vis.getAction("algorithm").setEnabled(true);
-            }
-            
-            System.out.println("play inside");
+        System.out.println("Play!");
+        if ( solver != null) {
+            solver.play();
+            this.firePropertyChange("play", 0, 1);
         } else {
-            System.err.println("Visualization doesn't exist!");
+            System.err.println("No solver!");
         }
     }
 
     public void pause() {
-        if ( vis != null) {
-            vis.getAction("algorithm").setEnabled(false);
-            System.out.println("pause inside");
+        System.out.println("Pause!");
+        if ( solver != null) {
+            solver.pause();
+            this.firePropertyChange("pause", 0, 1);
         } else {
-            System.err.println("Visualization doesn't exist!");
+            System.err.println("No solver!");
         }
     }
 
     public void step() {
-        if ( vis != null) {
-            if ( ! vis.getAction("algorithm").isEnabled() ) {
-                solver.run(0);
-            }
+        System.out.println("Step!");
+        if ( solver != null) {
+            solver.step();
+            this.firePropertyChange("step", 0, 1);
         } else {
-            System.err.println("Visualization doesn't exist!");
+            System.err.println("No solver!");
         }
     }
 
     public void stop() {
-        if ( vis != null) {
-            vis.removeAction("algorithm");
+        System.out.println("Stop!");
+        if ( solver != null) {
+            solver.stop();
+            this.firePropertyChange("stop", 0, 1);
         } else {
-            System.err.println("Visualization doesn't exist!");
+            System.err.println("No solver!");
         }
     }
 }

@@ -207,26 +207,28 @@ public final class GenerateGraphVisualPanel1 extends JPanel {
             }
         });
 
-        //sensowne sortowanie zebranych plików, "\dnodes" są sortowane po wartościach tych liczb 100 > 5 etc.
-        Arrays.sort(files, new Comparator<File>() {
+        if ( files.length > 0 ) {
+            //sensowne sortowanie zebranych plików, "\dnodes" są sortowane po wartościach tych liczb 100 > 5 etc.
+            Arrays.sort(files, new Comparator<File>() {
 
-            private final static String PATTERN = "^(\\d)*nodes.xml$";
+                private final static String PATTERN = "^(\\d)*nodes.xml$";
 
-            public int compare(File o1, File o2) {
-                String s1 = o1.getName();
-                String s2 = o2.getName();
+                public int compare(File o1, File o2) {
+                    String s1 = o1.getName();
+                    String s2 = o2.getName();
 
-                if (s1.matches(PATTERN) && s2.matches(PATTERN)) {
-                    return extractInteger(s1).compareTo(extractInteger(s2));
+                    if (s1.matches(PATTERN) && s2.matches(PATTERN)) {
+                        return extractInteger(s1).compareTo(extractInteger(s2));
+                    }
+
+                    return o1.compareTo(o2);
                 }
 
-                return o1.compareTo(o2);
-            }
-
-            private Integer extractInteger(String filename) {
-                return Integer.parseInt(filename.substring(0, filename.indexOf('n')));
-            }
-        });
+                private Integer extractInteger(String filename) {
+                    return Integer.parseInt(filename.substring(0, filename.indexOf('n')));
+                }
+            });
+        }
 
         for (File f : files) {
             graphFilename.addItem(f.getName());
