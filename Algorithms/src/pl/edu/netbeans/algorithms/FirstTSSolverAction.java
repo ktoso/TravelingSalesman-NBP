@@ -69,8 +69,6 @@ public class FirstTSSolverAction extends SolverAction implements TSSolverAction,
         lastSentByMe = new ChartDataDTO(SIMULATION_ID, numerGeneracji, avgFitness, maxFitness, minFitness);
         dynamicContent.add(lastSentByMe);
         res.allItems();
-
-        waitAMomentPlease(300);
     }
 
     public void play() {
@@ -135,14 +133,6 @@ public class FirstTSSolverAction extends SolverAction implements TSSolverAction,
         res = myLookup.lookup(new Lookup.Template(ChartDataDTO.class));
         res.allItems();//zdaje się odświeżać wnętrzności takiego lookupa (ładować spis klas)
         res.addLookupListener((LookupListener) drawer);
-    }
-
-    private void waitAMomentPlease(int time) {
-        try {
-            Thread.sleep(time);
-        } catch (InterruptedException ex) {
-            Exceptions.printStackTrace(ex);
-        }
     }
 }
 
