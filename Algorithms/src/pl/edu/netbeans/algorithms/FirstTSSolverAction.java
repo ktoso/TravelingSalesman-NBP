@@ -2,7 +2,6 @@
  */
 package pl.edu.netbeans.algorithms;
 
-import org.openide.util.Exceptions;
 import org.openide.util.Lookup;
 import org.openide.util.LookupListener;
 import org.openide.util.lookup.AbstractLookup;
@@ -12,6 +11,7 @@ import org.openide.windows.WindowManager;
 import pl.edu.netbeans.algorithms.genetic.Chromosom;
 import pl.edu.netbeans.algorithms.genetic.Population;
 import pl.edu.netbeans.toolbox.ChartDataDTO;
+import prefuse.Visualization;
 import prefuse.data.Graph;
 
 /**
@@ -34,7 +34,6 @@ public class FirstTSSolverAction extends SolverAction implements TSSolverAction,
     private Lookup myLookup = new AbstractLookup(dynamicContent);
     private Lookup.Result res;
 
-
     public FirstTSSolverAction(Graph graph) {
         super(graph);
         population = new Population(iloscOsobnikow, graph);
@@ -44,16 +43,6 @@ public class FirstTSSolverAction extends SolverAction implements TSSolverAction,
 
     @Override
     public void run(double frac) {
-
-        if (population.shouldStop()) {
-            getVisualization().getAction("algorithm").setEnabled(false);
-            Chromosom ch = population.getBestChromosom();
-            log("--- ALGORYTM ZAKONCZONY ---");
-            log("Best (" + ch.fitness() + "):");
-            log(ch.toString());
-
-            return;
-        }
 
         population.nextGeneration();
         Chromosom ch = population.getBestChromosom();
@@ -69,24 +58,45 @@ public class FirstTSSolverAction extends SolverAction implements TSSolverAction,
         lastSentByMe = new ChartDataDTO(SIMULATION_ID, numerGeneracji, avgFitness, maxFitness, minFitness);
         dynamicContent.add(lastSentByMe);
         res.allItems();
+
+        if (population.shouldStop()) {
+            stop();
+        }
     }
 
     public void play() {
-//        getVisualization().getAction("algorithm").setEnabled(true);
-//        pause = false;
+        if (!isStopped()) {
+            getVisualization().getAction("algorithm").setEnabled(true);
+        }
     }
 
     public void pause() {
-//        log("PAUZA");
-//        pause = true;
+        if (!isStopped()) {
+            getVisualization().getAction("algorithm").setEnabled(false);
+            log("--- PAUZA ---");
+        }
     }
 
     public void step() {
-        run(0);
+        if (!isStopped() && isPaused()) {
+            run(1);
+        }
     }
+
     public void stop() {
-//        log("STOP");
-//        stop = true;
+        if (!isStopped()) {
+            getVisualization().removeAction("algorithm");
+            showSummary();
+        }
+    }
+
+    public boolean isStopped() {
+        Visualization vis = getVisualization();
+        return vis == null || vis.getAction("algorithm") == null;
+    }
+
+    public boolean isPaused() {
+        return !isStopped() && !getVisualization().getAction("algorithm").isEnabled();
     }
 
     private void removeLastSent() {
@@ -133,6 +143,13 @@ public class FirstTSSolverAction extends SolverAction implements TSSolverAction,
         res = myLookup.lookup(new Lookup.Template(ChartDataDTO.class));
         res.allItems();//zdaje się odświeżać wnętrzności takiego lookupa (ładować spis klas)
         res.addLookupListener((LookupListener) drawer);
+    }
+
+    private void showSummary() {
+        Chromosom ch = population.getBestChromosom();
+        log("--- ALGORYTM ZAKONCZONY ---");
+        log("Best (" + ch.fitness() + "):");
+        log(ch.toString());
     }
 }
 
