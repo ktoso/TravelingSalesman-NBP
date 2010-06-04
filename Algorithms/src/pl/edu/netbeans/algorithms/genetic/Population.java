@@ -63,7 +63,9 @@ public class Population {
         osobnikowPopulacji = op;
         for (int i = 0; i < osobnikowPopulacji; ++i) {
             pop.add(new Chromosom(dlugoscChromosomu, graph));
-            pop.get(i).create();
+            pop.get(i).create(true);
+            
+            
         }
 
         // na samym początku ustaw każdej krawedzi parametr marked=0

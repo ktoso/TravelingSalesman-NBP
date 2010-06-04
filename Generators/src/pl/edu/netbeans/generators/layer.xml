@@ -7,17 +7,35 @@
                 <attr name="delegate" newvalue="pl.edu.netbeans.generators.GenerateGraphWizardAction"/>
                 <attr name="iconBase" stringvalue="pl/edu/netbeans/generators/icons/new_graph.png"/>
                 <attr name="instanceCreate" methodvalue="org.openide.awt.Actions.alwaysEnabled"/>
+                <attr name="displayName" stringvalue="Nowa wizualizacja"/>
                 <attr name="noIconInMenu" stringvalue="false"/>
             </file>
         </folder>
     </folder>
     <folder name="Toolbars">
         <folder name="File">
+            <file name="org-openide-actions-SaveAllAction.shadow_hidden"/>
             <file name="pl-edu-netbeans-generators-GenerateGraphAction.shadow">
                 <attr name="originalFile" stringvalue="Actions/File/pl-edu-netbeans-generators-GenerateGraphWizardAction.instance"/>
                 <attr name="position" intvalue="0"/>
             </file>
         </folder>
+        <file name="UndoRedo_hidden"/>
     </folder>
-    
+    <folder name="Menu">
+        <folder name ="File">
+            <file name="pl-edu-netbeans-generators-GenerateGraphAction.shadow">
+                <attr name="originalFile" stringvalue="Actions/File/pl-edu-netbeans-generators-GenerateGraphWizardAction.instance"/>
+                <attr name="position" intvalue="0"/>
+            </file>
+            <file name="org-openide-actions-SaveAction.shadow_hidden"/>
+            <file name="org-openide-actions-SaveAsAction.shadow_hidden"/>
+            <file name="org-openide-actions-SaveAllAction.shadow_hidden"/>
+            <file name="org-netbeans-modules-print-action-PageSetupAction.shadow_hidden"/>
+            <file name="org-netbeans-modules-print-action-PrintAction.shadow_hidden"/>
+            <file name="org-netbeans-core-actions-SystemExit.shadow">
+                <attr name="displayName" stringvalue="Zakończ program" />
+            </file>
+        </folder>
+    </folder>
 </filesystem>

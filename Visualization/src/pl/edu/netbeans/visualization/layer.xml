@@ -7,24 +7,28 @@
                 <attr name="delegate" newvalue="pl.edu.netbeans.visualization.actions.StartAlgorithmAction"/>
                 <attr name="iconBase" stringvalue="pl/edu/netbeans/visualization/icons/play.png"/>
                 <attr name="instanceCreate" methodvalue="org.openide.awt.Actions.alwaysEnabled"/>
+                <attr name="displayName" stringvalue="Uruchom algorytm" />
                 <attr name="noIconInMenu" stringvalue="false"/>
             </file>
             <file name="pl-edu-netbeans-visualization-actions-PauseAlgorithmAction.instance">
                 <attr name="delegate" newvalue="pl.edu.netbeans.visualization.actions.PauseAlgorithmAction"/>
                 <attr name="iconBase" stringvalue="pl/edu/netbeans/visualization/icons/pause.png"/>
                 <attr name="instanceCreate" methodvalue="org.openide.awt.Actions.alwaysEnabled"/>
+                <attr name="displayName" stringvalue="Zapauzuj algorytm" />
                 <attr name="noIconInMenu" stringvalue="false"/>
             </file>
             <file name="pl-edu-netbeans-visualization-actions-StepAlgorithmAction.instance">
                 <attr name="delegate" newvalue="pl.edu.netbeans.visualization.actions.StepAlgorithmAction"/>
                 <attr name="iconBase" stringvalue="pl/edu/netbeans/visualization/icons/step.png"/>
                 <attr name="instanceCreate" methodvalue="org.openide.awt.Actions.alwaysEnabled"/>
+                <attr name="displayName" stringvalue="Wykonaj krok w algorytmie" />
                 <attr name="noIconInMenu" stringvalue="false"/>
             </file>
             <file name="pl-edu-netbeans-visualization-actions-StopAlgorithmAction.instance">
                 <attr name="delegate" newvalue="pl.edu.netbeans.visualization.actions.StopAlgorithmAction"/>
                 <attr name="iconBase" stringvalue="pl/edu/netbeans/visualization/icons/stop.png"/>
                 <attr name="instanceCreate" methodvalue="org.openide.awt.Actions.alwaysEnabled"/>
+                <attr name="displayName" stringvalue="Zatrzymaj wykonywanie algorytmu" />
                 <attr name="noIconInMenu" stringvalue="false"/>
             </file>
         </folder>
@@ -42,6 +46,24 @@
         </folder>
     </folder>
     <folder name="Menu">
+        <folder name ="File">
+            <file name="pl-edu-netbeans-visualization-actions-StartAlgorithmAction.shadow">
+                <attr name="originalFile" stringvalue="Actions/File/pl-edu-netbeans-visualization-actions-StartAlgorithmAction.instance"/>
+                <attr name="position" intvalue="1"/>
+            </file>
+            <file name="pl-edu-netbeans-visualization-actions-PauseAlgorithmAction.shadow">
+                <attr name="originalFile" stringvalue="Actions/File/pl-edu-netbeans-visualization-actions-PauseAlgorithmAction.instance"/>
+                <attr name="position" intvalue="2"/>
+            </file>
+            <file name="pl-edu-netbeans-visualization-actions-StepAlgorithmAction.shadow">
+                <attr name="originalFile" stringvalue="Actions/File/pl-edu-netbeans-visualization-actions-StepAlgorithmAction.instance"/>
+                <attr name="position" intvalue="3"/>
+            </file>
+            <file name="pl-edu-netbeans-visualization-actions-StopAlgorithmAction.shadow">
+                <attr name="originalFile" stringvalue="Actions/File/pl-edu-netbeans-visualization-actions-StopAlgorithmAction.instance"/>
+                <attr name="position" intvalue="4"/>
+            </file>
+        </folder>
         <file name="Edit_hidden"/>
         <file name="View_hidden"/>
         <file name="GoTo_hidden"/>

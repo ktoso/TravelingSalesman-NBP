@@ -52,9 +52,9 @@
                               </Group>
                               <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="maxGenerationsWGB" pref="110" max="32767" attributes="0"/>
-                                  <Component id="maxGenerations" alignment="0" pref="110" max="32767" attributes="0"/>
-                                  <Component id="populationSize" alignment="0" pref="110" max="32767" attributes="0"/>
+                                  <Component id="maxGenerationsWGB" pref="111" max="32767" attributes="0"/>
+                                  <Component id="maxGenerations" alignment="0" pref="111" max="32767" attributes="0"/>
+                                  <Component id="populationSize" alignment="0" pref="111" max="32767" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
                           </Group>

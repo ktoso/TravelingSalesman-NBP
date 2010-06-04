@@ -3,11 +3,9 @@
 package pl.edu.netbeans.visualization;
 
 import java.awt.BorderLayout;
-import java.awt.Event;
 import java.awt.Point;
-import java.beans.PropertyChangeEvent;
+import java.io.File;
 import java.util.logging.Logger;
-import javax.swing.JButton;
 import org.openide.util.NbBundle;
 import org.openide.windows.TopComponent;
 import org.openide.windows.WindowManager;
@@ -23,8 +21,6 @@ import prefuse.action.RepaintAction;
 import prefuse.action.assignment.ColorAction;
 import prefuse.action.layout.SpecifiedLayout;
 import prefuse.activity.Activity;
-import prefuse.controls.FocusControl;
-import prefuse.controls.NeighborHighlightControl;
 import prefuse.controls.PanControl;
 import prefuse.controls.WheelZoomControl;
 import prefuse.controls.ZoomControl;
@@ -33,7 +29,6 @@ import prefuse.data.Graph;
 import prefuse.data.io.DataIOException;
 import prefuse.data.io.GraphMLReader;
 import prefuse.render.DefaultRendererFactory;
-import prefuse.render.LabelRenderer;
 import prefuse.util.ColorLib;
 import prefuse.visual.VisualItem;
 
@@ -44,7 +39,6 @@ import prefuse.visual.VisualItem;
 autostore = false)
 public final class VisualizerTopComponent extends TopComponent {
 
-
     private static VisualizerTopComponent instance;
     private static final String PREFERRED_ID = "VisualizerTopComponent";
     private Graph graph = null;
@@ -52,6 +46,7 @@ public final class VisualizerTopComponent extends TopComponent {
     private Visualization vis = null;
     private FirstTSSolverAction solver;
     int panelHeight, panelWidth;
+    private String displayName = "";
 
     public VisualizerTopComponent() {
         initComponents();
@@ -65,7 +60,8 @@ public final class VisualizerTopComponent extends TopComponent {
 
     public void open(String filename) {
         super.open();
-        super.setName(filename);
+        displayName = ( new File(filename) ).getName();
+        super.setName(displayName);
 
         initGraph(filename);
     }
@@ -165,11 +161,11 @@ public final class VisualizerTopComponent extends TopComponent {
      */
     @Override
     public boolean canClose() {
-        if (vis != null) {//nie możesz tego nie sprawdzać...
-            vis.removeAction("algorythm");
-            vis.removeAction("layout");
-            vis = null;
+        if (solver != null) {
+            solver.stop();
         }
+
+        vis = null;
 
         if (graph != null) {
             graph.clear();
@@ -237,6 +233,7 @@ public final class VisualizerTopComponent extends TopComponent {
         display.pan(-100, -100);
         display.zoom(new Point(100, 100), 0.7);
 
+
         add(display, BorderLayout.CENTER);
 
         panelWidth = getWidth();
@@ -247,9 +244,7 @@ public final class VisualizerTopComponent extends TopComponent {
         vis.run("algorithm"); // start algorithm
         vis.run("layout"); // start up the animated layout
 
-        //Odkomentować jak uda sie uruchomić akcję start/pause/step/stop
         vis.getAction("algorithm").setEnabled(false); // default, an action is paused
-
 
         revalidate();
         repaint();
@@ -274,41 +269,11 @@ public final class VisualizerTopComponent extends TopComponent {
         }
     }
 
-
-    public boolean isPlayable() {
-        if ( solver != null) {
-            return solver.isPaused() && !solver.isStopped();
-        } else {
-            return false;
-        }
-    }
-
-    public boolean isPauseable() {
-        if ( solver != null) {
-            return ! (solver.isPaused() || solver.isStopped() );
-        } else {
-            return false;
-        }
-    }
-
-    public boolean isStepable() {
-        return isPlayable();
-    }
-
-    public boolean isStopable() {
-        if ( solver != null) {
-            return ! solver.isStopped();
-        } else {
-            return false;
-        }
-    }
-
-
     public void play() {
         System.out.println("Play!");
-        if ( solver != null) {
+        if (solver != null) {
             solver.play();
-            this.firePropertyChange("play", 0, 1);
+            setName(displayName);
         } else {
             System.err.println("No solver!");
         }
@@ -316,9 +281,9 @@ public final class VisualizerTopComponent extends TopComponent {
 
     public void pause() {
         System.out.println("Pause!");
-        if ( solver != null) {
+        if (solver != null) {
             solver.pause();
-            this.firePropertyChange("pause", 0, 1);
+            setName(displayName + " (pauza)");
         } else {
             System.err.println("No solver!");
         }
@@ -326,9 +291,8 @@ public final class VisualizerTopComponent extends TopComponent {
 
     public void step() {
         System.out.println("Step!");
-        if ( solver != null) {
+        if (solver != null) {
             solver.step();
-            this.firePropertyChange("step", 0, 1);
         } else {
             System.err.println("No solver!");
         }
@@ -336,9 +300,9 @@ public final class VisualizerTopComponent extends TopComponent {
 
     public void stop() {
         System.out.println("Stop!");
-        if ( solver != null) {
+        if (solver != null) {
             solver.stop();
-            this.firePropertyChange("stop", 0, 1);
+            setName(displayName + " (zakończono)");
         } else {
             System.err.println("No solver!");
         }

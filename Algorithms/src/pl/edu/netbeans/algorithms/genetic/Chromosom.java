@@ -4,8 +4,11 @@
  */
 package pl.edu.netbeans.algorithms.genetic;
 
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Random;
+import pl.edu.netbeans.algorithms.exception.EdgeDoesNotExistException;
 import prefuse.data.Edge;
 import prefuse.data.Graph;
 
@@ -26,20 +29,58 @@ public class Chromosom extends LinkedList<Integer> implements Comparable<Chromos
     public Chromosom(int length, Graph g) {
         this.graph = g;
         for (int i = 0; i < length; ++i) {
-
             add(-1);
         }
     }
 
     public void create() {
+        create(false);
+    }
+
+    public void create(boolean greedy) {
         int length = size();
-        for (int i = 0; i < length; ++i) {
-            int num = generator.nextInt(length);
-            while (indexOf(num) != -1) {
-                num = generator.nextInt(length);
+        if (greedy) {
+            HashSet<Integer> unused = new HashSet<Integer>();
+            for (int i = 0; i < length; ++i) {
+                unused.add(i);
             }
-            set(i, num);
+            int start = generator.nextInt(length);
+            int it = 0;
+            set(it++, start);
+            unused.remove(start);
+            for( ; it < length; it++) {
+                
+                Iterator<Integer> iter = unused.iterator();
+                double min = Double.MAX_VALUE;
+                int min_it = start;
+                int act;
+                while(iter.hasNext()) {
+                    act = iter.next();
+                    double weight;
+                    try {
+                        weight = getEdgeWeight(start, act);
+                    } catch (EdgeDoesNotExistException ex) {
+                        weight = Double.MAX_VALUE;
+                    }
+                    if ( weight < min ) {
+                        min = weight;
+                        min_it = act;
+                    }
+                }
+                set(it, min_it);
+                unused.remove(min_it);
+            }
+            
+        } else {
+            for (int i = 0; i < length; ++i) {
+                int num = generator.nextInt(length);
+                while (indexOf(num) != -1) {
+                    num = generator.nextInt(length);
+                }
+                set(i, num);
+            }
         }
+
     }
 
     public ChromosomPair crossover(Chromosom ch) {
@@ -85,7 +126,6 @@ public class Chromosom extends LinkedList<Integer> implements Comparable<Chromos
         return new ChromosomPair(child1, child2);
     }
 
-
     /**
      * Funkcja mutująca dany chromosom
      * @param mutationSize liczba z przedziału (0, 1) określająca rozmiar mutacji
@@ -99,9 +139,9 @@ public class Chromosom extends LinkedList<Integer> implements Comparable<Chromos
         for (int i = 0; i < length; ++i) {
             child.set(i, get(i));
         }
-        
-        mutationSize = (mutationSize>1?1:mutationSize)*length;
-        
+
+        mutationSize = (mutationSize > 1 ? 1 : mutationSize) * length;
+
         //ilość zamian genów w mutacji
         for (int i = 0; i < mutationSize; ++i) {
             int from = generator.nextInt(length);
@@ -146,19 +186,28 @@ public class Chromosom extends LinkedList<Integer> implements Comparable<Chromos
      * @param i numer miasta w tablicy porządku
      * @return waga scieżki do kolejnego miasta
      */
-    private double getEdgeWeight(int i) {
-        //FIXME: HACK: brzydkie, ale lepsz "na szybko" to niż jazda po krawędziach których nie ma (nulle)
+    private double getEdgeWeight(int i) throws EdgeDoesNotExistException {
         if (i < 0) {
-            return Integer.MAX_VALUE;
+            throw new EdgeDoesNotExistException("Nie ma takiej krawędzi");
         }
 
         int source = get(i);
         int target = get(i + 1);
 
-        Edge e = graph.getEdge(graph.getEdge(source, target));
+        return getEdgeWeight(source, target);
+
+        
+    }
+
+    private double getEdgeWeight(int s, int t) throws EdgeDoesNotExistException {
+        if ( s < 0 || s > size() || t < 0 || t > size() ) {
+            throw new EdgeDoesNotExistException("Nie ma takiej krawędzi");
+        }
+
+        Edge e = graph.getEdge(graph.getEdge(s, t));
 
         if (e == null) {
-            e = graph.getEdge(graph.getEdge(target, source));
+            e = graph.getEdge(graph.getEdge(t, s));
         }
 
         if (e != null) {
@@ -171,7 +220,11 @@ public class Chromosom extends LinkedList<Integer> implements Comparable<Chromos
     public double fitness() {
         double f = 0;
         for (int i = 0; i < size(); ++i) {
-            f += getEdgeWeight(i);
+            try {
+                f += getEdgeWeight(i);
+            } catch (EdgeDoesNotExistException ex) {
+                f += 0;
+            }
         }
         return f;
     }

@@ -81,12 +81,12 @@ public final class GenerateGraphWizardAction extends CallableSystemAction {
     }
 
     public String getName() {
-        return "Start Sample Wizard";
+        return "Nowa wizualizacja";
     }
 
     @Override
     public String iconResource() {
-        return null;
+        return "pl/edu/netbeans/generators/icons/new_graph.png";
     }
 
     public HelpCtx getHelpCtx() {
