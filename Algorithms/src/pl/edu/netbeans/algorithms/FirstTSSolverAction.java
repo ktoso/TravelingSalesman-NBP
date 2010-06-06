@@ -28,7 +28,7 @@ public class FirstTSSolverAction extends SolverAction implements TSSolverAction,
     private final Population population;
     /**Służy indentyfikacji różnych serii danych podczas rysowania wykresów*/
     private static int simcount = 1;
-    private final String SIMULATION_ID = "symulacja " + FirstTSSolverAction.simcount++;
+    private final String SIMULATION_ID = "Symulacja " + FirstTSSolverAction.simcount++;
 
     /*Kosmiczna komunikacja między-wątkowo-modułowa poprzez dynamiczne lookupy*/
     private InstanceContent dynamicContent = new InstanceContent();
@@ -51,7 +51,7 @@ public class FirstTSSolverAction extends SolverAction implements TSSolverAction,
             double maxFitness = population.getWorstFittness();
             double minFitness = population.getBestFitness();
 
-            log("Pokolenie " + numerGeneracji + ": (" + minFitness + " - " + avgFitness + " - " + maxFitness + ")");
+            log(SIMULATION_ID + " - pokolenie " + numerGeneracji + ": (" + minFitness + " - " + avgFitness + " - " + maxFitness + ")");
 
             /* Słuchający tego lookup zostaną powiadomieni o zmianie, przerysują wykres */
             lastSentByMe = new ChartDataDTO(SIMULATION_ID, numerGeneracji, avgFitness, maxFitness, minFitness);

@@ -82,8 +82,8 @@ public class Chromosom extends LinkedList<Integer> implements Comparable<Chromos
 
     public ChromosomPair crossover(Chromosom ch, String type) throws WrongGraphTypeException {
         if (type.equals("Heurystyczne")) {
-            return new ChromosomPair( this.heuristicCrossover(ch), ch.heuristicCrossover(this));
-        }else {
+            return new ChromosomPair(this.heuristicCrossover(ch), ch.heuristicCrossover(this));
+        } else {
             return OXcrossover(ch);
         }
     }
@@ -150,10 +150,10 @@ public class Chromosom extends LinkedList<Integer> implements Comparable<Chromos
         int start = generator.nextInt(length);
         int from = get(start);
         int to1 = get(start + 1);
-        int to2 = ch.get( ch.find(from) + 1);
+        int to2 = ch.get(ch.find(from) + 1);
 
         child.set(0, from);
-        unused.remove( Integer.valueOf(from) );
+        unused.remove(Integer.valueOf(from));
 
 //        System.out.println("--- Heurystyka ---");
 
@@ -162,19 +162,19 @@ public class Chromosom extends LinkedList<Integer> implements Comparable<Chromos
             double ew1 = getEdgeWeight(from, to1);
             double ew2 = ch.getEdgeWeight(from, to2);
 
-            
-            if ( ew1 < ew2 ) {
-                if ( unused.contains(to1) ) {
+
+            if (ew1 < ew2) {
+                if (unused.contains(to1)) {
                     to = to1;
-                } else if ( unused.contains(to2) ) {
+                } else if (unused.contains(to2)) {
                     to = to2;
                 } else {
                     to = getClosestNeighbor(from, unused);
                 }
             } else {
-                if ( unused.contains(to2) ) {
+                if (unused.contains(to2)) {
                     to = to2;
-                } else if ( unused.contains(to1) ) {
+                } else if (unused.contains(to1)) {
                     to = to1;
                 } else {
                     to = getClosestNeighbor(from, unused);
@@ -190,16 +190,16 @@ public class Chromosom extends LinkedList<Integer> implements Comparable<Chromos
 //            System.out.println();
 
             child.set(i, to);
-            unused.remove( Integer.valueOf(to) );
-            
+            unused.remove(Integer.valueOf(to));
+
             from = to;
-            to1 = get( find(to) + 1);
-            to2 = ch.get( ch.find(to) + 1);
+            to1 = get(find(to) + 1);
+            to2 = ch.get(ch.find(to) + 1);
         }
 
 //        System.out.println(child);
 //        System.out.println();
-        
+
         return child;
     }
 
@@ -210,7 +210,7 @@ public class Chromosom extends LinkedList<Integer> implements Comparable<Chromos
      */
     public Chromosom mutation() {
         int length = size();
-        
+
         Chromosom child = new Chromosom(length, this.graph);
         for (int i = 0; i < length; ++i) {
             child.set(i, get(i));
@@ -222,7 +222,6 @@ public class Chromosom extends LinkedList<Integer> implements Comparable<Chromos
         int tmp = child.get(from);
         child.set(from, child.get(with));
         child.set(with, tmp);
-        
 
         return child;
     }

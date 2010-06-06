@@ -212,8 +212,28 @@ public class Population {
         return offspring;
     }
 
-    private LinkedList<Chromosom> Tournament(LinkedList<Chromosom> p) {
-        return p;
+    private LinkedList<Chromosom> Tournament(LinkedList<Chromosom> p) throws WrongGraphTypeException {
+        LinkedList<Chromosom> offspring = new LinkedList<Chromosom>();
+        int halfsize = p.size() / 2;
+
+        for (int i = 0; i < halfsize; ++i) {
+            //krzyżuj pierwszą połowę osobników z losowym osobnikiem z grupiej połowy
+            ChromosomPair childern = p.get(i).crossover(p.get(halfsize + generator.nextInt(p.size() - halfsize)), crossoverType);
+            Chromosom ch1 = childern.first();
+            Chromosom ch2 = childern.second();
+            if (generator.nextBoolean((iloscPokolenBezZmiany / maxPokolenBezZmiany) * 0.5)) {
+                ch1 = ch1.mutation();
+                ch2 = ch2.mutation();
+            }
+
+            offspring.add(ch1);
+            offspring.add(ch2);
+
+        }
+        
+        Collections.sort(offspring);
+
+        return offspring;
     }
 
     public Chromosom getBestChromosom() {
