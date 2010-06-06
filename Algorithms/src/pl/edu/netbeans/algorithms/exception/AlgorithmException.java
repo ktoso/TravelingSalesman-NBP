@@ -9,14 +9,18 @@ package pl.edu.netbeans.algorithms.exception;
  *
  * @author bartek
  */
-public class WrongGraphTypeException extends AlgorithmException {
+public class AlgorithmException extends Exception {
 
-    public WrongGraphTypeException() {
+    public AlgorithmException(String msg) {
+        super(msg);
+    }
+
+    public AlgorithmException() {
         super();
     }
 
-    public WrongGraphTypeException(String msg) {
-        super(msg);
-    }
+
+
+
 
 }

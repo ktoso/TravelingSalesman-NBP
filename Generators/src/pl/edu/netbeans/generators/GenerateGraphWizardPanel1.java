@@ -79,12 +79,15 @@ public class GenerateGraphWizardPanel1 implements WizardDescriptor.ValidatingPan
     // WizardDescriptor.getProperty & putProperty to store information entered
     // by the user.
     public void storeSettings(Object settings) {
-        ((WizardDescriptor) settings).putProperty("nodeCount", ((GenerateGraphVisualPanel1) getComponent()).getNodeCount());
-        ((WizardDescriptor) settings).putProperty("graphFilename", ((GenerateGraphVisualPanel1) getComponent()).getGraphFilename());
-        ((WizardDescriptor) settings).putProperty("maxGenerations", ((GenerateGraphVisualPanel1) getComponent()).getMaxGenerations());
-        ((WizardDescriptor) settings).putProperty("maxGenerationsWGB", ((GenerateGraphVisualPanel1) getComponent()).getMaxGenerationsWithoutGettingBetter());
-        ((WizardDescriptor) settings).putProperty("loadingExistingGraph", ((GenerateGraphVisualPanel1) getComponent()).isLoadingExisting());
-        ((WizardDescriptor) settings).putProperty("populationSize", ((GenerateGraphVisualPanel1) getComponent()).getPopulationSize());
+        ((WizardDescriptor) settings).putProperty("nodeCount", getComponent().getNodeCount());
+        ((WizardDescriptor) settings).putProperty("graphFilename", getComponent().getGraphFilename());
+        ((WizardDescriptor) settings).putProperty("maxGenerations", getComponent().getMaxGenerations());
+        ((WizardDescriptor) settings).putProperty("maxGenerationsWGB", getComponent().getMaxGenerationsWithoutGettingBetter());
+        ((WizardDescriptor) settings).putProperty("loadingExistingGraph", getComponent().isLoadingExisting());
+        ((WizardDescriptor) settings).putProperty("populationSize", getComponent().getPopulationSize());
+        ((WizardDescriptor) settings).putProperty("greedyAlgorithm", getComponent().isGreedy());
+        ((WizardDescriptor) settings).putProperty("crossoverType", getComponent().getCrossoverType());
+        ((WizardDescriptor) settings).putProperty("selectionType", getComponent().getSelectionType());
     }
 
     public void readSettings(Object settings) {
@@ -99,7 +102,11 @@ public class GenerateGraphWizardPanel1 implements WizardDescriptor.ValidatingPan
                 throw new WizardValidationException(null, "Proszę podać liczbę wierzchołków", null);
             }
             if (!nodeCount.matches("\\d+")) {
-                throw new WizardValidationException(null, "Proszę podać poprawną liczbę całkowitą", null);
+                throw new WizardValidationException(null, "Proszę podać całkowitą liczbę wieszchołków", null);
+            }
+            Integer nC = Integer.parseInt(nodeCount);
+            if (nC < 4 || nC > 500) {
+                throw new WizardValidationException(null, "Rozmiar grafu musi być liczbą z przedziału (4, 500)", null);
             }
         }
 
