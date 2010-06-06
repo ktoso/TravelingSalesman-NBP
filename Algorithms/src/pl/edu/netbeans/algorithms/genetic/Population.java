@@ -23,6 +23,7 @@ public class Population {
     int osobnikowPopulacji = 0;
     RandomNG generator = new RandomNG();
     private final Graph graph;
+    private double crossoverPropabilty = 0.25;
     private int iloscPokolenBezZmiany = 0;
     private int maxPokolenBezZmiany = 500;
     private boolean shouldStop = false;
@@ -68,7 +69,7 @@ public class Population {
         for (int i = 0; i < osobnikowPopulacji; ++i) {
             pop.add(new Chromosom(dlugoscChromosomu, graph));
             pop.get(i).create(greedy);
-            
+
         }
 
         // na samym początku ustaw każdej krawedzi parametr marked=0
@@ -84,88 +85,33 @@ public class Population {
      * Funkcja tworzy kolejne pokolenie które jest odrzucane lub przyjmowane na
      * podstawie wartości dopasowania najlepszego chromosomu
      */
-    public void nextGeneration() {
+    public void nextGeneration() throws WrongGraphTypeException {
 
 //        System.out.println("pop-fisrt: " + pop.getFirst().fitness());
 //        System.out.println("pop-last: " + pop.getLast().fitness());
 
-        int size = pop.size();
-        double fitnessSum = 0;
-        for (Chromosom ch : pop) {
-            fitnessSum += 1 / ch.fitness();
+        LinkedList<Chromosom> offspring;
+
+        System.out.println(selectionType);
+        if (selectionType.equals("Ruletka")) {
+            offspring = Roullete(pop);
+        } else {
+            offspring = Tournament(pop);
         }
 
-        // Dystrybuanta każdego chromosomu
-        double[] q = new double[size];
-        for (int i = 0; i < size; ++i) {
-            q[i] = 0;
-            for (int j = 0; j <= i; ++j) {
-                q[i] += 1 / pop.get(j).fitness();
-            }
-            q[i] /= fitnessSum;
-        }
 
-        // Losowanie osobników do krzyżowania
-        int forCrossoverCount = generator.nextInt(size / 2) * 2;
-        LinkedList<Chromosom> forCrossover = new LinkedList<Chromosom>();
-        for (int i = 0; i < forCrossoverCount; ++i) {
-            double r = generator.nextDouble();
-            int j = 0;
-            while (r > q[j]) {
-                j++;
-            }
-            forCrossover.add(pop.get(j));
-        }
 
-        // Losowanie osobników do nowej populacji
-        LinkedList<Chromosom> newPop = new LinkedList<Chromosom>();
-        for (int i = 0; i < size - forCrossoverCount; ++i) {
-            double r = generator.nextDouble();
-            int j = 0;
-            while (r > q[j]) {
-                j++;
-            }
-            newPop.add(pop.get(j));
-        }
-
-        /* Krzyżowanie:
-         * Krzyzują się tylko wybrane wczesniej osobniki
-         */
-        while (forCrossover.size() > 0) { //długość tej listy jest parzysta wiec moge pobierać w każdej pętli dwa obiekty
-
-            Chromosom fistParent = forCrossover.removeFirst();
-            Chromosom secondParent = forCrossover.removeFirst();
-
-            ChromosomPair childern = fistParent.crossover(secondParent);
-
-            newPop.add(childern.first());
-            newPop.add(childern.second());
-        }
-
-        // Mutacje: każdy osobnik ma (iloscPokolenBezZmiany/maxpokolenBezZmiany)*0.5
-        // szansa na mutacje rosną wraz z iloscią pokolen bez zmiany
-        for (int i = 0; i < size; ++i) {
-            if (generator.nextBoolean((iloscPokolenBezZmiany / maxPokolenBezZmiany) * 0.5)) {
-                newPop.set(i, newPop.get(i).mutation(iloscPokolenBezZmiany / maxPokolenBezZmiany));
-            }
-        }
-
-        Collections.sort(newPop);
-
-        if (getAvgFitness(newPop) < getAvgFitness(pop)) {
-            // Jeśli się coś zmieniło to ustawiamy wszystkim krawedziom
-            // marked=0, najlepszej sciezce ze starego pokolenia marked=1,
-            // a najlepszej sciezce z aktualnego pokolenia marked=2
-            clearGraph();
-            this.pop.getFirst().mark(1);
-            newPop.getFirst().mark(2);
-            this.pop = newPop;
+        if (offspring.getFirst().fitness() < pop.getFirst().fitness()) {
             iloscPokolenBezZmiany = 0;
         } else {
             iloscPokolenBezZmiany++;
         }
-
-
+        // Jeśli się coś zmieniło to ustawiamy wszystkim krawedziom
+        // marked=0, najlepszej sciezce ze starego pokolenia marked=1,
+        // a najlepszej sciezce z aktualnego pokolenia marked=2
+        clearGraph();
+        this.pop = offspring;
+        this.pop.getFirst().mark(1);
 
         numerGeneracji++;
 
@@ -175,8 +121,95 @@ public class Population {
 
     }
 
-    private LinkedList<Chromosom> Roullete(LinkedList<Chromosom> p) {
-        return p;
+    private LinkedList<Chromosom> Roullete(LinkedList<Chromosom> p) throws WrongGraphTypeException {
+        int size = p.size();
+        double fitnessSum = 0;
+        for (Chromosom ch : p) {
+            fitnessSum += 1 / ch.fitness();
+        }
+
+        // Dystrybuanta każdego chromosomu
+        double[] q = new double[size];
+        for (int i = 0; i < size; ++i) {
+            q[i] = 0;
+            for (int j = 0; j <= i; ++j) {
+                q[i] += 1 / p.get(j).fitness();
+            }
+            q[i] /= fitnessSum;
+        }
+
+        LinkedList<Chromosom> offspring = new LinkedList<Chromosom>();
+        for (int i = 0; i < osobnikowPopulacji; ++i) {
+            double r = generator.nextDouble();
+            int j = 0;
+            while (r > q[j]) {
+                j++;
+            }
+            offspring.add(p.get(j));
+        }
+
+        LinkedList<Integer> forCrossover = new LinkedList<Integer>();
+        for (int i = 0; i < size; ++i) {
+            if ( generator.nextDouble() < crossoverPropabilty ) {
+                forCrossover.add(i);
+            }
+        }
+
+        for( Integer it: forCrossover) {
+            Chromosom p1 = offspring.get(it);
+            int p2it = generator.nextInt(size);
+            Chromosom p2 = offspring.get(p2it);
+
+            ChromosomPair children =  p1.crossover(p2, crossoverType);
+            offspring.set(it, children.first());
+            offspring.set(p2it, children.second());
+        }
+
+        
+            // Losowanie osobników do krzyżowania
+                //        int forCrossoverCount = generator.nextInt(size / 2) * 2;
+                //        LinkedList<Chromosom> forCrossover = new LinkedList<Chromosom>();
+                //        for (int i = 0; i < forCrossoverCount; ++i) {
+                //            double r = generator.nextDouble();
+                //            int j = 0;
+                //            while (r > q[j]) {
+                //                j++;
+                //            }
+                //            forCrossover.add(pop.get(j));
+                //        }
+                // Losowanie osobników do nowej populacji
+                //        for (int i = 0; i < size - forCrossoverCount; ++i) {
+                //            double r = generator.nextDouble();
+                //            int j = 0;
+                //            while (r > q[j]) {
+                //                j++;
+                //            }
+                //            offspring.add(pop.get(j));
+                //        }
+                /* Krzyżowanie:
+                 * Krzyzują się tylko wybrane wczesniej osobniki
+                 */ //        while (forCrossover.size() > 0) { //długość tej listy jest parzysta wiec moge pobierać w każdej pętli dwa obiekty
+                //
+                //            Chromosom fistParent = forCrossover.removeFirst();
+                //            Chromosom secondParent = forCrossover.removeFirst();
+                //
+                //            ChromosomPair childern = fistParent.crossover(secondParent);
+                //
+                //            offspring.add(childern.first());
+                //            offspring.add(childern.second());
+                //        }
+                // Mutacje: każdy osobnik ma (iloscPokolenBezZmiany/maxpokolenBezZmiany)*0.5
+                  
+        for (int i = 0; i < size; ++i) {
+            if (generator.nextBoolean((iloscPokolenBezZmiany / maxPokolenBezZmiany) * 0.5)) {
+                offspring.set(i, offspring.get(i).mutation());
+            }
+        }
+        
+
+        Collections.sort(offspring);
+
+        return offspring;
     }
 
     private LinkedList<Chromosom> Tournament(LinkedList<Chromosom> p) {
@@ -225,7 +258,7 @@ public class Population {
     }
 
     public void setCrossoverType(String cType) {
-        this.crossoverType =cType;
+        this.crossoverType = cType;
     }
 
     public void setSelectionType(String sType) {

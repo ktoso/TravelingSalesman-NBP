@@ -80,7 +80,15 @@ public class Chromosom extends LinkedList<Integer> implements Comparable<Chromos
         return -1;
     }
 
-    public ChromosomPair crossover(Chromosom ch) {
+    public ChromosomPair crossover(Chromosom ch, String type) throws WrongGraphTypeException {
+        if (type.equals("Heurystyczne")) {
+            return new ChromosomPair( this.heuristicCrossover(ch), ch.heuristicCrossover(this));
+        }else {
+            return OXcrossover(ch);
+        }
+    }
+
+    public ChromosomPair OXcrossover(Chromosom ch) {
 
         if (size() != ch.size()) {
             throw new RuntimeException("Niezgodnośc rozmiarów chromosomów");
@@ -123,8 +131,7 @@ public class Chromosom extends LinkedList<Integer> implements Comparable<Chromos
         return new ChromosomPair(child1, child2);
     }
 
-    public ChromosomPair heuristicCrossover(Chromosom ch) throws WrongGraphTypeException {
-
+    public Chromosom heuristicCrossover(Chromosom ch) throws WrongGraphTypeException {
 
         if (size() != ch.size()) {
             throw new WrongGraphTypeException("Niezgodnośc rozmiarów chromosomów");
@@ -132,52 +139,68 @@ public class Chromosom extends LinkedList<Integer> implements Comparable<Chromos
 
         int length = size();
 
-        Chromosom child1 = new Chromosom(length, this.graph);
-        Chromosom child2 = new Chromosom(length, this.graph);
+        Chromosom child = new Chromosom(length, this.graph);
 
-        LinkedList<Integer> unused1 = new LinkedList<Integer>();
-        LinkedList<Integer> unused2 = new LinkedList<Integer>();
+        LinkedList<Integer> unused = new LinkedList<Integer>();
 
         for (int i = 0; i < length; ++i) {
-            unused1.add(i);
-            unused2.add(i);
+            unused.add(i);
         }
 
         int start = generator.nextInt(length);
+        int from = get(start);
+        int to1 = get(start + 1);
+        int to2 = ch.get( ch.find(from) + 1);
 
-        child1.set(0, get(start));
-        unused1.remove(get(start));
+        child.set(0, from);
+        unused.remove( Integer.valueOf(from) );
 
-        child2.set(0, ch.get(start));
-        unused2.remove(ch.get(start));
-
-        ++start;
+//        System.out.println("--- Heurystyka ---");
 
         for (int i = 1; i < length; ++i) {
+            int to;
+            double ew1 = getEdgeWeight(from, to1);
+            double ew2 = ch.getEdgeWeight(from, to2);
 
-            if (getEdgeWeight(start) < ch.getEdgeWeight(start)) {
-                if (!unused1.contains(get(start + 1))) {
-                    child1.set(i, get(start + 1));
-                    unused1.remove(get(start + 1));
-                } else if (!unused1.contains(ch.get(start + 1))) {
-                    child1.set(i, ch.get(start + 1));
-                    unused1.remove(ch.get(start + 1));
+            
+            if ( ew1 < ew2 ) {
+                if ( unused.contains(to1) ) {
+                    to = to1;
+                } else if ( unused.contains(to2) ) {
+                    to = to2;
                 } else {
-
-                    int closest = getClosestNeighbor(get(start), unused1);
-                    if (closest == -1) {
-                        throw new WrongGraphTypeException("Graf jest źle zbudowany");
-                    }
-                    child1.set(i, closest);
-                    unused1.remove(closest);
+                    to = getClosestNeighbor(from, unused);
+                }
+            } else {
+                if ( unused.contains(to2) ) {
+                    to = to2;
+                } else if ( unused.contains(to1) ) {
+                    to = to1;
+                } else {
+                    to = getClosestNeighbor(from, unused);
                 }
             }
 
-            ++start;
+//            Testowanie metody heurystycznej - może sie przydać
+//            System.out.println("from: " + from + " | to1: " + to1 + " | to2: " + to2 + " | to: " + to + " | ew1: " + ew1 + " | ew2: " + ew2);
+//            Iterator<Integer> iter = unused.iterator();
+//            while(iter.hasNext()) {
+//                System.out.print(iter.next() + ", ");
+//            }
+//            System.out.println();
+
+            child.set(i, to);
+            unused.remove( Integer.valueOf(to) );
+            
+            from = to;
+            to1 = get( find(to) + 1);
+            to2 = ch.get( ch.find(to) + 1);
         }
 
-
-        return new ChromosomPair(child1, child2);
+//        System.out.println(child);
+//        System.out.println();
+        
+        return child;
     }
 
     /**
@@ -185,28 +208,21 @@ public class Chromosom extends LinkedList<Integer> implements Comparable<Chromos
      * @param mutationSize liczba z przedziału (0, 1) określająca rozmiar mutacji
      * @return Zmutowany chromosom
      */
-    public Chromosom mutation(double mutationSize) {
+    public Chromosom mutation() {
         int length = size();
-
-
-
+        
         Chromosom child = new Chromosom(length, this.graph);
-
         for (int i = 0; i < length; ++i) {
             child.set(i, get(i));
         }
 
-        mutationSize = (mutationSize > 1 ? 1 : mutationSize) * length;
+        int from = generator.nextInt(length);
+        int with = from + generator.nextInt(length - 1);
 
-        //ilość zamian genów w mutacji
-        for (int i = 0; i < mutationSize; ++i) {
-            int from = generator.nextInt(length);
-            int with = from + generator.nextInt(length - 1);
-
-            int tmp = child.get(from);
-            child.set(from, child.get(with));
-            child.set(with, tmp);
-        }
+        int tmp = child.get(from);
+        child.set(from, child.get(with));
+        child.set(with, tmp);
+        
 
         return child;
     }
@@ -225,15 +241,15 @@ public class Chromosom extends LinkedList<Integer> implements Comparable<Chromos
     public String toString() {
         StringBuilder b = new StringBuilder();
         for (Integer i : this) {
-            try {
-                b.append(this.graph.getNode(i).get("name")).append(" ");
-            } catch (ArrayIndexOutOfBoundsException ex) {
-                b.append(" null ");
-            }
-//            b.append(i).append(" ");
+//            try {
+//                b.append(this.graph.getNode(i).get("name")).append(" ");
+//            } catch (ArrayIndexOutOfBoundsException ex) {
+//                b.append(" null ");
+//            }
+            b.append(i).append(", ");
         }
 
-        b.append(" (" + fitness() + " )");
+        b.append(" (" + fitness() + ")");
         return b.toString();
     }
 

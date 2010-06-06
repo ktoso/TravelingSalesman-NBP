@@ -43,21 +43,27 @@ public class FirstTSSolverAction extends SolverAction implements TSSolverAction,
 
     @Override
     public void run(double frac) {
+        try {
+            population.nextGeneration();
+            Chromosom ch = population.getBestChromosom();
+            int numerGeneracji = population.getNumerGeneracji();
+            double avgFitness = population.getAvgFitness();
+            double maxFitness = population.getWorstFittness();
+            double minFitness = population.getBestFitness();
 
-        population.nextGeneration();
-        Chromosom ch = population.getBestChromosom();
-        int numerGeneracji = population.getNumerGeneracji();
-        double avgFitness = population.getAvgFitness();
-        double maxFitness = population.getWorstFittness();
-        double minFitness = population.getBestFitness();
+            log("Pokolenie " + numerGeneracji + ": (" + minFitness + " - " + avgFitness + " - " + maxFitness + ")");
 
-        log("Generacja " + numerGeneracji + ": naj. chromosom: " + ch + " (" + avgFitness + ")");
+            /* Słuchający tego lookup zostaną powiadomieni o zmianie, przerysują wykres */
+            lastSentByMe = new ChartDataDTO(SIMULATION_ID, numerGeneracji, avgFitness, maxFitness, minFitness);
+            dynamicContent.add(lastSentByMe);
+            res.allItems();
+        } catch (WrongGraphTypeException ex) {
+            log("Nieoczekiwany błąd - koniec symulacji");
+        }
+        
 
 //        removeLastSent();
-        /* Słuchający tego lookup zostaną powiadomieni o zmianie, przerysują wykres */
-        lastSentByMe = new ChartDataDTO(SIMULATION_ID, numerGeneracji, avgFitness, maxFitness, minFitness);
-        dynamicContent.add(lastSentByMe);
-        res.allItems();
+        
 
         if (population.shouldStop()) {
             stop();
@@ -68,7 +74,7 @@ public class FirstTSSolverAction extends SolverAction implements TSSolverAction,
         population.setMaxNumerGeneracji(maxCount);
         population.setMaxPokolenBezZmiany(maxCountWGB);
         population.setCrossoverType(cType);
-        population.setSelectionType(cType);
+        population.setSelectionType(sType);
     }
 
     public void play() {

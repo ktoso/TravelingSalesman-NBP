@@ -79,14 +79,15 @@ public class GenerateGraphWizardPanel1 implements WizardDescriptor.ValidatingPan
     // WizardDescriptor.getProperty & putProperty to store information entered
     // by the user.
     public void storeSettings(Object settings) {
-        ((WizardDescriptor) settings).putProperty("nodeCount", ((GenerateGraphVisualPanel1) getComponent()).getNodeCount());
-        ((WizardDescriptor) settings).putProperty("graphFilename", ((GenerateGraphVisualPanel1) getComponent()).getGraphFilename());
-        ((WizardDescriptor) settings).putProperty("maxGenerations", ((GenerateGraphVisualPanel1) getComponent()).getMaxGenerations());
-        ((WizardDescriptor) settings).putProperty("maxGenerationsWGB", ((GenerateGraphVisualPanel1) getComponent()).getMaxGenerationsWithoutGettingBetter());
-        ((WizardDescriptor) settings).putProperty("loadingExistingGraph", ((GenerateGraphVisualPanel1) getComponent()).isLoadingExisting());
-        ((WizardDescriptor) settings).putProperty("populationSize", ((GenerateGraphVisualPanel1) getComponent()).getPopulationSize());
-        ((WizardDescriptor) settings).putProperty("greedyAlgorithm", ((GenerateGraphVisualPanel1) getComponent()).isGreedy());
-        ((WizardDescriptor) settings).putProperty("crossoverType", ((GenerateGraphVisualPanel1) getComponent()).getCrossoverType());
+        ((WizardDescriptor) settings).putProperty("nodeCount", getComponent().getNodeCount());
+        ((WizardDescriptor) settings).putProperty("graphFilename", getComponent().getGraphFilename());
+        ((WizardDescriptor) settings).putProperty("maxGenerations", getComponent().getMaxGenerations());
+        ((WizardDescriptor) settings).putProperty("maxGenerationsWGB", getComponent().getMaxGenerationsWithoutGettingBetter());
+        ((WizardDescriptor) settings).putProperty("loadingExistingGraph", getComponent().isLoadingExisting());
+        ((WizardDescriptor) settings).putProperty("populationSize", getComponent().getPopulationSize());
+        ((WizardDescriptor) settings).putProperty("greedyAlgorithm", getComponent().isGreedy());
+        ((WizardDescriptor) settings).putProperty("crossoverType", getComponent().getCrossoverType());
+        ((WizardDescriptor) settings).putProperty("selectionType", getComponent().getSelectionType());
     }
 
     public void readSettings(Object settings) {
