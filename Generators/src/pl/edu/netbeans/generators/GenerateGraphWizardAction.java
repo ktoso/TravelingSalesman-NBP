@@ -14,6 +14,8 @@ import org.openide.WizardDescriptor;
 import org.openide.util.Exceptions;
 import org.openide.util.HelpCtx;
 import org.openide.util.actions.CallableSystemAction;
+import org.openide.windows.WindowManager;
+import pl.edu.netbeans.algorithms.exception.WrongGraphTypeException;
 import pl.edu.netbeans.toolbox.Constants;
 import pl.edu.netbeans.toolbox.Pair;
 import pl.edu.netbeans.visualization.VisualizerTopComponent;
@@ -22,6 +24,7 @@ import prefuse.data.Graph;
 import prefuse.data.Node;
 import prefuse.data.io.DataIOException;
 import prefuse.data.io.GraphMLWriter;
+import sun.misc.MessageUtils;
 
 // An example action demonstrating how the wizard could be called from within
 // your code. You can copy-paste the code below wherever you need.
@@ -120,23 +123,27 @@ public final class GenerateGraphWizardAction extends CallableSystemAction {
                 nodesFilename = doGenerateGraph(Integer.parseInt(nodeCount));//pewne iż jest integerem, przeszło walidację
             }
 
-            String maxG = (String) wizardDescriptor.getProperty("maxGenerations");
-            String maxGWGB = (String) wizardDescriptor.getProperty("maxGenerationsWGB");
-            String popSize = (String) wizardDescriptor.getProperty("populationSize");
+            Integer maxG = Integer.parseInt((String) wizardDescriptor.getProperty("maxGenerations"));
+            Integer maxGWGB = Integer.parseInt((String) wizardDescriptor.getProperty("maxGenerationsWGB"));
+            Integer popSize = Integer.parseInt((String) wizardDescriptor.getProperty("populationSize"));
+            Boolean greedy = (Boolean) wizardDescriptor.getProperty("greedyAlgorithm");
 
-
+            String cType = (String) wizardDescriptor.getProperty("crossoverType");
+            String sType = (String) wizardDescriptor.getProperty("selectionType");
 
             //TODO: rewrite na lookup
             //Lookup  global = Lookup.getDefault();
-            VisualizerTopComponent top = new VisualizerTopComponent();
-            top.open(nodesFilename);
+            try {
+                VisualizerTopComponent top = new VisualizerTopComponent();
 
-            top.getPopulation().setMaxNumerGeneracji(Integer.parseInt(maxG));
-            top.getPopulation().setMaxPokolenBezZmiany(Integer.parseInt(maxGWGB));
-            top.getPopulation().setOsobnikowPopulacji(Integer.parseInt(popSize));
+                top.open(nodesFilename, popSize, greedy);
+                top.setSolverParameters(maxG, maxGWGB, cType, sType);
+                top.requestActive();
 
+            } catch (WrongGraphTypeException ex) {
+                MessageUtils.err("Napotkano następujący błąd:\n" + ex);
+            }
 
-            top.requestActive();
         }
     }
 

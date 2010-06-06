@@ -7,6 +7,7 @@ package pl.edu.netbeans.algorithms.genetic;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
+import pl.edu.netbeans.algorithms.exception.WrongGraphTypeException;
 import pl.edu.netbeans.toolbox.RandomNG;
 import prefuse.data.Graph;
 import prefuse.data.Tuple;
@@ -27,6 +28,9 @@ public class Population {
     private boolean shouldStop = false;
     private int maxNumerGeneracji = 5000;
     private int dlugoscChromosomu;
+    private boolean greedy = false;
+    private String crossoverType = "Heurystyczne";
+    private String selectionType = "Ruletka";
 
     public int getMaxNumerGeneracji() {
         return maxNumerGeneracji;
@@ -57,14 +61,13 @@ public class Population {
      * @param osobnikowPopulacji
      * @param g
      */
-    public Population(int op, Graph g) {
+    public Population(int op, boolean greedy, Graph g) throws WrongGraphTypeException {
         graph = g;
         dlugoscChromosomu = g.getNodeCount();
         osobnikowPopulacji = op;
         for (int i = 0; i < osobnikowPopulacji; ++i) {
             pop.add(new Chromosom(dlugoscChromosomu, graph));
-            pop.get(i).create(true);
-            
+            pop.get(i).create(greedy);
             
         }
 
@@ -140,7 +143,7 @@ public class Population {
         }
 
         // Mutacje: każdy osobnik ma (iloscPokolenBezZmiany/maxpokolenBezZmiany)*0.5
-        // szans na mutacje rosną wraz z iloscią pokolen bez zmiany
+        // szansa na mutacje rosną wraz z iloscią pokolen bez zmiany
         for (int i = 0; i < size; ++i) {
             if (generator.nextBoolean((iloscPokolenBezZmiany / maxPokolenBezZmiany) * 0.5)) {
                 newPop.set(i, newPop.get(i).mutation(iloscPokolenBezZmiany / maxPokolenBezZmiany));
@@ -149,20 +152,18 @@ public class Population {
 
         Collections.sort(newPop);
 
-        if ( pop.getFirst().compareTo(newPop.getFirst()) > 0) {
+        if (getAvgFitness(newPop) < getAvgFitness(pop)) {
             // Jeśli się coś zmieniło to ustawiamy wszystkim krawedziom
             // marked=0, najlepszej sciezce ze starego pokolenia marked=1,
             // a najlepszej sciezce z aktualnego pokolenia marked=2
             clearGraph();
             this.pop.getFirst().mark(1);
             newPop.getFirst().mark(2);
+            this.pop = newPop;
             iloscPokolenBezZmiany = 0;
         } else {
             iloscPokolenBezZmiany++;
         }
-
-
-        this.pop = newPop;
 
 
 
@@ -172,6 +173,14 @@ public class Population {
                 iloscPokolenBezZmiany > maxPokolenBezZmiany
                 || numerGeneracji > maxNumerGeneracji;
 
+    }
+
+    private LinkedList<Chromosom> Roullete(LinkedList<Chromosom> p) {
+        return p;
+    }
+
+    private LinkedList<Chromosom> Tournament(LinkedList<Chromosom> p) {
+        return p;
     }
 
     public Chromosom getBestChromosom() {
@@ -187,11 +196,15 @@ public class Population {
     }
 
     public double getAvgFitness() {
+        return getAvgFitness(pop);
+    }
+
+    private double getAvgFitness(LinkedList<Chromosom> p) {
         double averangeFittnes = 0;
-        for (Chromosom ch : pop) {
+        for (Chromosom ch : p) {
             averangeFittnes += ch.fitness();
         }
-        return averangeFittnes / pop.size();
+        return averangeFittnes / p.size();
     }
 
     public int getNumerGeneracji() {
@@ -209,5 +222,13 @@ public class Population {
         while (it.hasNext()) {
             it.next().setInt("marked", 0);
         }
+    }
+
+    public void setCrossoverType(String cType) {
+        this.crossoverType =cType;
+    }
+
+    public void setSelectionType(String sType) {
+        this.selectionType = sType;
     }
 }

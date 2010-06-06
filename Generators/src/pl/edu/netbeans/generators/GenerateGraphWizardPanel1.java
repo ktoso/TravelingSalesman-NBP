@@ -85,6 +85,8 @@ public class GenerateGraphWizardPanel1 implements WizardDescriptor.ValidatingPan
         ((WizardDescriptor) settings).putProperty("maxGenerationsWGB", ((GenerateGraphVisualPanel1) getComponent()).getMaxGenerationsWithoutGettingBetter());
         ((WizardDescriptor) settings).putProperty("loadingExistingGraph", ((GenerateGraphVisualPanel1) getComponent()).isLoadingExisting());
         ((WizardDescriptor) settings).putProperty("populationSize", ((GenerateGraphVisualPanel1) getComponent()).getPopulationSize());
+        ((WizardDescriptor) settings).putProperty("greedyAlgorithm", ((GenerateGraphVisualPanel1) getComponent()).isGreedy());
+        ((WizardDescriptor) settings).putProperty("crossoverType", ((GenerateGraphVisualPanel1) getComponent()).getCrossoverType());
     }
 
     public void readSettings(Object settings) {
@@ -99,7 +101,11 @@ public class GenerateGraphWizardPanel1 implements WizardDescriptor.ValidatingPan
                 throw new WizardValidationException(null, "Proszę podać liczbę wierzchołków", null);
             }
             if (!nodeCount.matches("\\d+")) {
-                throw new WizardValidationException(null, "Proszę podać poprawną liczbę całkowitą", null);
+                throw new WizardValidationException(null, "Proszę podać całkowitą liczbę wieszchołków", null);
+            }
+            Integer nC = Integer.parseInt(nodeCount);
+            if (nC < 4 || nC > 500) {
+                throw new WizardValidationException(null, "Rozmiar grafu musi być liczbą z przedziału (4, 500)", null);
             }
         }
 

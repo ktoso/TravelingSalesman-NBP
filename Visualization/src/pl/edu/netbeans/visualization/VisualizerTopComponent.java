@@ -6,11 +6,13 @@ import java.awt.BorderLayout;
 import java.awt.Point;
 import java.io.File;
 import java.util.logging.Logger;
+import org.openide.util.Exceptions;
 import org.openide.util.NbBundle;
 import org.openide.windows.TopComponent;
 import org.openide.windows.WindowManager;
 import org.netbeans.api.settings.ConvertAsProperties;
 import pl.edu.netbeans.algorithms.FirstTSSolverAction;
+import pl.edu.netbeans.algorithms.exception.WrongGraphTypeException;
 import pl.edu.netbeans.algorithms.genetic.Population;
 import pl.edu.netbeans.visualization.actions.RouteDataColorAction;
 import pl.edu.netbeans.visualization.renderers.PointRenderer;
@@ -58,12 +60,18 @@ public final class VisualizerTopComponent extends TopComponent {
         putClientProperty(TopComponent.PROP_UNDOCKING_DISABLED, Boolean.TRUE);
     }
 
-    public void open(String filename) {
+    public void open(String filename, int popSize, boolean greedy) throws WrongGraphTypeException {
         super.open();
         displayName = ( new File(filename) ).getName();
         super.setName(displayName);
 
-        initGraph(filename);
+        
+
+        initGraph(filename, popSize, greedy);
+    }
+
+    public void setSolverParameters(int maxCount, int maxCountWGB, String cType, String sType) {
+        solver.setPopulationParameters(maxCount, maxCountWGB, cType, sType);
     }
 
     public Population getPopulation() {
@@ -175,7 +183,7 @@ public final class VisualizerTopComponent extends TopComponent {
         return super.canClose();
     }
 
-    private void initGraph(String filename) {
+    private void initGraph(String filename, int popSize, boolean greedy) throws WrongGraphTypeException {
         loadGraph(filename);
 
         // add the graph to the visualization as the data group "graph"
@@ -184,7 +192,7 @@ public final class VisualizerTopComponent extends TopComponent {
         vis.add("graph", graph);
 
         ActionList algorithm = new ActionList(Activity.INFINITY);
-        solver = new FirstTSSolverAction(graph);
+        solver = new FirstTSSolverAction(popSize, greedy, graph);
         algorithm.add(solver);
 
         //poniższa seria akcji będzie wykonywana w nieskończoność

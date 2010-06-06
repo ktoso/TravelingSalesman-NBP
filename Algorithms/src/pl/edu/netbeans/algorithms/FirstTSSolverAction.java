@@ -2,12 +2,14 @@
  */
 package pl.edu.netbeans.algorithms;
 
+import org.openide.util.Exceptions;
 import org.openide.util.Lookup;
 import org.openide.util.LookupListener;
 import org.openide.util.lookup.AbstractLookup;
 import org.openide.util.lookup.InstanceContent;
 import org.openide.windows.TopComponent;
 import org.openide.windows.WindowManager;
+import pl.edu.netbeans.algorithms.exception.WrongGraphTypeException;
 import pl.edu.netbeans.algorithms.genetic.Chromosom;
 import pl.edu.netbeans.algorithms.genetic.Population;
 import pl.edu.netbeans.toolbox.ChartDataDTO;
@@ -24,7 +26,6 @@ public class FirstTSSolverAction extends SolverAction implements TSSolverAction,
     /**Bardzo istotna zmienna, zachowuje ostatnio wysłany DTO, aby w kolejnej iteracji być w stanie go usunąć, umożliwiając banalne rysowanie wykresu przez inny moduł*/
     private ChartDataDTO lastSentByMe;
     private final Population population;
-    private int iloscOsobnikow = 50; // Pwoinno być ustawiane w programie
     /**Służy indentyfikacji różnych serii danych podczas rysowania wykresów*/
     private static int simcount = 1;
     private final String SIMULATION_ID = "symulacja " + FirstTSSolverAction.simcount++;
@@ -34,10 +35,9 @@ public class FirstTSSolverAction extends SolverAction implements TSSolverAction,
     private Lookup myLookup = new AbstractLookup(dynamicContent);
     private Lookup.Result res;
 
-    public FirstTSSolverAction(Graph graph) {
+    public FirstTSSolverAction(int popSize, boolean greedy, Graph graph) throws WrongGraphTypeException {
         super(graph);
-        population = new Population(iloscOsobnikow, graph);
-
+        population = new Population(popSize, greedy, graph);
         setupLineGraphDrawerListener();
     }
 
@@ -62,6 +62,13 @@ public class FirstTSSolverAction extends SolverAction implements TSSolverAction,
         if (population.shouldStop()) {
             stop();
         }
+    }
+
+    public void setPopulationParameters(int maxCount, int maxCountWGB, String cType, String sType) {
+        population.setMaxNumerGeneracji(maxCount);
+        population.setMaxPokolenBezZmiany(maxCountWGB);
+        population.setCrossoverType(cType);
+        population.setSelectionType(cType);
     }
 
     public void play() {
