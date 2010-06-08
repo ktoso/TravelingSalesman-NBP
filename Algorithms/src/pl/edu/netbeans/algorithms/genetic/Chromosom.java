@@ -4,11 +4,9 @@
  */
 package pl.edu.netbeans.algorithms.genetic;
 
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Random;
-import pl.edu.netbeans.algorithms.exception.EdgeDoesNotExistException;
 import pl.edu.netbeans.algorithms.exception.WrongGraphTypeException;
 import prefuse.data.Edge;
 import prefuse.data.Graph;
@@ -38,6 +36,11 @@ public class Chromosom extends LinkedList<Integer> implements Comparable<Chromos
         create(false);
     }
 
+    /**
+     * Utwórz nowy chromosom
+     * @param greedy Czy korzystać z algorytmu zachłannego przy tworzeniu chromosomu
+     * @throws WrongGraphTypeException
+     */
     public void create(boolean greedy) throws WrongGraphTypeException {
         int length = size();
         if (greedy) {
@@ -71,6 +74,11 @@ public class Chromosom extends LinkedList<Integer> implements Comparable<Chromos
 
     }
 
+    /**
+     * Znajdź indeks danego miasta
+     * @param elem Szukane miasto
+     * @return Indeks danego miasta
+     */
     public int find(int elem) {
         for (int i = 0; i < size(); ++i) {
             if (get(i) == elem) {
@@ -80,6 +88,13 @@ public class Chromosom extends LinkedList<Integer> implements Comparable<Chromos
         return -1;
     }
 
+    /**
+     * Krzyżowanie wg. wybranego wcześniej typu
+     * @param ch Drugi rodzic
+     * @param type Typ krzyżowania
+     * @return Para potomków
+     * @throws WrongGraphTypeException
+     */
     public ChromosomPair crossover(Chromosom ch, String type) throws WrongGraphTypeException {
         if (type.equals("Heurystyczne")) {
             return new ChromosomPair(this.heuristicCrossover(ch), ch.heuristicCrossover(this));
@@ -88,33 +103,35 @@ public class Chromosom extends LinkedList<Integer> implements Comparable<Chromos
         }
     }
 
+    /**
+     * Krzyżowanie typu OX
+     * @param ch Drugi rodzic
+     * @return Para potomków
+     */
     public ChromosomPair OXcrossover(Chromosom ch) {
 
+        //Próba krzyżowania chromosomów o róznych długościach
         if (size() != ch.size()) {
             throw new RuntimeException("Niezgodnośc rozmiarów chromosomów");
         }
 
         int length = size();
-
+        //Tworzenie pustych dzieci
         Chromosom child1 = new Chromosom(length, this.graph);
         Chromosom child2 = new Chromosom(length, this.graph);
 
 
-        // Znajdz najdłuższą scieżkę do przecięcia
-//        int from = 0;
-//        for (int i = 0; i < length; ++i) {
-//            if (getEdgeWeight(i) > getEdgeWeight(from)) {
-//                from = i;
-//            }
-//        }
+        // Wybierz dwa losowe punkty przecięcia
         int from = generator.nextInt(length);
         int to = from + generator.nextInt(length - 1);
 
+        //Przenieś do dzieci miasta z pomiedzy punktów cięć
         for (int i = from; i < to; ++i) {
             child1.set(i, get(i));
             child2.set(i, ch.get(i));
         }
 
+        //Uzupełnij pozostałe pozycje
         int ch1pos = to;
         int ch2pos = to;
         for (int i = 0; i < length; ++i) {
@@ -131,8 +148,14 @@ public class Chromosom extends LinkedList<Integer> implements Comparable<Chromos
         return new ChromosomPair(child1, child2);
     }
 
+    /**
+     * Krzyżowanie heurystyczne
+     * @param ch Drugi rodzic
+     * @return Jeden potomek
+     * @throws WrongGraphTypeException
+     */
     public Chromosom heuristicCrossover(Chromosom ch) throws WrongGraphTypeException {
-
+        //Gdyby przypadkiem chcały się mutować osobniki z różnych symulacji
         if (size() != ch.size()) {
             throw new WrongGraphTypeException("Niezgodnośc rozmiarów chromosomów");
         }
@@ -141,42 +164,47 @@ public class Chromosom extends LinkedList<Integer> implements Comparable<Chromos
 
         Chromosom child = new Chromosom(length, this.graph);
 
+        //Tworzę liste nie użytych jeszcze miast
         LinkedList<Integer> unused = new LinkedList<Integer>();
 
         for (int i = 0; i < length; ++i) {
             unused.add(i);
         }
 
+        //Wybieram losowo początek krzyżowania
         int start = generator.nextInt(length);
         int from = get(start);
         int to1 = get(start + 1);
         int to2 = ch.get(ch.find(from) + 1);
 
+        //Dodaje wartość na początek potomka i usuwiam miasto z "nie użytych"
         child.set(0, from);
         unused.remove(Integer.valueOf(from));
 
 //        System.out.println("--- Heurystyka ---");
 
+        //Pętla w celu uzupełnienia kolejnych genów potomka
         for (int i = 1; i < length; ++i) {
             int to;
+            //Pobieram długości krawędzi z wybranego miasta do kolejnego u obu rodziców
             double ew1 = getEdgeWeight(from, to1);
             double ew2 = ch.getEdgeWeight(from, to2);
 
 
-            if (ew1 < ew2) {
-                if (unused.contains(to1)) {
+            if (ew1 < ew2) { //Jeśli ta wartość jest mniejsza u pierwszego rodzica
+                if (unused.contains(to1)) { //Jeśli nie jest użyta to ją wybieram
                     to = to1;
-                } else if (unused.contains(to2)) {
+                } else if (unused.contains(to2)) { //Jeśli którsza wartość jest użyta wybieram dłuższą
                     to = to2;
-                } else {
+                } else { //Jeśli i dłuższa jest użyta, wybieram najmniej oddaloną z pozostałych
                     to = getClosestNeighbor(from, unused);
                 }
-            } else {
-                if (unused.contains(to2)) {
+            } else { // Jeśli wartość jest mniejsza u drugiego z rodziców
+                if (unused.contains(to2)) { //Jeśli nie jest użyta to ją wybieram
                     to = to2;
-                } else if (unused.contains(to1)) {
+                } else if (unused.contains(to1)) { //Jeśli którsza wartość jest użyta wybieram dłuższą
                     to = to1;
-                } else {
+                } else { //Jeśli i dłuższa jest użyta, wybieram najmniej oddaloną z pozostałych
                     to = getClosestNeighbor(from, unused);
                 }
             }
@@ -189,11 +217,16 @@ public class Chromosom extends LinkedList<Integer> implements Comparable<Chromos
 //            }
 //            System.out.println();
 
+            //Dodaje miasto do potomka i usuwam z "nie użytych"
             child.set(i, to);
             unused.remove(Integer.valueOf(to));
 
+            //Przesuwam wskaźniki:
+            // /from/ na ostatnie miasto w potomku
             from = to;
+            // /to1/ na kolejne miasto u pierwszego rodzica
             to1 = get(find(to) + 1);
+            // /to2/ na kolejne miasto u drugiego rodzica
             to2 = ch.get(ch.find(to) + 1);
         }
 
@@ -204,7 +237,7 @@ public class Chromosom extends LinkedList<Integer> implements Comparable<Chromos
     }
 
     /**
-     * Funkcja mutująca dany chromosom
+     * Funkcja mutująca dany chromosom przez zamiane dwóch miast ze sobą
      * @param mutationSize liczba z przedziału (0, 1) określająca rozmiar mutacji
      * @return Zmutowany chromosom
      */
@@ -236,16 +269,23 @@ public class Chromosom extends LinkedList<Integer> implements Comparable<Chromos
         return super.set(index % size(), element);
     }
 
+    /**
+     * Reprezentacja chromosomu w postaci napisu
+     * @return Napis w postaci: miasto1 -> miasto2 ... miaston (fitness)
+     */
     @Override
     public String toString() {
         StringBuilder b = new StringBuilder();
         for (Integer i : this) {
-//            try {
-//                b.append(this.graph.getNode(i).get("name")).append(" ");
-//            } catch (ArrayIndexOutOfBoundsException ex) {
-//                b.append(" null ");
-//            }
-            b.append(i).append(", ");
+            try {
+                b.append(this.graph.getNode(i).get("name"));
+            } catch (ArrayIndexOutOfBoundsException ex) {
+                b.append(" null ");
+            }
+//            b.append(i).append(", ");
+            if (i != this.getLast()) {
+                b.append(" -> ");
+            }
         }
 
         b.append(" (" + fitness() + ")");
@@ -270,6 +310,12 @@ public class Chromosom extends LinkedList<Integer> implements Comparable<Chromos
 
     }
 
+    /**
+     * Wartość krawędzi miedzy podanymi miastami (krawędź powinna istnieć zawsze - operujemy na klikach)
+     * @param s Miasto źródłowe
+     * @param t Miasto docelowe
+     * @return Wartość ścieżki
+     */
     private double getEdgeWeight(int s, int t) {
         if (s < 0 || s > size() || t < 0 || t > size()) {
             return Double.MAX_VALUE;
@@ -288,6 +334,10 @@ public class Chromosom extends LinkedList<Integer> implements Comparable<Chromos
         return 0;
     }
 
+    /**
+     * Dopasowanie chromosomu - długość trasy przezeń reprezentowanej
+     * @return Dopasowanie chromosomu
+     */
     public double fitness() {
         double f = 0;
         for (int i = 0; i < size(); ++i) {
@@ -330,6 +380,12 @@ public class Chromosom extends LinkedList<Integer> implements Comparable<Chromos
         return true;
     }
 
+    /**
+     * Znajdź najbliższego sąsiada danego miasta spośród nie użytych miast
+     * @param from Miasta dla którego szukamy najbliższego sąsiada
+     * @param unused Lista dostępnych miast (dziedzina poszukiwań)
+     * @return Najbliższe miasto (-1 gdy nie znaleziono)
+     */
     private int getClosestNeighbor(int from, LinkedList<Integer> unused) {
 
         if (unused.isEmpty()) {

@@ -58,9 +58,11 @@ public class Population {
     }
 
     /**
-     * populacja powinna mieć też graf na podstawie którego bedzie oceniać chromosomy
-     * @param osobnikowPopulacji
-     * @param g
+     * Konstruktor
+     * @param op Rozmiar populacji
+     * @param greedy Czy pierwsza populacja powinna być generowana z algorytmen zachłąnnym
+     * @param g Graf w którym poszukujemy najkrótszego pełnego cyklu hamiltona (problem komiwojażera)
+     * @throws WrongGraphTypeException
      */
     public Population(int op, boolean greedy, Graph g) throws WrongGraphTypeException {
         graph = g;
@@ -82,8 +84,8 @@ public class Population {
     }
 
     /**
-     * Funkcja tworzy kolejne pokolenie które jest odrzucane lub przyjmowane na
-     * podstawie wartości dopasowania najlepszego chromosomu
+     * Funkcja tworzy nowe pokolenie wg. ustalonych wcześniej zasad,
+     * sprawdza również warunki stopu i zaznacza na grafie najlepszą scieżkę
      */
     public void nextGeneration() throws WrongGraphTypeException {
 
@@ -92,7 +94,7 @@ public class Population {
 
         LinkedList<Chromosom> offspring;
 
-        System.out.println(selectionType);
+        // Wygeneruj potomstwo wg wybranego typu selekcji
         if (selectionType.equals("Ruletka")) {
             offspring = Roullete(pop);
         } else {
@@ -100,7 +102,7 @@ public class Population {
         }
 
 
-
+        //Zliczaj jeśli nie wystąpiły żadne zmiany
         if (offspring.getFirst().fitness() < pop.getFirst().fitness()) {
             iloscPokolenBezZmiany = 0;
         } else {
@@ -121,8 +123,16 @@ public class Population {
 
     }
 
+    /**
+     * Metoda generująca potomstwo wg. selekcji typu ruletka
+     * @param p Populacja rodziców
+     * @return Liste zawierającą potomstwo
+     * @throws WrongGraphTypeException
+     */
     private LinkedList<Chromosom> Roullete(LinkedList<Chromosom> p) throws WrongGraphTypeException {
         int size = p.size();
+
+        //Suma odwrotności dopasowania każdego z chromosomów
         double fitnessSum = 0;
         for (Chromosom ch : p) {
             fitnessSum += 1 / ch.fitness();
@@ -138,6 +148,7 @@ public class Population {
             q[i] /= fitnessSum;
         }
 
+        //Wybieram do potomstwa osobniki wg. zaady ruletki
         LinkedList<Chromosom> offspring = new LinkedList<Chromosom>();
         for (int i = 0; i < osobnikowPopulacji; ++i) {
             double r = generator.nextDouble();
@@ -148,77 +159,58 @@ public class Population {
             offspring.add(p.get(j));
         }
 
+        //Każdy osobnik ma stałe parwdopodobieństwo na krzyżowanie
+        //Tworzę liste wskaźników które osobniki bedą się krzyżowały
         LinkedList<Integer> forCrossover = new LinkedList<Integer>();
         for (int i = 0; i < size; ++i) {
-            if ( generator.nextDouble() < crossoverPropabilty ) {
+            if (generator.nextDouble() < crossoverPropabilty) {
                 forCrossover.add(i);
             }
         }
 
-        for( Integer it: forCrossover) {
+        //Krzyżownie, potomkowie zastępują rodziców
+        for (Integer it : forCrossover) {
             Chromosom p1 = offspring.get(it);
             int p2it = generator.nextInt(size);
             Chromosom p2 = offspring.get(p2it);
 
-            ChromosomPair children =  p1.crossover(p2, crossoverType);
+            ChromosomPair children = p1.crossover(p2, crossoverType);
             offspring.set(it, children.first());
             offspring.set(p2it, children.second());
         }
 
-        
-            // Losowanie osobników do krzyżowania
-                //        int forCrossoverCount = generator.nextInt(size / 2) * 2;
-                //        LinkedList<Chromosom> forCrossover = new LinkedList<Chromosom>();
-                //        for (int i = 0; i < forCrossoverCount; ++i) {
-                //            double r = generator.nextDouble();
-                //            int j = 0;
-                //            while (r > q[j]) {
-                //                j++;
-                //            }
-                //            forCrossover.add(pop.get(j));
-                //        }
-                // Losowanie osobników do nowej populacji
-                //        for (int i = 0; i < size - forCrossoverCount; ++i) {
-                //            double r = generator.nextDouble();
-                //            int j = 0;
-                //            while (r > q[j]) {
-                //                j++;
-                //            }
-                //            offspring.add(pop.get(j));
-                //        }
-                /* Krzyżowanie:
-                 * Krzyzują się tylko wybrane wczesniej osobniki
-                 */ //        while (forCrossover.size() > 0) { //długość tej listy jest parzysta wiec moge pobierać w każdej pętli dwa obiekty
-                //
-                //            Chromosom fistParent = forCrossover.removeFirst();
-                //            Chromosom secondParent = forCrossover.removeFirst();
-                //
-                //            ChromosomPair childern = fistParent.crossover(secondParent);
-                //
-                //            offspring.add(childern.first());
-                //            offspring.add(childern.second());
-                //        }
-                // Mutacje: każdy osobnik ma (iloscPokolenBezZmiany/maxpokolenBezZmiany)*0.5
-                  
+        //Mutowanie, szanse na mutacje rosną wraz ze stabilizacją w kolejnych pokoleniach
         for (int i = 0; i < size; ++i) {
             if (generator.nextBoolean((iloscPokolenBezZmiany / maxPokolenBezZmiany) * 0.5)) {
                 offspring.set(i, offspring.get(i).mutation());
             }
         }
-        
 
+        //Sortuje potomstwo przed jego zwróceniem
         Collections.sort(offspring);
 
         return offspring;
     }
 
+    /**
+     * Metoda tworząca nowe pokolenie wg. zasady turnieju
+     * Zasada turnioeju została tutaj zdegenerowana do jednej "walki" wszystkich
+     * osobników. Wygrywa lepsza połowa, która ma możliwosć krzyżowania się z gorszymi osobnikami,
+     * abu zapobiec utracie dobrych genów w słabszych chromosomach
+     * @param p Populacja rodziców
+     * @return Posortowaną populację dzieci
+     * @throws WrongGraphTypeException
+     */
     private LinkedList<Chromosom> Tournament(LinkedList<Chromosom> p) throws WrongGraphTypeException {
-        LinkedList<Chromosom> offspring = new LinkedList<Chromosom>();
-        int halfsize = p.size() / 2;
 
+        LinkedList<Chromosom> offspring = new LinkedList<Chromosom>();
+
+        //Wybieram środek populacji w którym dzielę osobniki na lepsze i gorsze
+        int halfsize = p.size() / 2;
         for (int i = 0; i < halfsize; ++i) {
-            //krzyżuj pierwszą połowę osobników z losowym osobnikiem z grupiej połowy
-            ChromosomPair childern = p.get(i).crossover(p.get(halfsize + generator.nextInt(p.size() - halfsize)), crossoverType);
+            //krzyżuj pierwszą połowę osobników z losowym osobnikiem od niego gorszym
+            int toCrossover = i + 1 + generator.nextInt(p.size() - i - 1);
+            ChromosomPair childern = p.get(i).crossover(p.get(toCrossover), crossoverType);
             Chromosom ch1 = childern.first();
             Chromosom ch2 = childern.second();
             if (generator.nextBoolean((iloscPokolenBezZmiany / maxPokolenBezZmiany) * 0.5)) {
@@ -230,7 +222,8 @@ public class Population {
             offspring.add(ch2);
 
         }
-        
+
+        //Sortowanie przed zwraceniem
         Collections.sort(offspring);
 
         return offspring;

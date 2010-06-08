@@ -33,7 +33,12 @@ public class PauseAlgorithmAction extends CallableSystemAction {
 
     @Override
     public String getName() {
-        return "Pause algorithm";
+        return "Zapauzuj algorytm";
+    }
+
+    @Override
+    protected String iconResource() {
+        return "pl/edu/netbeans/visualization/icons/pause.png";
     }
 
     @Override

@@ -30,7 +30,12 @@ public class StepAlgorithmAction extends CallableSystemAction {
 
     @Override
     public String getName() {
-        return "Do step in algorithm";
+        return "Wykonaj krok w algorytmie";
+    }
+
+    @Override
+    protected String iconResource() {
+        return "pl/edu/netbeans/visualization/icons/step.png";
     }
 
     @Override

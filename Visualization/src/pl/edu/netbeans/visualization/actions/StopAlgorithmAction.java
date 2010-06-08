@@ -30,7 +30,12 @@ public class StopAlgorithmAction extends CallableSystemAction {
 
     @Override
     public String getName() {
-        return "Stop algorithm";
+        return "Zatrzymaj wykonywanie algorytmu";
+    }
+
+    @Override
+    protected String iconResource() {
+        return "pl/edu/netbeans/visualization/icons/stop.png";
     }
 
     @Override

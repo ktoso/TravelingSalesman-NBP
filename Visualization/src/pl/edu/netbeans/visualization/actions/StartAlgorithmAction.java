@@ -31,7 +31,12 @@ public class StartAlgorithmAction extends CallableSystemAction {
 
     @Override
     public String getName() {
-        return "Start algorithm";
+        return "Uruchom algorytm";
+    }
+
+    @Override
+    protected String iconResource() {
+        return "pl/edu/netbeans/visualization/icons/play.png";
     }
 
     @Override

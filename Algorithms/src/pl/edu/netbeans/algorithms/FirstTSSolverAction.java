@@ -77,30 +77,38 @@ public class FirstTSSolverAction extends SolverAction implements TSSolverAction,
         population.setSelectionType(sType);
     }
 
-    public void play() {
+    public boolean play() {
         if (!isStopped()) {
             getVisualization().getAction("algorithm").setEnabled(true);
+            return true;
         }
+        return false;
     }
 
-    public void pause() {
+    public boolean pause() {
         if (!isStopped()) {
             getVisualization().getAction("algorithm").setEnabled(false);
             log("--- PAUZA ---");
+            return true;
         }
+        return false;
     }
 
-    public void step() {
+    public boolean step() {
         if (!isStopped() && isPaused()) {
             run(1);
+            return true;
         }
+        return false;
     }
 
-    public void stop() {
+    public boolean stop() {
         if (!isStopped()) {
             getVisualization().removeAction("algorithm");
             showSummary();
+            return true;
         }
+        return false;
     }
 
     public boolean isStopped() {

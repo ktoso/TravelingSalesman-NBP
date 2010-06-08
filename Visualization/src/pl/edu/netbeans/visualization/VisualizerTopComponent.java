@@ -291,27 +291,29 @@ public final class VisualizerTopComponent extends TopComponent {
     }
 
     public void play() {
-        System.out.println("Play!");
+//        System.out.println("Play!");
         if (solver != null) {
-            solver.play();
-            setName(displayName);
+            if (solver.play()) {
+                setName(displayName);
+            }
         } else {
             System.err.println("No solver!");
         }
     }
 
     public void pause() {
-        System.out.println("Pause!");
+//        System.out.println("Pause!");
         if (solver != null) {
-            solver.pause();
-            setName(displayName + " (pauza)");
+            if (solver.pause()) {
+                setName(displayName + " (pauza)");
+            }
         } else {
             System.err.println("No solver!");
         }
     }
 
     public void step() {
-        System.out.println("Step!");
+//        System.out.println("Step!");
         if (solver != null) {
             solver.step();
         } else {
@@ -320,10 +322,11 @@ public final class VisualizerTopComponent extends TopComponent {
     }
 
     public void stop() {
-        System.out.println("Stop!");
+//        System.out.println("Stop!");
         if (solver != null) {
-            solver.stop();
-            setName(displayName + " (zakończono)");
+            if (solver.stop()) {
+                setName(displayName + " (zakończono)");
+            }
         } else {
             System.err.println("No solver!");
         }
