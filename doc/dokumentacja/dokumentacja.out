@@ -1,0 +1,18 @@
+\BOOKMARK [1][-]{section.1}{Problem komiwojazera}{}
+\BOOKMARK [2][-]{subsection.1.1}{Problem komiwojazera jako NP-zupelny}{section.1}
+\BOOKMARK [2][-]{subsection.1.2}{Podejscie algorytmiczne, a heurystyczne}{section.1}
+\BOOKMARK [1][-]{section.2}{Rozwiazanie problemu komiwojazera przy uzyciu algorytm\363w ewolucyjnych}{}
+\BOOKMARK [2][-]{subsection.2.1}{Chromosomy}{section.2}
+\BOOKMARK [2][-]{subsection.2.2}{Losowanie populacji poczatkowej}{section.2}
+\BOOKMARK [2][-]{subsection.2.3}{Kryterium oceny osobnik\363w}{section.2}
+\BOOKMARK [2][-]{subsection.2.4}{Metody selekcji}{section.2}
+\BOOKMARK [2][-]{subsection.2.5}{Proces krzyzowania}{section.2}
+\BOOKMARK [2][-]{subsection.2.6}{Mutowanie}{section.2}
+\BOOKMARK [2][-]{subsection.2.7}{Warunek stopu}{section.2}
+\BOOKMARK [1][-]{section.3}{Parametry programu}{}
+\BOOKMARK [1][-]{section.4}{Wykorzystane technologie/frameworki}{}
+\BOOKMARK [2][-]{subsection.4.1}{NetBeans Platform}{section.4}
+\BOOKMARK [2][-]{subsection.4.2}{Prefuse}{section.4}
+\BOOKMARK [2][-]{subsection.4.3}{GraphML}{section.4}
+\BOOKMARK [2][-]{subsection.4.4}{JFreeChart}{section.4}
+\BOOKMARK [1][-]{section.5}{Kod zr\363dlowy oraz licencja}{}

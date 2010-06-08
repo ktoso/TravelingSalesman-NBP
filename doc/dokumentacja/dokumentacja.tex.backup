@@ -1,0 +1,59 @@
+\documentclass[a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage[polish]{babel}
+\usepackage{amsfonts}
+\usepackage{graphicx}
+\usepackage{hyperref} 
+
+\title{Dokumentacja \\ Problem Komiwojażera \\ na NetBeans Platform}
+\author{Bartek Bułat \\ Konrad Malawski \\ Michał Nowak}
+\date{08.06.2010}
+
+\pdfinfo{
+  /Title    (Dokumentacja --- Problem Komiwojażera - na NetBeans Platform)
+  /Author   (Bartek Bułat Konrad Malawski, Michał Nowak)
+  /Creator  (Konrad Malawski)
+  /Keywords (NetBeans Platform, Traveling Salesman)
+}
+
+\begin{document}
+\maketitle
+\newpage
+
+\tableofcontents
+\newpage
+
+\section{Wstęp}
+lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum 
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Wykorzystane technologie/frameworki}
+Projekt został stworzony przy wykorzystaniu tylko i wyłącznie wolnego oprogramowania jak i korzysta z wolnych bibliotek oraz frameworków. Poniżej kilka słów o najważniejszych z nich, celem przybliżenia dlaczego zostały wybrane, i czy polecilibyśmy je do wykorzystania innym.
+
+\subsection{NetBeans Platform}
+Projekt został napisany w Javie, korzystając z NetBeans Platform (w wersji 6.8). Przed rozpoczęciem programowania naszej aplikacji wszyscy uczestniczyliśmy w szkoleniu \textit{NetBeans Platform Certified Training} którego w imieniu \textit{Polish Java User Group} organizatorem był Konrad. Więcej informacji o samym szkoleniu można znaleźć pod: \href{http://www.netbeans.edu.pl}{netbeans.edu.pl}.
+
+Powodem wyboru NBP jako platformy do rozwoju naszej aplikacji były ogólne zalety frameworków, czyli przyśpieszonego cyklu rozwoju samej aplikacji oraz konkretne zalety NetBeans Platform tj. budowa \textit{modularnych aplikacji}. Realne aplikacje generalnie nie są już obecnie pisane nie-modularnie, powodem są oczywiste zalety płynące z luźnego wiązania aplikacji, czyli możliwość niezależnej pracy nad poszczególnymi modułami przez programistów - nie przeszkadzając sobie zmianami ew. udostępnianych metod. 
+
+Do realizacji luźnego wiązania między modułami - konkretniej między 'algorytmem' oraz 'elementami 'rysującymi graf wynikowy' został wykorzystany wzorzec Observer/Observable zaimplementowany przy wykorzystaniu Lookup'ów (jednej z zalet NetBeans Platform). Implementację tą Konrad przedstawił na dZone.com za prośbą Pana Wielenga do publikacji tegoż tekstu tam: \href{http://netbeans.dzone.com/articles/netbeans-platform-lookups}{NetBeans Platform Lookups as Communication Method}.
+
+Bardzo ważną zaletą NetBeans Platform, odróżniającą ją na przykład od \textit{Eclipse RCP} lub \textit{Spring RCP} jest bazowanie na Swing - dzięki czemu nie występują problemy podczas integracji istniejących rozwiązań (prefuse, jfreechart etc) z aplikacją bazującą na NetBeans RCP - co w przypadku Eclipse RCP potencjalnie mogłoby sprawić duże problemy, jako że bazuje on na SWT (natywnych kontrolkach).
+
+\subsection{Prefuse}
+
+\subsection{GraphML}
+Program korzysta z plików XML zapisywanych w folderze data w celu przechowywania danych o wygenerowanych (oraz dostępnych predefiniowanych) grafach. Format tych plików jest ściśle określony przez \href{http://graphml.graphdrawing.org/specification.html}{specyfikację GraphML}, dzięki czemu możliwe jest sprawdzenie naszych algorytmów na dowolnym grafie - dostarczonym do folderu data w postaci pliku zgodnego z GraphML.
+
+\subsection{JFreeChart}
+Do rysowania wykresów zbieżności algorytmu użyliśmy bardzo dobrej biblioteki jaką jest JFreeChart. Jest ona dostępna na licencji LGPL pod następującym adresem: \href{http://www.jfree.org/jfreechart/}{http://www.jfree.org/jfreechart/}.
+
+\section{Kod źródłowy oraz licencja}
+Kod źródłowy programu był rozwijany od początku do końca pod kontrolą systemu kontroli wersji \textbf{Git} a repozytorium znajduje się pod: \href{http://github.com/ktoso/TravelingSalesman-NBP}{http://github.com/ktoso/TravelingSalesman-NBP}. Możliwe do wglądu są kolejne 'wydania' (tagi) jak i najświeższa wersja kodu.
+
+Program będzie w całości licencjonowany na warunkach \textbf{GPLv3} --- odpowiednie adnotacje w kodzie źródłowym zostaną dodane już niebawem.
+
+\end{document}
