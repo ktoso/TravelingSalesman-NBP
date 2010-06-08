@@ -2,7 +2,6 @@
  */
 package pl.edu.netbeans.algorithms;
 
-import org.openide.util.Exceptions;
 import org.openide.util.Lookup;
 import org.openide.util.LookupListener;
 import org.openide.util.lookup.AbstractLookup;
@@ -17,7 +16,8 @@ import prefuse.Visualization;
 import prefuse.data.Graph;
 
 /**
- * Poniższa klasa służy jedynie testowaniu czy i jak często wołana jest akcja
+ * Poniższa klasa rozwiązuje problem komiwojażera wybraną metodą algorytmu genetycznego (mamy kilka) -
+ * TODO: może wydzielić je na inne Solvery - jak pierwotnie zakłądano? - pomyślę
  * Przedstawia również logowanie do output window
  * @author ktoso
  */
@@ -60,10 +60,10 @@ public class FirstTSSolverAction extends SolverAction implements TSSolverAction,
         } catch (WrongGraphTypeException ex) {
             log("Nieoczekiwany błąd - koniec symulacji");
         }
-        
+
 
 //        removeLastSent();
-        
+
 
         if (population.shouldStop()) {
             stop();
@@ -73,7 +73,7 @@ public class FirstTSSolverAction extends SolverAction implements TSSolverAction,
     public void setPopulationParameters(int maxCount, int maxCountWGB, String cType, String sType) {
         population.setMaxNumerGeneracji(maxCount);
         population.setMaxPokolenBezZmiany(maxCountWGB);
-        population.setCrossoverType(cType);
+        population.setCrossoverType(cType);//TODO: Generalnie wypadałoby te klasy rozdzielić a nie stringami ustalać typ: AntiPattern http://blogs.msdn.com/blogfiles/cdndevs/WindowsLiveWriter/NewProgrammingJargon_A38D/i%20can%20has%20string_0e1d6ac7-2adf-4b93-8e1a-8caf9e3db81d.jpg
         population.setSelectionType(sType);
     }
 

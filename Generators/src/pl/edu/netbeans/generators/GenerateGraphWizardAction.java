@@ -130,13 +130,14 @@ public final class GenerateGraphWizardAction extends CallableSystemAction {
 
             String cType = (String) wizardDescriptor.getProperty("crossoverType");
             String sType = (String) wizardDescriptor.getProperty("selectionType");
+            boolean useLabelsForNodes = checkLabelRenderingMethod(wizardDescriptor);
 
             //TODO: rewrite na lookup
             //Lookup  global = Lookup.getDefault();
             try {
                 VisualizerTopComponent top = new VisualizerTopComponent();
 
-                top.open(nodesFilename, popSize, greedy);
+                top.open(nodesFilename, popSize, greedy, useLabelsForNodes);
                 top.setSolverParameters(maxG, maxGWGB, cType, sType);
                 top.requestActive();
 
@@ -207,5 +208,15 @@ public final class GenerateGraphWizardAction extends CallableSystemAction {
         }
 
         return nodesFilename;
+    }
+
+    /**
+     * Sprawdza czy powinniśmy rysować punkty czy nazwy miast
+     * @param wizardDescriptor z niego pobierane są potrzebne dane.
+     * @return true jeżeli chcemy nazwy miast, false jeżeli chcemy punkty
+     */
+    private boolean checkLabelRenderingMethod(WizardDescriptor wizardDescriptor) {
+        String name = (String) wizardDescriptor.getProperty("nodeDrawType");
+        return !name.equals("Punkty");
     }
 }

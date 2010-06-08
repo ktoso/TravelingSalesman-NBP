@@ -88,6 +88,7 @@ public class GenerateGraphWizardPanel1 implements WizardDescriptor.ValidatingPan
         ((WizardDescriptor) settings).putProperty("greedyAlgorithm", getComponent().isGreedy());
         ((WizardDescriptor) settings).putProperty("crossoverType", getComponent().getCrossoverType());
         ((WizardDescriptor) settings).putProperty("selectionType", getComponent().getSelectionType());
+        ((WizardDescriptor) settings).putProperty("nodeDrawType", getComponent().getNodeDrawType());
     }
 
     public void readSettings(Object settings) {

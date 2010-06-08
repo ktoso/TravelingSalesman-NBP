@@ -30,7 +30,9 @@ import prefuse.controls.ZoomToFitControl;
 import prefuse.data.Graph;
 import prefuse.data.io.DataIOException;
 import prefuse.data.io.GraphMLReader;
+import prefuse.render.AbstractShapeRenderer;
 import prefuse.render.DefaultRendererFactory;
+import prefuse.render.LabelRenderer;
 import prefuse.util.ColorLib;
 import prefuse.visual.VisualItem;
 
@@ -49,6 +51,7 @@ public final class VisualizerTopComponent extends TopComponent {
     private FirstTSSolverAction solver;
     int panelHeight, panelWidth;
     private String displayName = "";
+    private boolean useLabelsForNodes;
 
     public VisualizerTopComponent() {
         initComponents();
@@ -60,12 +63,12 @@ public final class VisualizerTopComponent extends TopComponent {
         putClientProperty(TopComponent.PROP_UNDOCKING_DISABLED, Boolean.TRUE);
     }
 
-    public void open(String filename, int popSize, boolean greedy) throws WrongGraphTypeException {
+    public void open(String filename, int popSize, boolean greedy, boolean useLabelsForNodes) throws WrongGraphTypeException {
         super.open();
-        displayName = ( new File(filename) ).getName();
-        super.setName(displayName);
+        displayName = (new File(filename)).getName();
+        this.useLabelsForNodes = useLabelsForNodes;
 
-        
+        super.setName(displayName);
 
         initGraph(filename, popSize, greedy);
     }
@@ -205,17 +208,27 @@ public final class VisualizerTopComponent extends TopComponent {
         //layout.add(new MockTSSolverAction(graph));
         layout.add(new RepaintAction());
 
-        PointRenderer r = new PointRenderer(5);
-//        LabelRenderer r = new LabelRenderer("name");
-//        r.setRoundedCorner(8, 8);
+        AbstractShapeRenderer r = null;
+        ColorAction text  = new ColorAction(nodes, VisualItem.TEXTCOLOR, ColorLib.gray(0));
+        ColorAction fill;//kolor Node'ów
+
+        if (useLabelsForNodes) {
+            LabelRenderer labelRenderer = new LabelRenderer("name");
+            labelRenderer.setRoundedCorner(8, 8);
+            r = labelRenderer;
+
+            fill = new ColorAction(nodes, VisualItem.FILLCOLOR, ColorLib.rgb(178, 221, 232));//niebieski taki
+        } else {
+            r = new PointRenderer(5);
+
+            fill = new ColorAction(nodes, VisualItem.FILLCOLOR, ColorLib.rgb(0, 0, 0));
+        }
 
         // create a new default renderer factory
         // return our name label renderer as the default for all non-EdgeItems
         // includes straight line edges for EdgeItems by default
         vis.setRendererFactory(new DefaultRendererFactory(r));
 
-        ColorAction text = new ColorAction(nodes, VisualItem.TEXTCOLOR, ColorLib.gray(0));
-        ColorAction fill = new ColorAction(nodes, VisualItem.FILLCOLOR, ColorLib.rgb(0, 0, 0));//kolor Node'ów
         ColorAction dataMarked = new RouteDataColorAction();
 
         ActionList color = new ActionList(Activity.INFINITY);
