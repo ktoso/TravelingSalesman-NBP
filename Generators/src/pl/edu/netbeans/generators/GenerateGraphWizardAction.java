@@ -107,6 +107,13 @@ public final class GenerateGraphWizardAction extends CallableSystemAction {
         // {0} will be replaced by WizardDesriptor.Panel.getComponent().getName()
         wizardDescriptor.setTitleFormat(new MessageFormat("{0}"));
         wizardDescriptor.setTitle("Generator Grafów");
+        //Odświeżanie listy plików przy każdym uruchomieniu wizarda
+        if (panels != null && panels.length > 0) {
+            Component c = panels[0].getComponent();
+            if (c instanceof GenerateGraphVisualPanel1) {
+                ((GenerateGraphVisualPanel1) c).refreshFileList();
+            }
+        }
         Dialog dialog = DialogDisplayer.getDefault().createDialog(wizardDescriptor);
         dialog.setVisible(true);
         dialog.toFront();
@@ -144,6 +151,8 @@ public final class GenerateGraphWizardAction extends CallableSystemAction {
             } catch (WrongGraphTypeException ex) {
                 MessageUtils.err("Napotkano następujący błąd:\n" + ex);
             }
+
+
 
         }
     }
