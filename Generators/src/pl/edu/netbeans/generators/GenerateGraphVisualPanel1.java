@@ -8,11 +8,13 @@ import java.io.File;
 import java.io.FileFilter;
 import java.util.Arrays;
 import java.util.Comparator;
-import javax.swing.JComboBox;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 import pl.edu.netbeans.toolbox.Constants;
 
 public final class GenerateGraphVisualPanel1 extends JPanel {
+
+    private File[] files;
 
     /** Creates new form GenerateGraphVisualPanel1 */
     public GenerateGraphVisualPanel1() {
@@ -68,8 +70,6 @@ public final class GenerateGraphVisualPanel1 extends JPanel {
     public String getNodeDrawType() {
         return nodeDrawType.getSelectedItem().toString();
     }
-
-
 
     /** This method is called from within the constructor to
      * initialize the form.
@@ -303,7 +303,6 @@ public final class GenerateGraphVisualPanel1 extends JPanel {
     private void nodeDrawTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nodeDrawTypeActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_nodeDrawTypeActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox crossoverType;
     private javax.swing.JComboBox graphFilename;
@@ -332,20 +331,19 @@ public final class GenerateGraphVisualPanel1 extends JPanel {
     private javax.swing.JComboBox selectionType;
     // End of variables declaration//GEN-END:variables
 
-    private void initMyComponents() {
-
+    public void refreshFileList() {
         //generators/../data
         File datapath = new File(Constants.DATA_FOLDER);
-        System.out.println("DATA_FOLDER: "+ datapath.getAbsolutePath());
+        System.out.println("DATA_FOLDER: " + datapath.getAbsolutePath());
 
-        File files[] = datapath.listFiles(new FileFilter() {
+        files = datapath.listFiles(new FileFilter() {
 
             public boolean accept(File pathname) {
                 return pathname.getName().matches(".*.xml");
             }
         });
 
-        if ( files.length > 0 ) {
+        if (files.length > 0) {
             //sensowne sortowanie zebranych plików, "\dnodes" są sortowane po wartościach tych liczb 100 > 5 etc.
             Arrays.sort(files, new Comparator<File>() {
 
@@ -368,9 +366,16 @@ public final class GenerateGraphVisualPanel1 extends JPanel {
             });
         }
 
+        graphFilename.removeAllItems();
+
         for (File f : files) {
             graphFilename.addItem(f.getName());
         }
+    }
+
+    private void initMyComponents() {
+
+        refreshFileList();
 
         graphFilename.setEnabled(false);
 

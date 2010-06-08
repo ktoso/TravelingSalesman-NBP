@@ -97,7 +97,7 @@ public class GenerateGraphWizardPanel1 implements WizardDescriptor.ValidatingPan
 
     @Override
     public void validate() throws WizardValidationException {
-        if ( ! component.isLoadingExisting() ) {
+        if (!component.isLoadingExisting()) {
             String nodeCount = component.getNodeCount();
             if (nodeCount.isEmpty()) {
                 throw new WizardValidationException(null, "Proszę podać liczbę wierzchołków", null);
