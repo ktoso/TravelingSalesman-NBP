@@ -30,16 +30,20 @@
 Zagadnieniem naszego projektu był jeden z najstarszych problemów związanych z teorią grafów – problem komiwojażera (Traveling Salesman Problem). Tematem tego zagadnienia patrząc od strony teorii grafów jest znalezienie minimalnego cyklu Hamiltona w k-klice, gdzie podane są wagi wszystkich krawędzi. Problem ten obrazowany jest z punktu widzenia komiwojażera (akwizytora) który chce odwiedzić wszystkie miasta, przy czym w każdym chce być dokładnie raz i nie chce dwa razy chodzić tą samą drogą. Zna on odległości pomiędzy każdymi dwoma miastami i wszystkie miasta są ze sobą połączone. Istnieje bardziej skomplikowana wersja tego problemu – wersja asymetryczna. Problem tamten różni się tym, że droga z pierwszego do miasta drugiego może mieć inną długość, niż droga powrotna. W naszym projekcie skupiliśmy się jednak na bardziej popularnej i standardowej wersji tego problemu grafowego.
 
 \subsection{Problem komiwojażera jako NP-zupełny}
-Zagadnienie związane z naszym projektem w teorii grafów, przy podejściu decyzyjnym uznane jest za należące do klasy NP-zupełnych. Należenie do klasy NP oznacza, że w czasie wielomianowym, możliwe jest sprawdzenie czy podane rozwiązanie jest poprawne. Ale samo rozwiązanie problemu nie jest możliwe. Definicja klasy NP-zupełnej jest bardziej skomplikowana. Dowód należenia problemu komiwojażera do tej klasy można znaleźć w [1] na stronie 1036. Przykładem problemu klasy NP jest problem znalezienia cyklu Hamiltona (w skończonym czasie jesteśmy w stanie sprawdzić, czy podana sekwencja wierzchołków tworzy cykl), problem komiwojażera rozszerza to zagadnienie (po otrzymaniu sekwencji węzłów możemy policzyć koszt przebycia trasy, ale nie mamy pewności, że jest ona najkrótszą z możliwych). Dlatego nasz problem jest „tak trudny jak dowolny problem w NP” [1] (strona 991).
+\hypertarget{np}
+Zagadnienie związane z naszym projektem w teorii grafów, przy podejściu decyzyjnym uznane jest za należące do klasy NP-zupełnych. Należenie do klasy NP oznacza, że w czasie wielomianowym, możliwe jest sprawdzenie czy podane rozwiązanie jest poprawne. Ale samo rozwiązanie problemu nie jest możliwe. Definicja klasy NP-zupełnej jest bardziej skomplikowana. Dowód należenia problemu komiwojażera do tej klasy można znaleźć w [1] na stronie 1036. Przykładem problemu klasy NP jest problem znalezienia cyklu Hamiltona (w skończonym czasie jesteśmy w stanie sprawdzić, czy podana sekwencja wierzchołków tworzy cykl), problem komiwojażera rozszerza to zagadnienie (po otrzymaniu sekwencji węzłów możemy policzyć koszt przebycia trasy, ale nie mamy pewności, że jest ona najkrótszą z możliwych). Dlatego nasz problem jest „tak trudny jak dowolny problem w NP” \hyperlink{biblio}{[1] (strona 991)}.
 
 \subsection{Podejście algorytmiczne, a heurystyczne}
+\hypertarget{podejscie}
 Podejście algorytmiczne do problemu komiwojażera, gwarantuje rozwiązanie optymalne. Ilość przypadków do rozpatrzenia przy n wierzchołków wynosi n! Więc sprawdzanie wszystkich możliwych rozwiązań może być skuteczne tylko dla bardzo małych ilości węzłów. Przy większej ilości węzłów czas oczekiwania na wynik ostateczny zmierza do nieskończoności, a dodanie każdego kolejnego węzła (numer n+1) tylko zwiększa ten czas (ilość przypadków do rozważenia rośnie n+1 – krotnie).  Podejściem całkiem odmiennym jest heurystyczne spojrzenie na ten problem. Trzeba być jednak świadomym wad tego rozwiązania. To podejście nie daje nam gwarancji znalezienia najlepszego rozwiązania, ale daje gwarancje obliczeń w skończonym czasie i zakończenie ich w jakimś minimum lokalnym (być może ekstremum globalnym). Lecz podejście drugie ze względu na gwarancję otrzymania wyniku zostało wykorzystane w tym projekcie. W celu implementacji tego podejścia wykorzystane są algorytmy genetyczne.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Rozwiązanie problemu komiwojażera przy użyciu algorytmów ewolucyjnych}
+\hypertarget{rozwiazanie}
 Mamy zamiar teraz przedstawić nasz sposób rozwiązania tego NP-zupełnego problemu wykorzystując algorytmy decyzyjne. W kolejnych punktach opisze struktury oraz mechanizmy stworzone i wykorzystane przez nas na potrzeby projektu. Zawierają się w nich: struktura chromosomu, losowanie populacji początkowej, kryterium oceny osobników, metody selekcji (używane przez nas: metoda ruletki i metoda turniejowa), proces krzyżowania (krzyżowanie OX oraz heurystyczne), a także wykorzystany przez nas sposób mutowania osobników.
 
 \subsection{Chromosomy}
+\hypertarget{chromosomy}
 Spośród trzech możliwych reprezentacji (ścieżkowej, przyległościowej i porządkowej) chromosomu możliwych do wykorzystania w naszym projekcie wybraliśmy reprezentacje ścieżkową. Reprezentacja chromosomu zawiera u nas ciąg wartości odpowiadających kolejnym węzłom (miastom) cyklu. Reprezentacja ta jest najbliższa i najbardziej przejrzysta dla ludzi. Lecz jej wadą jest trudność w implementacji krzyżowania. Chromosomy można tworzyć z wykorzystaniem algorytmu zachłannego. Wersja bez algorytmu zachłannego przypisuje kolejnym wartością losowe numery węzłów w grafie. Wersja zachłanna różni się tym, że trasa jest już w procesie tworzenia optymalizowana. Wybierany jest pierwszy węzeł, a następnie wybierany jest kolejny położony najbliżej i tak zapełniany jest cały chromosom.
 
 \subsection{Losowanie populacji początkowej}
@@ -49,6 +53,7 @@ Odbywa się na podstawie wprowadzonej zmiennej (liczba osobników populacji), ge
 Kryterium w przypadku naszego projektu jest po prostu długość ścieżki (cyklu), dążymy do jak najmniejszej wartości tego parametru, a więc kryterium przystosowania w naszym przypadku jest odwrotnie proporcjonalne do wartości długości cyklu.
 
 \subsection{Metody selekcji}
+\hypertarget{selekcja}
 W naszym projekcie w celu wprowadzenie zróżnicowania i możliwości porównania skuteczności postanowiliśmy wdrożyć dwie metody selekcji: poprzez ruletkę oraz metodę turniejową.
 
 \textbf{Metoda ruletki} --- polega na wielokrotnym (dokładnie tyle ile mamy osobników) losowaniu osobników z pierwotnej populacji. Osobniki te przepisane zostaną do nowej populacji. Losowanie odbywa się poprzez stworzenie „koła fortuny” w którym osobniki lepsze (o większym kryterium przystosowania), zajmują większy obszar. Dzięki temu zabiegowi mają one większe prawdopodobieństwo na przeniesienie do kolejnego pokolenia. Wadą tego rozwiązania jest, stosunkowo szybkie zbieganie się do ewentualnego minimum lokalnego.
@@ -56,6 +61,7 @@ W naszym projekcie w celu wprowadzenie zróżnicowania i możliwości porównani
 \textbf{Metoda turniejowa} --- druga wybrana przez nas metoda, ma całkiem inne parametry, niż ruletka. Jest ona bardziej odporna na zbieganie się do minimum lokalnych. Jest tak dlatego, że przy każdym z n losowań, wybierana jest podgrupa osobników z których do kolejnego pokolenia przechodzi tylko najlepiej dopasowany. Ta zwiększona losowość chroni przed zbyt szybkim zbieganiem się. Zastosowany u nas sposób jest uproszczoną metodą turniejową. Przeprowadzany jest turniej wśród wszystkich osobników, w którym wygrywa lepsza połowa (sortujemy rosnąco wszystkie osobniki i wybieramy połowę lepiej przystosowaną), którą krzyżujemy z losowym osobnikiem z gorszej połowy, dzięki czemu dłużej zachowana jest różnorodność. Powstaje w ten sposób nowe pokolenie które przechodzi do następnego cyklu.
 
 \subsection{Proces krzyżowania}
+\hypertarget{krzyzowanie}
 W procesie tworzenia grafu w naszym projekcie możliwy jest wybór typu krzyżowania. Dostępne jest krzyżowanie OX (popularne) oraz krzyżowanie heurystyczne (w tym przypadku na decyzje mają wpływ obecne warunki zadania). Poszczególne metody przedstawiają się następująco:
 
 \textbf{Metoda OX }polega na przeniesieniu pewnej losowej części z jednego chromosomu-rodzica i uzupełnieniu wartościami z drugiego, przy zachowaniu kolejności ich występowania i poczynając od tylniej części chromosomu-dziecka. Ogólnie metoda ta polega na wymianie pewnej środkowej części genotypu i uzupełnieniu wartościami drugiego niezmienionego chromosomu, w ramach możliwości. W trakcie prac nad projektem udało nam się zauważyć, że metoda OX nie gwarantuje dobrej zbieżności, co skłoniło nas do implementacji innej metody.
@@ -63,6 +69,7 @@ W procesie tworzenia grafu w naszym projekcie możliwy jest wybór typu krzyżow
 \textbf{Metoda heurystyczna} w naszym projekcie działa następująco. Dane są dwa chromosomy - rodzice z których będą wybierane lepsze warianty. Kolejnym krokiem jest losowanie dowolnego węzła. Kolejnym krokiem jest sprawdzenie w którym chromosomie – rodzicu kolejne miasto leży najbliżej, a następnie wybranie i przepisanie go. Jeżeli nie jest to możliwe następuje wybór możliwości z drugiego rodzica. Jeżeli obydwa węzły zostały  już wykorzystane w potomku, następuje przepisanie kolejnego najbliższego wariantu. W momencie wywoływania tego krzyżowania jest on wywoływane dla każdego z chromosomów pełniących rolę z rodzica, z parametrem w postaci drugiego z tych osobników. Zachowanie takie ma na celu stworzenie dwójki potomnych dzieci.
 
 \subsection{Mutowanie}
+\hypertarget{Mutowanie}
 Proces ten w naszym projekcie oparliśmy na prostym wylosowaniu dwóch różnych węzłów na drodze komiwojażera i zamienieniu ich miejscami. Procesowi mutacji podlega co cykl ilość osobników równa: (ilość pokoleń bez poprawy)/(max ilość pokoleń bez poprawy)*0.5 (oba parametry można ustawić w momencie tworzenia grafu).
 
 \subsection{Warunek stopu}
@@ -77,20 +84,22 @@ W celu zakończenia naszego algorytmu stworzyliśmy dwa warunki stopu, zależne 
 \end{figure}
 
 Na załączonym rysunku widać okno które pozwala nam wygenerować graf w którym będziemy szukać minimalnego cyklu. Nasz projekt udostępnia użytkownikowi takie opcje jak:
-Ilość wierzchołków – w zależności od wartości tego parametru, generowany jest graf pełny o zadanej liczbie węzłów.
-Wybierz gotowy graf – na potrzeby projektu stworzone zostało kilkanaście grafów, na których można bardzo przejrzyście zaobserwować proces wyznaczania minimalnego cyklu. Niektóre grafy, mają też swoje odwzorowanie na mapach Polski i liczą cykle dla wybranych miast.
-Ilość pokoleń bez poprawy – parametr ten jest pierwszym warunkiem stopu, określa on, ile razy pod rząd może nie wystąpić zmiana u najlepszego osobnika populacji, jeżeli wartość ta zostanie osiągnięta program zakończy działanie.
-
 \begin{itemize}
+ \item \textbf{Ilość wierzchołków} --- w zależności od wartości tego parametru, generowany jest graf pełny o zadanej liczbie węzłów.
+
+ \item \textbf{Wybierz gotowy graf} --- na potrzeby projektu stworzone zostało kilkanaście grafów, na których można bardzo przejrzyście zaobserwować proces wyznaczania minimalnego cyklu. Niektóre grafy, mają też swoje odwzorowanie na mapach Polski i liczą cykle dla wybranych miast.
+
+ \item \textbf{Ilość pokoleń bez poprawy} --- parametr ten jest pierwszym warunkiem stopu, określa on, ile razy pod rząd może nie wystąpić zmiana u najlepszego osobnika populacji, jeżeli wartość ta zostanie osiągnięta program zakończy działanie.
+
  \item \textbf{Maksymalna ilość pokoleń} --- drugi warunek stopu, po osiągnięciu tej wartości podczas procesów krzyżowania program zostanie zatrzymany. Pokolenie o indeksie równym temu parametrowi będzie ostatnim potomstwem.
 
  \item \textbf{Rozmiar populacji} --- określa ilość chromosomów zawierających się w każdej populacji, zwiększenie tej wartości powoduje zwiększenie szans na znalezienie ekstremum globalnego, ale jest to osiągane kosztem czasu (zwiększa się ilość obliczeń, a co za tym idzie ich czas). Zmniejszenie go, zwiększa szanse na to, że nasze obliczenia zatrzymają się na pewnym minimum lokalnym, ale przyśpiesza działanie programu.
 
- \item \textbf{Typ krzyżowania} --- przełącza pomiędzy zaimplementowanymi przez nas rodzajami krzyżowania. W programie dostępne są krzyżowania typu OX oraz krzyżowanie heurystyczne. Opis różnic poszczególnych krzyżowań zawiera się w części 2.d.
+ \item \textbf{Typ krzyżowania} --- przełącza pomiędzy zaimplementowanymi przez nas rodzajami krzyżowania. W programie dostępne są krzyżowania typu OX oraz krzyżowanie heurystyczne. Opis różnic poszczególnych krzyżowań zawiera się w części \hyperlink{krzyzowanie}{2.4}.
 
- \item \textbf{Typ selekcji} --- podobnie jak parametr wyżej, ustawia jeden z dostępnych rodzajów selekcji. W projekcie zaimplementowane zostały selekcje metodą ruletki oraz uproszczoną metodą turniejową. Opisy tych metod znaleźć można w sekcji 2.e.
+ \item \textbf{Typ selekcji} --- podobnie jak parametr wyżej, ustawia jeden z dostępnych rodzajów selekcji. W projekcie zaimplementowane zostały selekcje metodą ruletki oraz uproszczoną metodą turniejową. Opisy tych metod znaleźć można w sekcji \hyperlink{selekcja}{2.5}.
 
- \item \textbf{Gen. alg. zachłannym} --- zaznaczenie tej opcji spowoduje wykorzystanie algorytmu zachłannego w procesie tworzenia chromosomów (w trakcie generowania populacji początkowej). Spowoduje to jeszcze szybsze zbieganie się algorytmu. Opis tego algorytmu znajduje się w podpunkcie 2.a.
+ \item \textbf{Gen. alg. zachłannym} --- zaznaczenie tej opcji spowoduje wykorzystanie algorytmu zachłannego w procesie tworzenia chromosomów (w trakcie generowania populacji początkowej). Spowoduje to jeszcze szybsze zbieganie się algorytmu. Opis tego algorytmu znajduje się w podpunkcie \hyperlink{chromosomy}{2.1}.
 
  \item \textbf{Metoda wizualizacji wierzchołków} --- do wyboru mamy tutaj dwie opcje. Wybór punktów polecany jest szczególnie przy większych grafach, a także dla zwiększenia przejrzystości grafu. Opcja z etykietami miast jest dużo ciekawsza, jeżeli obserwujemy działanie algorytmu na przykładzie grafu który odwzorowuje położenie geograficzne określonych miast i na ich przykładzie rozwiązuje problem komiwojażera.
 \end{itemize}
@@ -134,6 +143,7 @@ Możliwe do wglądu są kolejne 'wydania' (tagi) jak i najświeższa wersja kodu
 
 \section{Bibliografia}
 \begin{itemize}
+ \hypertarget{biblio}
  \item Cormen Thomas H., Leiserson Charles E., Rivest Ronald L., Stein Clifford --- 'Wprowadzenie do algorytmów' 2007
  \item Zbigniew Michalewicz --- 'Algorytmu genetyczne + programy ewolucyjne = programy ewolucyjne' 1996
  \item Tim Boudreau, Jaroslav Tulach, Geertjan Wielenga --- 'Rich Client Programming: Plugging into the NetBeans Platform' 2007
