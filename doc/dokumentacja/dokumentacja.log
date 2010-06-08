@@ -1,4 +1,4 @@
-This is pdfTeXk, Version 3.141592-1.40.3 (Web2C 7.5.6) (format=pdflatex 2010.1.24)  8 JUN 2010 20:51
+This is pdfTeXk, Version 3.141592-1.40.3 (Web2C 7.5.6) (format=pdflatex 2010.1.24)  8 JUN 2010 21:40
 entering extended mode
  %&-line parsing enabled.
 **dokumentacja.tex
@@ -485,7 +485,7 @@ Overfull \hbox (24.7196pt too wide) in paragraph at lines 61--62
 lo-so-wej cz¦-±ci z jed-nego chromosomu-
  []
 
-[5] <wizard.png, id=125, 498.36188pt x 472.01344pt>
+[5] <wizard.png, id=130, 498.36188pt x 472.01344pt>
 File: wizard.png Graphic file (type png)
  <use wizard.png> [6 <./wizard.png>]
 LaTeX Font Info:    Try loading font information for OMS+lmr on input line 85.
@@ -497,10 +497,10 @@ LaTeX Font Info:    Font shape `OMS/lmr/m/n' in size <10> not available
  [7] [8] [9]
 (./dokumentacja.aux) ) 
 Here is how much of TeX's memory you used:
- 3502 strings out of 256216
- 46065 string characters out of 1917072
+ 3504 strings out of 256216
+ 46085 string characters out of 1917072
  102090 words of memory out of 1500000
- 6688 multiletter control sequences out of 10000+200000
+ 6689 multiletter control sequences out of 10000+200000
  54492 words of font info for 54 fonts, out of 1200000 for 2000
  645 hyphenation exceptions out of 8191
  25i,6n,36p,1057b,370s stack positions out of 5000i,500n,6000p,200000b,15000s
@@ -511,9 +511,9 @@ mf/fonts/type1/public/lm/lmr10.pfb></usr/share/texmf/fonts/type1/public/lm/lmr1
 2.pfb></usr/share/texmf/fonts/type1/public/lm/lmr17.pfb></usr/share/texmf/fonts
 /type1/public/lm/lmri10.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy10.pfb>
 
-Output written on dokumentacja.pdf (9 pages, 259511 bytes).
+Output written on dokumentacja.pdf (9 pages, 261533 bytes).
 PDF statistics:
- 187 PDF objects out of 1000 (max. 8388607)
- 30 named destinations out of 1000 (max. 131072)
- 166 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 193 PDF objects out of 1000 (max. 8388607)
+ 31 named destinations out of 1000 (max. 131072)
+ 174 words of extra memory for PDF output out of 10000 (max. 10000000)
 
